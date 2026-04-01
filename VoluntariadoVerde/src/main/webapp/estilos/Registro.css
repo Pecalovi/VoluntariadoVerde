@@ -1,0 +1,120 @@
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 75px;
+    padding-block: 100px;
+}
+
+.cajas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    background-color:#eeeeee;
+    padding: 75px;
+    border-radius: 16px;
+}
+
+.btn-rol {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 300px;
+    height: 280px;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    border: none;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+
+}
+
+.btn-rol:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+}
+
+.btn-rol p {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 300;
+    padding-inline: 25px;
+}
+
+.icono {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+#btnContinuar {
+    margin-top: 40px;
+    padding: 14px 60px;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--verde-principal);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+#btnContinuar:enabled {
+    opacity: 1;
+}
+
+
+@media (max-width:860px) {
+
+    .selector {
+        padding-block: 50px;
+        gap: 20px;
+    }
+
+    .cajas {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .btn-rol {
+        width: 235px;
+        height: 220px;
+    }
+
+    .btn-rol h3 {
+        font-size: 1rem;
+    }
+
+    .btn-rol p {
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: 300;
+        padding-inline: 25px;
+    }
+
+    .icono {
+        width: 78px;
+        height: 78px;
+        margin-bottom: 15px;
+        object-fit: contain;
+    }
+
+}

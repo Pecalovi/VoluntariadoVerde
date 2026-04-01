@@ -1,0 +1,477 @@
+/* VARIABLES DE COLOR */
+:root {
+	--verde-principal: #005900;
+	--verde-oscuro: #005700;
+	--blanco: #ffffff;
+	--gris-oscuro: #333333;
+	--gris-claro: #999999;
+}
+
+/* RESETEO GLOBAL Y BASE */
+* {
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	min-height: 100vh;
+	overflow-x: hidden;
+	background-color: var(--blanco);
+	color: var(--gris-oscuro);
+}
+
+/* TIPOGRAFÍA GENERAL */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+	color: var(--verde-oscuro);
+	margin-bottom: 0.5em;
+	line-height: 1.2;
+}
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+	margin: 30px 0;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.2rem;
+}
+
+p {
+	font-size: 1rem;
+	line-height: 1.6;
+	color: var(--gris-oscuro);
+	margin-bottom: 1em;
+	text-align: justify;
+}
+
+/* ENLACES */
+a {
+	text-decoration: none;
+	color: var(--verde-principal);
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: var(--verde-oscuro);
+}
+
+/* LISTAS */
+ul, ol {
+	margin-left: 1.5em;
+	margin-bottom: 1em;
+}
+
+li {
+	line-height: 1.6;
+}
+
+/* IMÁGENES */
+img {
+	max-width: 100%;
+	display: block;
+	height: auto;
+	border-radius: 4px;
+}
+
+/* BOTONES */
+.botones {
+	margin-top: 20px;
+	border: none;
+	background-color: var(--verde-principal);
+	color: var(--blanco);
+	padding: 14px 60px;
+	border-radius: 30px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	--animate-duration: 2s;
+	animation-duration: 2s;
+}
+
+.botones:hover {
+	background-color: #006e00;
+	color: var(--blanco);
+}
+
+/*Logo HOVER*/
+.logo a {
+	display: inline-block;
+	transition: transform 0.3s ease;
+}
+
+.logo a:hover {
+	transform: scale(1.05);
+}
+
+/*Idioma HOVER*/
+.idiom-opcion-es {
+	display: inline-block;
+	transition: transform 0.3s ease;
+}
+
+.idiom-opcion-es:hover {
+	transform: scale(1.08);
+}
+
+.idiom-opcion-en {
+	display: inline-block;
+	transition: transform 0.3s ease;
+}
+
+.idiom-opcion-en:hover {
+	transform: scale(1.08);
+}
+
+/* ESTRUCTURA PRINCIPAL */
+main {
+	flex: 1;
+	padding-top: 60px;
+}
+
+/* OPCIONAL: TEXTOS ESPECIALES */
+strong {
+	font-weight: 600;
+}
+
+em {
+	font-style: italic;
+}
+
+/* CABECERA */
+header {
+	height: 60px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	align-content: center;
+	padding: 0 20px;
+	background-color: var(--verde-oscuro);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+header img {
+	height: 25px;
+}
+
+.iconOrd {
+	display: block;
+}
+
+.iconMovil {
+	display: none;
+}
+
+header.isla {
+	position: fixed;
+	top: 15px;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 80%;
+	max-width: 1200px;
+	background-color: #005700ff;
+	border-radius: 18px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	height: 55px;
+}
+
+/* MENU DE CABECERA */
+.menu {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	flex: 1;
+	margin: 0 30px;
+	gap: 30px;
+}
+
+.menu a {
+	text-decoration: none;
+	color: #ffffff;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+	font-style: normal;
+}
+
+.hamburguesa {
+	display: none;
+	background: none;
+	border: none;
+	font-size: 30px;
+	color: white;
+	cursor: pointer;
+}
+
+.login-mobile {
+	display: none;
+}
+
+/*Idioma switch*/
+.idiom-opcion-es, .idiom-opcion-en {
+	opacity: 0.4;
+	font-size: 25px;
+}
+
+.active {
+	opacity: 1;
+	font-size: 30px;
+}
+
+.idiom-barra {
+	font-size: 30px;
+	color: white;
+}
+
+
+/* DropDown */
+.dropdown-menu.dropdown-menu-end {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #ccc;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Estilos de los enlaces dentro del dropdown */
+.dropdown-menu .dropdown-item {
+  color: #333333;
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #bfbfbf;
+  color: #ffffff;
+}
+
+
+/* FOOTER */
+footer {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+}
+
+.colaboracion {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 25px;
+	border: none;
+	border-radius: 25px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.15),
+		rgba(0, 0, 0, 0.70)), url('../src/Lago_footer.jpg');
+	background-size: cover;
+	background-position: center;
+	margin-block: 50px;
+	padding: 50px;
+	min-width: 80%;
+}
+
+.colaboracion h2, .colaboracion h3 {
+	color: white;
+}
+
+.btn-colab {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+}
+
+.btn-colab a {
+	background-color: transparent;
+	border: 1px solid white;
+}
+
+.btn-colab a:hover {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.contacto {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+	margin: 20px;
+}
+
+.iconos, .rrss {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	gap: 20px;
+}
+
+.icon {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	gap: 10px;
+}
+
+.iconos img {
+	width: 32px;
+	height: 32px;
+}
+
+.icon p {
+	margin: 0;
+}
+
+.copyright {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin-block: 30px;
+}
+
+.copyright p {
+	font-size: 13px;
+	color: var(--gris-oscuro);
+}
+
+/* ADAPTADO PARA DISPOSITIVOS MOVILES/TABLET */
+@media ( max-width : 860px) {
+	/* Cambiar icono */
+	.iconOrd {
+		display: none;
+	}
+	.iconMovil {
+		display: block;
+	}
+
+	/* Mostrar hamburguesa */
+	.hamburguesa {
+		display: block;
+	}
+
+	/* Ocultar menú normal */
+	.menu {
+		display: none;
+		position: absolute;
+		top: 60px;
+		left: 0;
+		width: 100%;
+		background-color: rgb(0, 100, 0);
+		flex-direction: column;
+		align-items: center;
+		margin: 0;
+		gap: 0;
+		transition: all 0.3s ease;
+	}
+	.menu a {
+		padding: 15px 0;
+		width: 100%;
+		text-align: center;
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
+	}
+
+	/* Mostrar menu cuando se hace click */
+	.menu.activo {
+		display: flex;
+	}
+
+	/* Ocultar icono login del header */
+	.login-desktop {
+		display: none;
+	}
+
+	/* Mostrar login dentro del menú */
+	.login-mobile {
+		display: block;
+	}
+
+	/* FOOTER */
+	.colaboracion {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		border: none;
+		border-radius: 25px;
+		margin-inline: 10px;
+		padding-block: 25px;
+		min-width: 80%;
+		margin-block: 0px;
+	}
+	.colaboracion h2, .colaboracion h3 {
+		color: white;
+		text-align: center;
+	}
+	.btn-colab {
+		gap: 1px;
+	}
+	.btn-colab a {
+		font-size: 14px;
+		text-align: center;
+	}
+	.iconos {
+		display: none;
+	}
+	.rrss {
+		width: 100%;
+		justify-content: center;
+		gap: 10px;
+	}
+	.rrss img {
+		width: 38px;
+		height: 38px;
+	}
+	.copyright {
+		margin: 0px;
+		margin-bottom: 15px;
+	}
+	.copyright p {
+		font-size: 11px;
+	}
+	/*Idioma switch*/
+	.idiom-opcion-es {
+		font-size: 50px;
+		padding-right: 30px;
+	}
+	.idiom-opcion-en {
+		font-size: 50px;
+		padding-left: 30px;
+	}
+	.idiom-barra {
+		font-size: 60px;
+	}
+}

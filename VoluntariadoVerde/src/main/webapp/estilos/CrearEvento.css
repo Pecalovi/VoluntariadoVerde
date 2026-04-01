@@ -1,0 +1,218 @@
+main {
+	padding-bottom: 100px;
+}
+
+/* ===========================
+   INDICADOR DE PASOS
+   =========================== */
+.indicador-pasos {
+	display: flex;
+	justify-content: center;
+	gap: 40px;
+	margin: 50px 0;
+}
+
+.paso {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: #aaaaaa;
+}
+
+.paso span {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border: 2px solid #ccc;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	background: #fff;
+}
+
+.paso p {
+	margin-top: 6px;
+	font-size: 0.85rem;
+	text-align: center;
+	max-width: 80px;
+}
+
+/* ===========================
+   ESTADOS DE LOS PASOS
+   =========================== */
+
+/* color del paso actual */
+.paso.activo span {
+	background: #7e7e7e;
+	border-color: #7e7e7e;
+	color: #fff;
+}
+
+/* color del paso completado */
+.paso.completado span {
+	background: #0070c0;
+	border-color: #0070c0;
+	color: #fff;
+}
+
+/* texto del paso completado */
+.paso.completado p {
+	color: #0070c0;
+}
+
+/* ===========================
+   ENCABEZADO DEL FORMULARIO
+   =========================== */
+.enuncidado {
+	text-align: center;
+	margin-bottom: 60px;
+}
+
+.enuncidado h1 {
+	font-size: 1.8rem;
+	margin-bottom: 10px;
+	color: var(--verde-principal);
+}
+
+.enuncidado p {
+	font-size: 1rem;
+	color: #555;
+	text-align: center;
+}
+
+/* ===========================
+   FORMULARIO
+   =========================== */
+form {
+	max-width: 600px;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin: 0 auto;
+}
+
+form input[type="text"], form input[type="date"], form input[type="number"],
+	form select, form textarea {
+	width: 100%;
+	padding: 12px 15px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 1rem;
+	transition: border 0.3s;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+	border-color: #2e8b57;
+	outline: none;
+}
+
+form label {
+	font-size: 0.9rem;
+	color: #555;
+}
+
+form textarea {
+	resize: vertical;
+	height: 300px;
+}
+
+fieldset{
+	border: none;
+}
+
+/* ===========================
+   PUNTOS INTERMEDIOS
+   =========================== */
+.puntos-container {
+	margin-bottom: 20px;
+}
+
+.punto-item {
+	background-color: #f4f8fc;
+	border: 1px solid #c0d9ee;
+	border-radius: 16px;
+	padding: 20px;
+	margin-top: 16px;
+	position: relative;
+}
+
+/* Para el select y km en la misma fila */
+.punto-item .form-row {
+	display: flex;
+	gap: 16px;
+	margin-bottom: 12px;
+}
+
+.punto-item .form-row .form-group.tipo {
+	flex: 7; /* 70% */
+}
+
+.punto-item .form-row .form-group.km {
+	flex: 3; /* 30% */
+}
+
+/* Nombre debajo */
+.punto-item .form-group.nombre {
+	margin-top: 12px;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	font-size: 1.2rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.3s;
+}
+
+.btn-eliminar:hover {
+	background-color: #c82333;
+}
+
+/* Mensaje vacío */
+.empty-message {
+	text-align: center;
+	color: #6faedc;
+	font-style: italic;
+	padding: 20px;
+	border: 2px dashed #c0d9ee;
+	border-radius: 16px;
+	margin-bottom: 16px;
+}
+
+.btn-agregar {
+	background-color: rgb(255, 255, 255);
+	color: var(--verde-principal);
+	border: 2px solid var(--verde-principal);
+	padding: 10px 20px;
+	margin-block: 10px;
+	border-radius: 50px;
+	font-size: 0.9rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+@media ( max-width : 860px) {
+	.indicador-pasos {
+		margin-block: 25px;
+	}
+	.enuncidado {
+		margin-bottom: 30px;
+	}
+	main{
+	padding-bottom:50px;
+	}
+}
