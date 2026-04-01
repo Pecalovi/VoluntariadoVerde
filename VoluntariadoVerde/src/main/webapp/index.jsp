@@ -4,7 +4,7 @@
 <%
 Usuario user = (Usuario) session.getAttribute("usuario");
 
-// IDIOMAS
+// IDIOMA
 String lang = request.getParameter("lang");
 
 if (lang != null) {
