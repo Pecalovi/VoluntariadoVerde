@@ -6,7 +6,6 @@ Usuario user = (Usuario) session.getAttribute("usuario");
 String lang = (String) session.getAttribute("lang");
 if (lang == null)
 	lang = "es";
-boolean esOrganizador = (user != null && user instanceof Organizador);
 %>
 
 <header>

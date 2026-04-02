@@ -21,6 +21,12 @@ public class PerffilController extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		
+	    if (session.getAttribute("usuario") == null) {
+	        response.sendRedirect(request.getContextPath() + "/login");
+	        return;
+	    }
+	    
 		String lang = (String) session.getAttribute("lang");
 		
 		if (lang == null) {

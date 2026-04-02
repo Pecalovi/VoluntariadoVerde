@@ -1,7 +1,6 @@
 /* VARIABLES DE COLOR */
 :root {
 	--verde-principal: #005900;
-	--verde-oscuro: #005700;
 	--blanco: #ffffff;
 	--gris-oscuro: #333333;
 	--gris-claro: #999999;
@@ -33,7 +32,7 @@ body {
 /* TIPOGRAFÍA GENERAL */
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
-	color: var(--verde-oscuro);
+	color: var(--verde-principal);
 	margin-bottom: 0.5em;
 	line-height: 1.2;
 }
@@ -163,7 +162,7 @@ header {
 	justify-content: space-between;
 	align-content: center;
 	padding: 0 20px;
-	background-color: var(--verde-oscuro);
+	background-color: var(--verde-principal);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -190,7 +189,7 @@ header.isla {
 	transform: translateX(-50%);
 	min-width: 80%;
 	max-width: 1200px;
-	background-color: #005700ff;
+	background-color: var(--verde-principal);
 	border-radius: 18px;
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	height: 55px;
@@ -209,7 +208,7 @@ header.isla {
 
 .menu a {
 	text-decoration: none;
-	color: #ffffff;
+	color: var(--blanco);
 	font-family: "Poppins", sans-serif;
 	font-weight: 600;
 	font-style: normal;
@@ -220,7 +219,7 @@ header.isla {
 	background: none;
 	border: none;
 	font-size: 30px;
-	color: white;
+	color: var(--blanco);
 	cursor: pointer;
 }
 
@@ -241,14 +240,14 @@ header.isla {
 
 .idiom-barra {
 	font-size: 30px;
-	color: white;
+	color: var(--blanco);
 }
 
 
 /* DropDown */
 .dropdown-menu.dropdown-menu-end {
-  background-color: #ffffff;
-  color: #333333;
+  background-color: var(--blanco);
+  color: var(--gris-oscuro);
   border: 1px solid #ccc;
   min-width: 150px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -256,14 +255,14 @@ header.isla {
 
 /* Estilos de los enlaces dentro del dropdown */
 .dropdown-menu .dropdown-item {
-  color: #333333;
+  color: var(--gris-oscuro);
   transition: all 0.2s ease;
 }
 
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
   background-color: #bfbfbf;
-  color: #ffffff;
+  color: var(--blanco);
 }
 
 
@@ -293,7 +292,7 @@ footer {
 }
 
 .colaboracion h2, .colaboracion h3 {
-	color: white;
+	color: var(--blanco);
 }
 
 .btn-colab {
@@ -307,7 +306,7 @@ footer {
 
 .btn-colab a {
 	background-color: transparent;
-	border: 1px solid white;
+	border: 1px solid var(--blanco);
 }
 
 .btn-colab a:hover {
@@ -390,7 +389,7 @@ footer {
 		top: 60px;
 		left: 0;
 		width: 100%;
-		background-color: rgb(0, 100, 0);
+		background-color: var(--verde-principal);
 		flex-direction: column;
 		align-items: center;
 		margin: 0;
@@ -433,7 +432,7 @@ footer {
 		margin-block: 0px;
 	}
 	.colaboracion h2, .colaboracion h3 {
-		color: white;
+		color: var(--blanco);
 		text-align: center;
 	}
 	.btn-colab {

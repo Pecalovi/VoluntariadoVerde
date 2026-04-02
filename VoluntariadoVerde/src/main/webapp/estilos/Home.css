@@ -12,7 +12,7 @@
 }
 
 #imagen_index h1 {
-	color: white;
+	color: var(--blanco);
 }
 
 #container_eventos {
@@ -43,7 +43,7 @@
 	padding-block: 50px;
 	border: none;
 	min-width: 660px;
-	background-color: white;
+	background-color: var(--blanco);
 	padding-inline: 2em;
 	border-radius: 1em;
 	transition: 0.3s ease-in-out;
