@@ -11,7 +11,7 @@ if (lang == null)
 <header>
 
 	<div class="logo">
-		<a href="index.jsp"> <img class="iconOrd"
+		<a href="<%=request.getContextPath()%>/home"> <img class="iconOrd"
 			src="src/Logo_VV_v1_Blanco.png"> <img class="iconMovil"
 			src="src/IconoBlanco.png">
 		</a>

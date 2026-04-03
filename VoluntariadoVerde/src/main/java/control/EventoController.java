@@ -78,9 +78,9 @@ public class EventoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/Evento.jsp");
+			request.setAttribute("view", "evento/Evento.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/Evento.jsp");
+			request.setAttribute("view", "EN/Evento.jsp");
 		}
 		request.setAttribute("estilo", "estilos/Evento.css");
 		;

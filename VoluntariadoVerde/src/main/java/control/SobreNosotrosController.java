@@ -23,9 +23,9 @@ public class SobreNosotrosController extends HttpServlet {
 		}
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/SobreNosotros.jsp");
+			request.setAttribute("view", "empresa/SobreNosotros.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/SobreNosotros.jsp");
+			request.setAttribute("view", "EN/SobreNosotros.jsp");
 		}
 		request.setAttribute("estilo", "estilos/SobreNosotros.css");;
 

@@ -39,9 +39,9 @@ public class DescripcionEventoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/DescripcionEvento.jsp");
+			request.setAttribute("view", "eventos/DescripcionEvento.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/DescripcionEvento.jsp");
+			request.setAttribute("view", "EN/DescripcionEvento.jsp");
 		}
 	    request.setAttribute("estilo", "estilos/CrearEvento.css");
 

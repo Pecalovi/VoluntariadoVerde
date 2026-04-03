@@ -24,9 +24,9 @@ public class RegistroOrgController extends HttpServlet {
 		}
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/RegistroOrg.jsp");
+			request.setAttribute("view", "registro/RegistroOrg.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/RegistroOrg.jsp");
+			request.setAttribute("view", "EN/RegistroOrg.jsp");
 		}
 		request.setAttribute("estilo", "estilos/Formularios.css");;
 

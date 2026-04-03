@@ -23,7 +23,7 @@ public class RegistroController extends HttpServlet {
 			session.setAttribute("lang", lang);
 		}
 		// 2. Cargar la vista
-		request.setAttribute("view", "WEB-INF/sections/Registro.jsp");
+		request.setAttribute("view", "registro/Registro.jsp");
 		request.setAttribute("estilo", "estilos/Registro.css");
 
 		// Encadenar la petición y cargar otro recurso

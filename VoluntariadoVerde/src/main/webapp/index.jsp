@@ -49,19 +49,19 @@ if (lang != null) {
 
 <body>
 
-	<jsp:include page="WEB-INF/sections/Header.jsp" />
+	<jsp:include page="/WEB-INF/sections/Header.jsp" />
 
 	<main class="main">
-		<jsp:include page="${view}" />
+		<jsp:include page="/WEB-INF/sections/${view}" />
 	</main>
 
-	<jsp:include page="WEB-INF/sections/Footer.jsp" />
+	<jsp:include page="/WEB-INF/sections/Footer.jsp" />
 
 	<script>
 <%String success = (String) request.getAttribute("success");
 String error = (String) request.getAttribute("error");
 String info = (String) request.getAttribute("info");
-String logoutParam = request.getParameter("logout");%>
+String parametro = request.getParameter("parametro");%>
 
 <%if (success != null) {%>
 Swal.fire({
@@ -71,15 +71,26 @@ Swal.fire({
 });
 <%}%>
 
-<%if ("1".equals(logoutParam)) {%>
+<%if ("1".equals(parametro)) {%>
 Swal.fire({
     icon: 'success',
     text: 'Has cerrado sesión correctamente.',
     confirmButtonText: 'Aceptar'
 }).then(() => {
-    // Borra el parámetro de la URL para que no se repita al recargar
     const url = new URL(window.location);
-    url.searchParams.delete('logout');
+    url.searchParams.delete('parametro');
+    window.history.replaceState({}, document.title, url);
+});
+<%}%>
+
+<%if ("2".equals(parametro)) {%>
+Swal.fire({
+    icon: 'success',
+    text: 'Se ha eliminado tu cuenta correctamente.',
+    confirmButtonText: 'Aceptar'
+}).then(() => {
+    const url = new URL(window.location);
+    url.searchParams.delete('parametro');
     window.history.replaceState({}, document.title, url);
 });
 <%}%>

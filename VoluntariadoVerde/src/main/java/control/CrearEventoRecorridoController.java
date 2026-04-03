@@ -39,9 +39,9 @@ public class CrearEventoRecorridoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/RecorridoEvento.jsp");
+			request.setAttribute("view", "Eventos/RecorridoEvento.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/RecorridoEvento.jsp");
+			request.setAttribute("view", "EN/RecorridoEvento.jsp");
 		}
 	    request.setAttribute("estilo", "estilos/CrearEvento.css");
 

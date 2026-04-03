@@ -39,7 +39,19 @@
     font-weight: bold;
 }
 
+.menu-perfil a.eliminar{
+    background-color: rgba(246, 97, 81, 0.2);
+}
+.menu-perfil a.eliminar:hover {
+	background-color: rgba(246, 97, 81, 0.3);
+    border-right: 3px solid rgba(246, 97, 81, 0.7);
+}
+
 .menu-perfil img{
 	height: 30px;
 	width: auto;
+}
+
+section{
+	padding: 50px;
 }

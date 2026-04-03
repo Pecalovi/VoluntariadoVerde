@@ -24,9 +24,9 @@ public class TrabajaNosotrosController extends HttpServlet {
 		}
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/TrabajaNosotros.jsp");
+			request.setAttribute("view", "empresa/TrabajaNosotros.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/TrabajaNosotros.jsp");
+			request.setAttribute("view", "EN/TrabajaNosotros.jsp");
 		}
 		request.setAttribute("estilo", "estilos/Contacto.css");;
 

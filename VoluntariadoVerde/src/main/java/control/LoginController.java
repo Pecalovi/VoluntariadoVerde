@@ -24,7 +24,7 @@ public class LoginController extends HttpServlet {
 		}
 		// 2. Cargar la vista
 
-		request.setAttribute("view", "WEB-INF/sections/Login.jsp");
+		request.setAttribute("view", "registro/Login.jsp");
 
 		request.setAttribute("estilo", "estilos/Formularios.css");
 		// Encadenar la petición y cargar otro recurso

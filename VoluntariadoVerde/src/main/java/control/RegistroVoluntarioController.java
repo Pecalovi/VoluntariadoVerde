@@ -24,9 +24,9 @@ public class RegistroVoluntarioController extends HttpServlet {
 		}
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "WEB-INF/sections/RegistroVoluntario.jsp");
+			request.setAttribute("view", "registro/RegistroVoluntario.jsp");
 		} else {
-			request.setAttribute("view", "WEB-INF/sections/EN/RegistroVoluntario.jsp");
+			request.setAttribute("view", "EN/RegistroVoluntario.jsp");
 		}
 		request.setAttribute("estilo", "estilos/Formularios.css");;
 

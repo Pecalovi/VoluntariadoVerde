@@ -28,7 +28,7 @@ public class ServLogout extends HttpServlet {
 		}
 
 		// Redirigir a home con parámetro para SweetAlert
-		response.sendRedirect(request.getContextPath() + "/home?logout=1");
+		response.sendRedirect(request.getContextPath() + "/home?parametro=1");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

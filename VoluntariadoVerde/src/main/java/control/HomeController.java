@@ -33,7 +33,7 @@ public class HomeController extends HttpServlet {
 		// 2. Cargar la vista
 		request.setAttribute("eventos", eventos);
 		
-		request.setAttribute("view", "WEB-INF/sections/home.jsp");
+		request.setAttribute("view", "home.jsp");
 
 		request.setAttribute("estilo", "estilos/Home.css");
 
