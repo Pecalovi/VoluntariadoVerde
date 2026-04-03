@@ -40,12 +40,15 @@ public class PerffilController extends HttpServlet {
 		switch (opcion) {
 		case "mis-eventos":
 			seccion = "MisEventos.jsp";
+			opcion = "eventos";
 			break;
 		case "gestionar-eventos":
 			seccion = "GestionarEventos.jsp";
+			opcion = "gestionar";
 			break;
 		case "eliminar-cuenta":
 			seccion = "EliminarCuenta.jsp";
+			opcion = "eliminar";
 			break;
 		default:
 			seccion = "EditarPerfil.jsp";
@@ -57,6 +60,7 @@ public class PerffilController extends HttpServlet {
 		request.setAttribute("view", "perfil/Perfil.jsp");
 
 		request.setAttribute("perfilView", seccion);
+		request.setAttribute("opcion", opcion);
 
 		request.setAttribute("estilo", "estilos/Perfil.css");
 

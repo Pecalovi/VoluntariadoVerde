@@ -1,4 +1,4 @@
-.tarjeta-perfil{
+.tarjeta-perfil {
 	display: flex;
 	margin-inline: 200px;
 	margin-block: 100px;
@@ -8,7 +8,7 @@
 	overflow: hidden;
 }
 
-.menu-perfil{
+.menu-perfil {
 	display: flex;
 	flex-direction: column;
 	min-width: 100px;
@@ -17,41 +17,97 @@
 }
 
 .menu-perfil a {
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    padding: 20px 40px;
-    text-decoration: none;
-    color: black;
-    transition: background 0.3s;
-    font-size: 1.5em;
-    gap: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 20px 40px;
+	text-decoration: none;
+	color: black;
+	transition: background 0.3s;
+	font-size: 1.5em;
+	gap: 20px;
 }
 
 .menu-perfil a:hover {
-    background-color: #f5f5f5;
-    cursor: pointer;
+	background-color: #f5f5f5;
+	cursor: pointer;
 }
 
 .menu-perfil a.activo {
-    background-color: #d0d0d0;
-    border-right: 3px solid #007bff;
-    font-weight: bold;
+	background-color: rgb(246, 245, 244); border-right : 3px solid #007bff;
+	font-weight: bold;
+	border-right: 3px solid #007bff;
 }
 
-.menu-perfil a.eliminar{
-    background-color: rgba(246, 97, 81, 0.2);
-}
 .menu-perfil a.eliminar:hover {
-	background-color: rgba(246, 97, 81, 0.3);
-    border-right: 3px solid rgba(246, 97, 81, 0.7);
+	background-color: rgba(246, 97, 81, 0.2);
+	border-right: 3px solid rgba(246, 97, 81, 0.7);
 }
 
-.menu-perfil img{
+.menu-perfil a.eliminar.activo {
+	background-color: rgba(246, 97, 81, 0.3);
+	border-right: 3px solid rgba(246, 97, 81, 0.8);
+	font-weight: bold;
+}
+
+.menu-perfil img {
 	height: 30px;
 	width: auto;
 }
 
-section{
-	padding: 50px;
+section {
+    padding: 50px;
+    width: 75%;
+    overflow-y: auto; 
+    max-height: 700px;
+    box-sizing: border-box;
 }
+
+/* EDITAR PERFIL */
+
+
+/* FORM LAYOUT (2 columnas) */
+section form {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Columnas */
+.form-col {
+    flex: 1;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Botón ocupa toda la fila */
+.form-full {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Labels */
+section form label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Inputs */
+section form input {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+
+
