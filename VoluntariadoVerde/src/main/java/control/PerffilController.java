@@ -3,6 +3,8 @@ package control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +25,7 @@ public class PerffilController extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute("usuario");
 
 		String lang = (String) session.getAttribute("lang");
 
@@ -41,6 +44,13 @@ public class PerffilController extends HttpServlet {
 		case "mis-eventos":
 			seccion = "MisEventos.jsp";
 			opcion = "eventos";
+			try {
+				AccesoBD bd = new AccesoBD();
+				List<Evento> eventos = AccesoBD.obtenerEventosUsuario(user.getId());
+				request.setAttribute("eventos", eventos); 
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
 			break;
 		case "gestionar-eventos":
 			seccion = "GestionarEventos.jsp";

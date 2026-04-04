@@ -10,6 +10,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AccesoBD {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -292,6 +295,46 @@ public class AccesoBD {
 		}
 
 		return evento;
+	}
+	
+	public static List<Evento> obtenerEventosUsuario(int idUsuario) {
+	    String sql = "SELECT e.* " +
+	                 "FROM eventos e " +
+	                 "JOIN inscripciones i ON e.id_evento = i.id_evento " +
+	                 "WHERE i.id_usuario = ?";
+
+	    List<Evento> eventos = new ArrayList<>();
+
+	    try {
+	        AccesoBD bd = new AccesoBD();
+	        PreparedStatement ps = bd.con.prepareStatement(sql);
+	        ps.setInt(1, idUsuario);
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            Evento evento = new Evento(
+	                rs.getString("nombre"),
+	                rs.getString("lugar"),
+	                rs.getDate("fecha").toLocalDate(),
+	                rs.getString("tipo"),
+	                rs.getInt("id_evento"),
+	                rs.getString("descripcion"),
+	                rs.getInt("capacidad_maxima"),
+	                0,
+	                0
+	            );
+	            eventos.add(evento);
+	        }
+
+	        rs.close();
+	        ps.close();
+	        bd.disconnect();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return eventos;
 	}
 
 	public static int obtenerUltimoEvento() {

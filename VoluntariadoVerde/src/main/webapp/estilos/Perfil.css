@@ -34,7 +34,8 @@
 }
 
 .menu-perfil a.activo {
-	background-color: rgb(246, 245, 244); border-right : 3px solid #007bff;
+	background-color: rgb(246, 245, 244);
+	border-right: 3px solid #007bff;
 	font-weight: bold;
 	border-right: 3px solid #007bff;
 }
@@ -56,58 +57,105 @@
 }
 
 section {
-    padding: 50px;
-    width: 75%;
-    overflow-y: auto; 
-    max-height: 700px;
-    box-sizing: border-box;
+	padding: 50px;
+	width: 75%;
+	overflow-y: auto;
+	max-height: 700px;
+	box-sizing: border-box;
 }
 
 /* EDITAR PERFIL */
 
-
 /* FORM LAYOUT (2 columnas) */
 section form {
-    max-width: 900px;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+	max-width: 900px;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 30px;
 }
 
 /* Columnas */
 .form-col {
-    flex: 1;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+	flex: 1;
+	min-width: 280px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
 }
 
 /* Botón ocupa toda la fila */
 .form-full {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 /* Labels */
 section form label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: #333;
+	font-weight: 600;
+	font-size: 0.9rem;
+	color: #333;
 }
 
 /* Inputs */
 section form input {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 0.95rem;
-    transition: all 0.25s ease;
-    outline: none;
+	padding: 12px 14px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	font-size: 0.95rem;
+	transition: all 0.25s ease;
+	outline: none;
 }
 
+section form input[readonly] {
+	background-color: #f5f5f5;
+	color: #777;
+	cursor: not-allowed;
+}
 
+section form input:not([readonly]) {
+	background-color: #fff;
+	border: 1px solid #007bff;
+}
 
+section form input:focus {
+	border-color: #007bff;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+/* Contenedor de cada evento */
+.evento-tarjeta {
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	padding: 20px;
+	margin-bottom: 20px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	background-color: #fff;
+	cursor: pointer;
+	display: flex; /* activamos flexbox en la tarjeta */
+	align-items: center; /* centra verticalmente su contenido */
+	justify-content: center; /* opcional: centra horizontalmente */
+	min-height: 100px;
+	/* altura mínima para que se note el centrado vertical */
+}
+
+.evento-tarjeta:hover {
+	transform: scale(1.02);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.evento-tarjeta a {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+
+}
+
+.evento-tarjeta h2 {
+	margin: 0;
+	padding-left: 20px;
+}

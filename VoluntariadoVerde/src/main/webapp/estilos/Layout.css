@@ -97,15 +97,20 @@ img {
 	padding: 14px 60px;
 	border-radius: 30px;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 16px;
+	font-weight: 600;
 	transition: all 0.3s ease;
-	--animate-duration: 2s;
-	animation-duration: 2s;
+	--animate-duration: 1.5s;
+	animation-duration: 1.5s;
 }
 
 .botones:hover {
 	background-color: #006e00;
 	color: var(--blanco);
+}
+
+.botones:focus {
+    
 }
 
 /*Logo HOVER*/
