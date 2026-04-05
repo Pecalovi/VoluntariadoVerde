@@ -12,49 +12,49 @@ if (lang == null)
 		<%=lang.equals("es") ? "Próximos eventos" : "Upcoming events"%>
 	</h1>
 
-	<%
-	if (eventos != null && !eventos.isEmpty()) {
-		double delay = 0.0;
-		for (Evento evento : eventos) {
-	%>
+	<div class="eventos">
+		<%
+		if (eventos != null && !eventos.isEmpty()) {
+			double delay = 0.0;
+			for (Evento evento : eventos) {
+		%>
 
-	<a
-		href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
-		class="evento_index1 animate__animated animate__bounceInLeft"
-		style="animation-delay: <%=delay%>s;">
-		<div class="evento_index">
-			<img src="src/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
-			<div class="informacion-evento">
-				<h2><%=evento.getNombre()%></h2>
+		<a
+			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
+			class="evento_index1 animate__animated animate__bounceInLeft"
+			style="animation-delay: <%=delay%>s;">
+			<div class="evento_index">
+				<img src="src/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
+				<div class="informacion-evento">
+					<h2><%=evento.getNombre()%></h2>
 
-				<div class="extra_info">
-					<p><%=evento.getTipo()%></p>
+					<div class="extra_info">
+						<p><%=evento.getTipo()%></p>
 
-					<div>
-						<img class="icono" src="src/Icono-evento_ubi.png"
-							alt="icono ubicación">
-						<p><%=evento.getUbicacion()%></p>
-					</div>
+						<div>
+							<img class="icono" src="src/Icono-evento_ubi.png"
+								alt="icono ubicación">
+							<p><%=evento.getUbicacion()%></p>
+						</div>
 
-					<div>
-						<img class="icono" src="src/Icono-evento_fecha.png"
-							alt="icono fecha">
-						<p><%=evento.getFechaFormateada()%></p>
+						<div>
+							<img class="icono" src="src/Icono-evento_fecha.png"
+								alt="icono fecha">
+							<p><%=evento.getFechaFormateada()%></p>
+						</div>
 					</div>
 				</div>
-
-				<p class="descripcion_evento"><%=evento.getDescripcion()%></p>
 			</div>
-		</div>
-	</a>
+		</a>
 
-	<%
-	delay += 0.3;
-	}
-	} else {
-	%>
-	<p><%=lang.equals("es") ? "No hay ningún evento próximamente." : "No upcoming events."%></p>
-	<%
-	}
-	%>
+		<%
+		delay += 0.3;
+		}
+		} else {
+		%>
+		<p><%=lang.equals("es") ? "No hay ningún evento próximamente." : "No upcoming events."%></p>
+		<%
+		}
+		%>
+	</div>
 </section>

@@ -35,7 +35,7 @@ public class ProximosEventosController extends HttpServlet {
 		
 		request.setAttribute("view", "evento/ProximosEventos.jsp");
 
-		request.setAttribute("estilo", "estilos/Home.css");
+		request.setAttribute("estilo", "estilos/ProximosEventos.css");
 
 		// Encadenar la petición y cargar otro recurso
 		request.getRequestDispatcher("/index.jsp").forward(request, response);

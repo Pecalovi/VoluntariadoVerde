@@ -1,161 +1,108 @@
-/* INDEX.HTML */
-#imagen_index {
-	background-image: url('../src/index_running.jpg');
-	background-size: cover;
-	background-position: center;
-	background-color: rgba(0, 0, 0, 0.5);
-	background-blend-mode: darken;
-	height: 300px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-#imagen_index h1 {
-	color: var(--blanco);
-}
-
+/* Contenedor principal */
 #container_eventos {
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
-	justify-content: center;
 	align-items: center;
-	align-content: center;
-	padding: 10px;
-	margin-bottom: 50px;
+	padding: 40px 20px;
 }
 
-.evento_index1 {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	width: 60%;
-	border: none;
-	margin-block: 10px;
-	min-width: 660px;
+/* Título */
+#container_eventos h1 {
+	font-size: 2.4rem;
+	font-weight: 700;
+	margin-bottom: 30px;
+	text-align: center;
+	letter-spacing: 0.5px;
 }
 
+/* Contenedor de eventos */
+.eventos {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+	width: 100%;
+	max-width: 1200px;
+}
+
+/* Tarjeta de evento */
 .evento_index {
 	display: flex;
-	flex-direction: row;
-	width: 100%;
-	padding-block: 50px;
-	border: none;
-	min-width: 660px;
-	background-color: var(--blanco);
-	padding-inline: 2em;
-	border-radius: 1em;
-	transition: 0.3s ease-in-out;
+	flex-direction: column;
+	background-color: #ffffff;
+	border-radius: 12px;
+	overflow: hidden;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+	transition: transform 0.35s ease, box-shadow 0.35s ease;
+	cursor: pointer;
 }
 
+/* Imagen del evento */
 .evento_index img {
-	width: 200px;
+	width: 100%;
 	height: 200px;
 	object-fit: cover;
-	border-radius: 8px;
-	margin-right: 50px;
+	transition: transform 0.35s ease;
 }
 
+.evento_index:hover img {
+	transform: scale(1.02);
+}
+
+/* Información del evento */
+.informacion-evento {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	gap: 12px;
+}
+
+/* Nombre del evento */
 .informacion-evento h2 {
-	color: black;
+	font-size: 1.6rem;
+	font-weight: 700;
+	color: #111;
+	margin: 0;
+	height: 60px;
 }
 
-.descripcion_evento {
-	height: 100px;
-	overflow: hidden;
-	position: relative;
-	text-align: justify;
-}
-
+/* Información extra (tipo, ubicación, fecha) */
 .extra_info {
 	display: flex;
-	flex-direction: row;
-	margin-top: 5px;
-	margin-bottom: 15px;
-	gap: 50px;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 10px;
 }
 
-.extra_info p {
-	color: var(--verde-principal);
-}
-
-.extra_info img {
-	height: 2rem;
-	width: auto;
-	margin-right: 10px;
-}
-
-.extra_info div{
+.extra_info div {
 	display: flex;
-	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+}
+
+.extra_info img.icono {
+	width: 20px;
+	height: 20px;
+	object-fit: contain;
+}
+
+.extra_info div p {
+	padding: 0px;
+	margin: 0px;
 }
 
 .evento_index:hover {
-	transition: 0.3s ease-in-out;
-	cursor: pointer;
-	transform: scale(1.002);
-	box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
-	padding-inline: 2em;
-	border-radius: 1em;
+	transform: translateY(-6px) scale(1.01);
+	box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
 }
 
 @media ( max-width : 860px) {
-	#imagen_index h1 {
-		font-size: 1.5rem;
-		padding-inline: 50px;
-	}
-	#imagen_index {
-		height: 230px;
-	}
-	#container_eventos {
-		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-content: flex-start;
-		padding: 10px;
-		margin-bottom: 20px;
-	}
-	.evento_index1 {
-		width: 100%;
-		min-width: 0;
-		margin-block: 10px;
-		
-	}
 	.evento_index {
-		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		padding-block: 1px;
-		min-width: min-content;
-		width: 100%;
-		padding-block:25px;
 	}
 	.evento_index img {
-		width: 250px;
-		aspect-ratio: 3/2;
-		object-fit: cover;
-		border-radius: 4px;
-		margin-right: 0px;
-		margin-bottom: 20px;
+		height: 180px;
 	}
 	.extra_info {
-		display: none;
-	}
-	.extra_info p {
-		font-size: 0.8rem;
-	}
-	.informacion-evento {
-		width: fit-content;
-		height: 50px;
-	}
-	.informacion-evento h2 {
-		font-size: 1.2rem;
-		text-align: center;
-	}
-	.descripcion_evento {
-		display: none;
+		font-size: 0.9rem;
 	}
 }
