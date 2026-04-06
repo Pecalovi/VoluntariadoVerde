@@ -15,6 +15,98 @@
 	letter-spacing: 0.5px;
 }
 
+.buscar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border: 2px solid var(--verde-principal);
+	border-radius: 30px;
+	width: 1200px;
+	padding: 10px;
+	margin: 20px;
+}
+
+.buscar img {
+	height: 30px;
+	padding-inline: 10px;
+}
+
+.buscar form {
+	width: 100%;
+}
+
+.buscar input {
+	border: none;
+	outline: none;
+	background: transparent;
+	width: 100%;
+	font-size: 1.5em;
+}
+
+.buscar input:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+.buscar input::placeholder {
+	transition: opacity 0.3s ease;
+}
+
+.buscar input:focus::placeholder {
+	opacity: 0;
+}
+
+.buscar button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+/* ICONO FILTRO */
+.icono-filtro {
+	cursor: pointer;
+}
+
+/* PANEL DE FILTROS */
+#panelFiltros {
+	display: none;
+	width: 1200px;
+	margin-bottom: 20px;
+	background: #fff;
+	border-radius: 15px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+	padding: 15px;
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+/* oculto por defecto */
+#panelFiltros.oculto {
+	display: none;
+}
+
+/* visible */
+#panelFiltros.activo {
+	display: flex;
+}
+
+/* inputs más largos */
+#panelFiltros input, #panelFiltros select {
+	flex: 1;
+	min-width: 150px;
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	font-size: 0.95rem;
+}
+
+#panelFiltros button {
+	margin: 0px;
+}
+
 /* Contenedor de eventos */
 .eventos {
 	display: grid;
@@ -65,6 +157,12 @@
 	height: 60px;
 }
 
+.informacion-evento p {
+	padding: 0px;
+	margin: 0px;
+	color: var(--verde-principal);
+}
+
 /* Información extra (tipo, ubicación, fecha) */
 .extra_info {
 	display: flex;
@@ -96,13 +194,32 @@
 }
 
 @media ( max-width : 860px) {
-	.evento_index {
+	.eventos {
 		flex-direction: column;
+		width: 100%;
+		gap: 0;
+	}
+	.evento_index {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+		padding: 15px 0;
+		box-shadow: none;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+		border-radius: 0;
 	}
 	.evento_index img {
-		height: 180px;
+		width: 100px;
+		height: 80px;
+		object-fit: cover;
+		border-radius: 6px;
+		margin-bottom: 0;
+		flex-shrink: 0;
 	}
-	.extra_info {
-		font-size: 0.9rem;
+	
+	.informacion-evento p ,.extra_info {
+		display: none;
 	}
 }
