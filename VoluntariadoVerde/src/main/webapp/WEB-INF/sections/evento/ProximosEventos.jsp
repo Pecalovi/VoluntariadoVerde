@@ -5,6 +5,13 @@ ArrayList<Evento> eventos = (ArrayList<Evento>) request.getAttribute("eventos");
 String lang = (String) session.getAttribute("lang");
 if (lang == null)
 	lang = "es";
+
+String nombreFiltro = request.getParameter("nombre");
+String tipoFiltro = request.getParameter("tipo");
+String ciudadFiltro = request.getParameter("ciudad");
+
+boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoFiltro != null && !tipoFiltro.isEmpty())
+		|| (ciudadFiltro != null && !ciudadFiltro.isEmpty());
 %>
 
 <section id="container_eventos">
@@ -13,7 +20,7 @@ if (lang == null)
 	</h1>
 
 	<form id="formBuscar" class="buscar"
-		action="<%=request.getContextPath()%>/ProximosEventos" method="POST">
+		action="<%=request.getContextPath()%>/eventos" method="POST">
 
 		<img src="src/lupa.png"> <input type="text" name="nombre"
 			placeholder="<%=lang.equals("es") ? "Buscar evento..." : "Find event..."%>">
@@ -21,15 +28,26 @@ if (lang == null)
 		<img src="src/filtrar.png" class="icono-filtro"
 			onclick="toggleFiltros(); return false;">
 
+		<%
+		if (hayFiltros) {
+		%>
+		<img src="src/limpiar-filtro.png" class="icono-filtro"
+			onclick="resetFiltros(); return false;">
+		<%
+		}
+		%>
+
 	</form>
 
 	<!-- PANEL DE FILTROS -->
-	<div id="panelFiltros" class="oculto">
+	<div id="panel-filtros" class="oculto">
 		<select name="tipo" form="formBuscar">
-			<option value="">Tipo</option>
-			<option value="musica">Música</option>
-			<option value="deporte">Deporte</option>
-			<option value="teatro">Teatro</option>
+			<option value="" disabled selected>Selecciona tipo de evento</option>
+			<option value="Motocros">Motocross</option>
+			<option value="Maraton">Maratón</option>
+			<option value="Ciclismo">Ciclismo</option>
+			<option value="Senderismo">Senderismo / Trail</option>
+			<option value="Otro">Otro</option>
 		</select> <input type="text" name="ciudad" placeholder="Ciudad"
 			form="formBuscar">
 
@@ -48,7 +66,7 @@ if (lang == null)
 			class="evento_index1 animate__animated animate__bounceInLeft"
 			style="animation-delay: <%=delay%>s;">
 			<div class="evento_index">
-				<img src="src/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
+				<img src="src/eventos/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
 				<div class="informacion-evento">
 					<p><%=evento.getTipo()%></p>
 					<h2><%=evento.getNombre()%></h2>
@@ -76,7 +94,13 @@ if (lang == null)
 		}
 		} else {
 		%>
-		<p><%=lang.equals("es") ? "No hay ningún evento próximamente." : "No upcoming events."%></p>
+		<p>
+			<%=hayFiltros
+		? (lang.equals("es")
+				? "No se encontraron eventos con los filtros seleccionados."
+				: "No events found with the selected filters.")
+		: (lang.equals("es") ? "No hay ningún evento próximamente." : "No upcoming events.")%>
+		</p>
 		<%
 		}
 		%>
@@ -86,16 +110,20 @@ if (lang == null)
 <script>
 	// Abrir / cerrar panel al hacer click en el icono
 	function toggleFiltros() {
-		document.getElementById("panelFiltros").classList.toggle("activo");
+		document.getElementById("panel-filtros").classList.toggle("activo");
 	}
 
 	// Cerrar panel al hacer click fuera
 	document.addEventListener("click", function(e) {
-		const panel = document.getElementById("panelFiltros");
+		const panel = document.getElementById("panel-filtros");
 		const icono = document.querySelector(".icono-filtro");
 
 		if (!panel.contains(e.target) && !icono.contains(e.target)) {
 			panel.classList.remove("activo");
 		}
 	});
+	
+	function resetFiltros() {
+	    window.location.href = "<%=request.getContextPath()%>/eventos";
+	}
 </script>

@@ -39,7 +39,7 @@ public class CrearEventoRecorridoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "Eventos/RecorridoEvento.jsp");
+			request.setAttribute("view", "evento/RecorridoEvento.jsp");
 		} else {
 			request.setAttribute("view", "EN/RecorridoEvento.jsp");
 		}

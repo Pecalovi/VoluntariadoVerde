@@ -36,9 +36,10 @@ boolean es = "es".equals(lang);
 			style="animation-delay: <%=delay%>s;">
 
 			<div class="evento-index">
-				<img src="src/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
+				<img src="src/eventos/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
 
 				<div class="informacion-evento">
+					<p><%=evento.getTipo()%></p>
 					<h2><%=evento.getNombre()%></h2>
 					<p><%=evento.getFechaFormateada()%></p>
 				</div>

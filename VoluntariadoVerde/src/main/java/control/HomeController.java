@@ -28,7 +28,7 @@ public class HomeController extends HttpServlet {
 		    session.setAttribute("lang", lang);
 		}
 
-		ArrayList<Evento> eventos = AccesoBD.obtenerEventos();
+		ArrayList<Evento> eventos = AccesoBD.obtenerEventos("","");
 
 		// 2. Cargar la vista
 		request.setAttribute("eventos", eventos);

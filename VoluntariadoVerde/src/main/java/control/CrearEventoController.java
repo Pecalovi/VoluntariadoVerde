@@ -40,7 +40,7 @@ public class CrearEventoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "/eventos/CrearEvento.jsp");
+			request.setAttribute("view", "evento/CrearEvento.jsp");
 		} else {
 			request.setAttribute("view", "EN/CrearEvento.jsp");
 		}

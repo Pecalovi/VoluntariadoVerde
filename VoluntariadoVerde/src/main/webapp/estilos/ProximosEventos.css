@@ -69,7 +69,7 @@
 }
 
 /* PANEL DE FILTROS */
-#panelFiltros {
+#panel-filtros {
 	display: none;
 	width: 1200px;
 	margin-bottom: 20px;
@@ -84,17 +84,17 @@
 }
 
 /* oculto por defecto */
-#panelFiltros.oculto {
+#panel-filtros.oculto {
 	display: none;
 }
 
 /* visible */
-#panelFiltros.activo {
+#panel-filtros.activo {
 	display: flex;
 }
 
 /* inputs más largos */
-#panelFiltros input, #panelFiltros select {
+#panel-filtros input, #panel-filtros select {
 	flex: 1;
 	min-width: 150px;
 	padding: 10px;
@@ -103,7 +103,7 @@
 	font-size: 0.95rem;
 }
 
-#panelFiltros button {
+#panel-filtros button {
 	margin: 0px;
 }
 
@@ -120,7 +120,6 @@
 .evento_index {
 	display: flex;
 	flex-direction: column;
-	background-color: #ffffff;
 	border-radius: 12px;
 	overflow: hidden;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -194,6 +193,10 @@
 }
 
 @media ( max-width : 860px) {
+	
+	.buscar, #panel-filtros{
+	width: 100%;
+	}
 	.eventos {
 		flex-direction: column;
 		width: 100%;

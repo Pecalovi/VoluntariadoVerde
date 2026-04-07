@@ -204,15 +204,38 @@ public class AccesoBD {
 		}
 	}
 
-	public static ArrayList<Evento> obtenerEventos() {
-		String sql = "SELECT * FROM eventos";
+	public static ArrayList<Evento> obtenerEventos(String atributo, String valor) {
 
+		String sql = "SELECT * FROM eventos";
 		Evento evento = null;
 		ArrayList<Evento> eventos = new ArrayList<>();
 
 		try {
 			AccesoBD bd = new AccesoBD();
+			if (atributo != null && !atributo.isEmpty() && valor != null && !valor.isEmpty()) {
+
+				if (atributo.equals("nombre") || atributo.equals("tipo") || atributo.equals("lugar")) {
+
+					if (atributo.equals("nombre") || atributo.equals("lugar")) {
+						sql += " WHERE " + atributo + " LIKE ?";
+					} else {
+						sql += " WHERE " + atributo + " = ?";
+					}
+				}
+			}
+
+			sql += " ORDER BY fecha";
+
 			PreparedStatement ps = bd.con.prepareStatement(sql);
+
+			if (atributo != null && !atributo.isEmpty() && valor != null && !valor.isEmpty()) {
+
+				if (atributo.equals("nombre") || atributo.equals("lugar")) {
+					ps.setString(1, "%" + valor + "%");
+				} else {
+					ps.setString(1, valor);
+				}
+			}
 
 			ResultSet rs = ps.executeQuery();
 
@@ -236,7 +259,6 @@ public class AccesoBD {
 						capacidadMaximaDB, 0, 0);
 
 				eventos.add(evento);
-
 			}
 
 			rs.close();
@@ -296,45 +318,35 @@ public class AccesoBD {
 
 		return evento;
 	}
-	
+
 	public static List<Evento> obtenerEventosUsuario(int idUsuario) {
-	    String sql = "SELECT e.* " +
-	                 "FROM eventos e " +
-	                 "JOIN inscripciones i ON e.id_evento = i.id_evento " +
-	                 "WHERE i.id_usuario = ?";
+		String sql = "SELECT e.* " + "FROM eventos e " + "JOIN inscripciones i ON e.id_evento = i.id_evento "
+				+ "WHERE i.id_usuario = ?";
 
-	    List<Evento> eventos = new ArrayList<>();
+		List<Evento> eventos = new ArrayList<>();
 
-	    try {
-	        AccesoBD bd = new AccesoBD();
-	        PreparedStatement ps = bd.con.prepareStatement(sql);
-	        ps.setInt(1, idUsuario);
-	        ResultSet rs = ps.executeQuery();
+		try {
+			AccesoBD bd = new AccesoBD();
+			PreparedStatement ps = bd.con.prepareStatement(sql);
+			ps.setInt(1, idUsuario);
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
-	            Evento evento = new Evento(
-	                rs.getString("nombre"),
-	                rs.getString("lugar"),
-	                rs.getDate("fecha").toLocalDate(),
-	                rs.getString("tipo"),
-	                rs.getInt("id_evento"),
-	                rs.getString("descripcion"),
-	                rs.getInt("capacidad_maxima"),
-	                0,
-	                0
-	            );
-	            eventos.add(evento);
-	        }
+			while (rs.next()) {
+				Evento evento = new Evento(rs.getString("nombre"), rs.getString("lugar"),
+						rs.getDate("fecha").toLocalDate(), rs.getString("tipo"), rs.getInt("id_evento"),
+						rs.getString("descripcion"), rs.getInt("capacidad_maxima"), 0, 0);
+				eventos.add(evento);
+			}
 
-	        rs.close();
-	        ps.close();
-	        bd.disconnect();
+			rs.close();
+			ps.close();
+			bd.disconnect();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	    return eventos;
+		return eventos;
 	}
 
 	public static int obtenerUltimoEvento() {
@@ -420,37 +432,38 @@ public class AccesoBD {
 			ps.setInt(1, idUsuario);
 			ps.setInt(2, idEvento);
 
-	        try (ResultSet rs = ps.executeQuery()) {
-	            return rs.next();
-	        }
+			try (ResultSet rs = ps.executeQuery()) {
+				return rs.next();
+			}
 		} catch (Exception m) {
 			m.printStackTrace();
 			return false;
 		}
 	}
+
 	public ArrayList<Integer> obtenerInscripciones(int id_usuario) throws SQLException {
-		String sql ="select * from inscripciones where id_usuario=?";
+		String sql = "select * from inscripciones where id_usuario=?";
 		ArrayList<Integer> idsEventos = new ArrayList<>();
-		
+
 		PreparedStatement ps = con.prepareStatement(sql);
-		ResultSet rs = ps.executeQuery();;
+		ResultSet rs = ps.executeQuery();
+		;
 		ps.setInt(1, id_usuario);
 		ps.executeQuery();
-		
+
 		if (rs.next()) {
 			idsEventos.add(rs.getInt("id_evento"));
 		}
-		
+
 		return idsEventos;
-		
+
 	}
 
 	public void borrarDatosUsuario(int idUsuario) throws SQLException {
-	    String sql = "UPDATE usuarios SET nombre = '', apellidos = '', email = CONCAT('DeletedUser', id_usuario), pass = '', fechaNac = NULL,\r\n"
-	    		+ "telefono = 0, empresa = NULL, vehiculo = '', discapacidad = ''\r\n"
-	    		+ "WHERE id_usuario = ?;";
-	    PreparedStatement ps = con.prepareStatement(sql);
-	    ps.setInt(1, idUsuario);
-	    ps.executeUpdate();
+		String sql = "UPDATE usuarios SET nombre = '', apellidos = '', email = CONCAT('DeletedUser', id_usuario), pass = '', fechaNac = NULL,\r\n"
+				+ "telefono = 0, empresa = NULL, vehiculo = '', discapacidad = ''\r\n" + "WHERE id_usuario = ?;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, idUsuario);
+		ps.executeUpdate();
 	}
 }

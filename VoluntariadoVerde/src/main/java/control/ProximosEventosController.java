@@ -28,13 +28,11 @@ public class ProximosEventosController extends HttpServlet {
 		    session.setAttribute("lang", lang);
 		}
 
-		ArrayList<Evento> eventos = AccesoBD.obtenerEventos();
+		ArrayList<Evento> eventos = AccesoBD.obtenerEventos("","");
 
 		// 2. Cargar la vista
 		request.setAttribute("eventos", eventos);
-		
 		request.setAttribute("view", "evento/ProximosEventos.jsp");
-
 		request.setAttribute("estilo", "estilos/ProximosEventos.css");
 
 		// Encadenar la petición y cargar otro recurso
@@ -43,8 +41,33 @@ public class ProximosEventosController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
+	        throws ServletException, IOException {
+
+	    String nombre = request.getParameter("nombre");
+	    String tipo = request.getParameter("tipo");
+	    String ciudad = request.getParameter("ciudad");
+
+	    String atributo = "";
+	    String valor = "";
+
+	    if (nombre != null && !nombre.isEmpty()) {
+	        atributo = "nombre";
+	        valor = nombre;
+	    } else if (tipo != null && !tipo.isEmpty()) {
+	        atributo = "tipo";
+	        valor = tipo;
+	    } else if (ciudad != null && !ciudad.isEmpty()) {
+	        atributo = "lugar";
+	        valor = ciudad;
+	    }
+
+	    ArrayList<Evento> eventos = AccesoBD.obtenerEventos(atributo, valor);
+
+	    request.setAttribute("eventos", eventos);
+	    request.setAttribute("view", "evento/ProximosEventos.jsp");
+	    request.setAttribute("estilo", "estilos/ProximosEventos.css");
+
+	    request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 }

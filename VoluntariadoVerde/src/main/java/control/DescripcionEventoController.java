@@ -39,7 +39,7 @@ public class DescripcionEventoController extends HttpServlet {
 		
 		//2. Cargar la vista
 		if (lang.equals("es")) {
-			request.setAttribute("view", "eventos/DescripcionEvento.jsp");
+			request.setAttribute("view", "evento/DescripcionEvento.jsp");
 		} else {
 			request.setAttribute("view", "EN/DescripcionEvento.jsp");
 		}
