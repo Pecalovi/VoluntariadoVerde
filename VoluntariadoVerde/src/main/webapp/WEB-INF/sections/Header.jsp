@@ -17,13 +17,10 @@ if (lang == null)
 		</a>
 	</div>
 
-	<button class="hamburguesa">☰</button>
-
 	<div class="menu">
 
-<a href="<%=request.getContextPath()%>/eventos"> <%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
-		</a>
-		<a href="<%=request.getContextPath()%>/sobrenosotros"> <%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
+		<a href="<%=request.getContextPath()%>/eventos"> <%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
+		</a> <a href="<%=request.getContextPath()%>/sobrenosotros"> <%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
 		</a> <a href="<%=request.getContextPath()%>/contacto"> <%=lang.equals("es") ? "Contacto" : "Contact"%>
 		</a>
 
@@ -67,4 +64,18 @@ if (lang == null)
 
 	</div>
 
+	<div class="menu-movil">
+		<a href="<%=request.getContextPath()%>/home"> <img
+			src="src/IconoBlanco.png" alt="Home"> <span><%=lang.equals("es") ? "Inicio" : "Home"%></span>
+		</a>
+
+	</div>
+
 </header>
+
+<div class="menu-movil">
+	<a href="<%=request.getContextPath()%>/home"> <img
+		src="src/IconoBlanco.png" alt="Home"> <span><%=lang.equals("es") ? "Inicio" : "Home"%></span>
+	</a>
+
+</div>

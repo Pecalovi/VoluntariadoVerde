@@ -94,7 +94,7 @@ iframe{
     border-radius: 10px;
 }
 
-@media(max-width: 860px) {
+@media(max-width: 768px) {
 
     #info {
         width: 100%;

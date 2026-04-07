@@ -192,7 +192,7 @@
 	box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
 }
 
-@media ( max-width : 860px) {
+@media ( max-width : 768px) {
 	
 	.buscar, #panel-filtros{
 	width: 100%;

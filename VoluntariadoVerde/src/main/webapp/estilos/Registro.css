@@ -82,7 +82,7 @@ main {
 }
 
 
-@media (max-width:860px) {
+@media (max-width:768px) {
 
     .selector {
         padding-block: 50px;

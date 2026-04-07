@@ -205,7 +205,7 @@ fieldset{
 	transition: background-color 0.3s;
 }
 
-@media ( max-width : 860px) {
+@media ( max-width : 768px) {
 	.indicador-pasos {
 		margin-block: 25px;
 	}

@@ -242,7 +242,7 @@ em {
 }
 
 /* Responsive */
-@media ( max-width : 860px) {
+@media ( max-width : 768px) {
 	.container_conocenos {
 		max-width: 360px;
 		margin: 0 auto;

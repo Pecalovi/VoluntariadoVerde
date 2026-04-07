@@ -82,7 +82,7 @@
 	color: var(--verde-principal);
 }
 
-@media (max-width : 860px) {
+@media (max-width : 768px) {
 	#imagen-index {
 		height: 230px;
 	}
