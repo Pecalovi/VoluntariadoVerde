@@ -252,6 +252,10 @@ header.isla {
 	color: var(--blanco);
 }
 
+.menu-movil{
+	display:none
+}
+
 /* FOOTER */
 footer {
 	display: flex;

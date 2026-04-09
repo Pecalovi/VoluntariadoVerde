@@ -37,7 +37,13 @@
 			funcional, indícalo debajo.</label> <input type="textarea" id="fdisc"
 			name="fdisc" placeholder="Indícanos tu caso o tus necesidades">
 
-		<input class="botones" type="submit" value="Crear cuenta"></input> <input
+		<label> <input type="checkbox" name="terms" required>
+			Acepto los <a
+			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">términos
+				y condiciones</a> y la <a
+			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">política
+				de privacidad</a>
+		</label> <input class="botones" type="submit" value="Crear cuenta"></input> <input
 			type="hidden" name="tipo" value="voluntario" />
 
 		<p style="color: #570300;">${error}</p>
@@ -46,14 +52,14 @@
 </div>
 
 <script>
-    const hoy = new Date();
+	const hoy = new Date();
 
-    // Restar 16 años
-    hoy.setFullYear(hoy.getFullYear() - 16);
-    hoy.setHours(0, 0, 0, 0);
+	// Restar 16 años
+	hoy.setFullYear(hoy.getFullYear() - 16);
+	hoy.setHours(0, 0, 0, 0);
 
-    // Formato YYYY-MM-DD
-    const fechaMaxima = hoy.toISOString().split("T")[0];
+	// Formato YYYY-MM-DD
+	const fechaMaxima = hoy.toISOString().split("T")[0];
 
-    document.getElementById("edad").max = fechaMaxima;
+	document.getElementById("edad").max = fechaMaxima;
 </script>
