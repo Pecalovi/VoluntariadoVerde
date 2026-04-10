@@ -5,22 +5,16 @@ import java.time.LocalDate;
 
 public class Voluntario extends Usuario {
 
-	// Atributos
 	private String discapacidad, vehiculo;
 	private LocalDate fechaNac;
-	
 
-	public Voluntario(String nombre, String apellidos, int id, int numTelf, String email, String pass, String discapacidad, String vehiculo, LocalDate fechaNac) {
+	public Voluntario(String nombre, String apellidos, int id, int numTelf, String email, String pass,
+			String discapacidad, String vehiculo, LocalDate fechaNac) {
 		super(nombre, apellidos, id, numTelf, email, pass);
 		this.discapacidad = discapacidad;
 		this.vehiculo = vehiculo;
-		
-		
-		
 		this.fechaNac = fechaNac;
 	}
-
-	// Getters y Setters
 
 	public String getDiscapacidad() {
 		return discapacidad;
@@ -42,12 +36,7 @@ public class Voluntario extends Usuario {
 		return fechaNac;
 	}
 
-	public void setFechaNac(Date fechaNac) {
-		
+	public void setFechaNac(LocalDate fechaNac) {
+		this.fechaNac = fechaNac;
 	}
-	
-	public void setFechaNac(String fechaNac) {
-		
-	}
-	
 }

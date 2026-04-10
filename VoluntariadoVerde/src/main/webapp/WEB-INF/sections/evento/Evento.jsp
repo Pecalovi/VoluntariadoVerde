@@ -2,7 +2,7 @@
 
 	<div id="banner"
 		style="background: linear-gradient(rgba(0, 0, 0, 0.548), rgba(43, 43, 43, 0.3)), 
-             url('${pageContext.request.contextPath}/src/${evento.tipo}.jpg') center center / cover no-repeat;">
+             url('${pageContext.request.contextPath}/src/eventos/${evento.tipo}.jpg') center center / cover no-repeat;">
 		<h1>${evento.nombre}</h1>
 	</div>
 
