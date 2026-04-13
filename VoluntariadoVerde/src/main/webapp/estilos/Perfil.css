@@ -161,9 +161,6 @@ section form input:focus {
 }
 
 @media ( max-width : 768px) {
-	.menu-perfil{
-	flex-direction: row;
-	}
 	.tarjeta-perfil{
 	margin-inline: 0px;
 	flex-direction: column;
@@ -175,18 +172,23 @@ section form input:focus {
 	section form input{
 	width:90%;
 	}
-	.menu-perfil a{
-	flex-direction: column;
-	}
 	.menu-perfil{
 	height: 100px;
+	flex-direction: row;
 	}
 	.menu-perfil img{
 	height: 25px;
 	width: auto;
+	margin-bottom: -20px;
+	}
+	.menu-perfil a{
+	flex-direction: column;
+	font-size: 20px;
+	text-align:center;
 	}
 	.menu-perfil a.activo{
-	font-size: 20px
+	border-bottom: 3px solid #007bff;
+	border-right: none;
 	}
 	
 }
