@@ -11,7 +11,7 @@
 .menu-perfil {
 	display: flex;
 	flex-direction: column;
-	min-width: 100px;
+
 	width: 25%;
 	border-right: solid 1px #c0bfbc;
 }
@@ -164,6 +164,7 @@ section form input:focus {
 	.tarjeta-perfil{
 	margin-inline: 0px;
 	flex-direction: column;
+	border-radius: 0px;
 	}
 	section{
 	width: 100%;
@@ -173,22 +174,47 @@ section form input:focus {
 	width:90%;
 	}
 	.menu-perfil{
-	height: 100px;
+	height: 120px;
 	flex-direction: row;
+	width:0px;
 	}
 	.menu-perfil img{
-	height: 25px;
-	width: auto;
-	margin-bottom: -20px;
+	height: 30px;
+	max-width: 50px;
+	margin-bottom: -14px;
 	}
 	.menu-perfil a{
 	flex-direction: column;
-	font-size: 20px;
+	font-size: 15px;
 	text-align:center;
+	width: 104px;
 	}
 	.menu-perfil a.activo{
 	border-bottom: 3px solid #007bff;
 	border-right: none;
+	}
+	.menu-perfil a.eliminar.activo{
+	border-bottom: 3px solid rgba(246, 97, 81, 0.8);
+	border-right: none;
+	}
+	.menu-perfil a.eliminar:hover {
+	border-bottom: 3px solid rgba(246, 97, 81, 0.7);
+	border-right: none;	
+	}
+	#btnEditar{
+	margin-top: -4px;
+	}
+	.form-col{
+	gap: 0px;
+	}
+	.form-col input{
+	margin-bottom: 20px;
+	}
+	.form-col label{
+	margin-bottom: 3px;
+	}
+	section form{
+	gap:0px;
 	}
 	
 }
