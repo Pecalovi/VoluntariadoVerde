@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.AccesoBD;
+import model.Organizador;
 import model.Usuario;
 
 /**
@@ -54,7 +55,14 @@ public class ServLogin extends HttpServlet {
 			session.setAttribute("usuario", user);
 
 			// Redirigir al home
-			response.sendRedirect(contextPath + "/home");
+			
+			boolean esOrganizador = (user != null && user instanceof Organizador);
+			
+			if (esOrganizador) {
+				response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");
+			}else {
+				response.sendRedirect(contextPath + "/home");
+			}
 		} else {
 			// Si no se encuentra el usuario
 			request.setAttribute("error", "El email o la contraseña no son correctos.");

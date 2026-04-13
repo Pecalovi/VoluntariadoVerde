@@ -1,4 +1,4 @@
-<%@ page language="java" import="model.Usuario, model.Organizador"
+<%@ page language="java" import="model.Usuario"
 	pageEncoding="UTF-8"%>
 
 <%
@@ -24,7 +24,7 @@ if (lang == null)
 		</a> <a href="<%=request.getContextPath()%>/contacto"> <%=lang.equals("es") ? "Contacto" : "Contact"%>
 		</a>
 
-		<!-- Cambio: menú de usuario / organizador -->
+		<!-- Cambio: menú de usuario -->
 		<%
 		if (user != null) {
 		%>
