@@ -159,3 +159,34 @@ section form input:focus {
 	margin: 0;
 	padding-left: 20px;
 }
+
+@media ( max-width : 768px) {
+	.menu-perfil{
+	flex-direction: row;
+	}
+	.tarjeta-perfil{
+	margin-inline: 0px;
+	flex-direction: column;
+	}
+	section{
+	width: 100%;
+	padding: 30px;
+	}
+	section form input{
+	width:90%;
+	}
+	.menu-perfil a{
+	flex-direction: column;
+	}
+	.menu-perfil{
+	height: 100px;
+	}
+	.menu-perfil img{
+	height: 25px;
+	width: auto;
+	}
+	.menu-perfil a.activo{
+	font-size: 20px
+	}
+	
+}
