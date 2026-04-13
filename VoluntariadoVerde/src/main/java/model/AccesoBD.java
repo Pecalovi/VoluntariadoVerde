@@ -58,7 +58,7 @@ public class AccesoBD {
 
 	public static Usuario iniciarSesion(String email, String pass) {
 
-		String sql = "SELECT * FROM usuarios_con_rol WHERE LOWER(TRIM(email)) = ? AND pass = ?";
+		String sql = "SELECT * FROM usuarios WHERE LOWER(TRIM(email)) = ? AND pass = ?";
 
 		Usuario sesionUsuario = null;
 
@@ -82,9 +82,9 @@ public class AccesoBD {
 				String empresaDB = rs.getString("empresa");
 				String vehiculoDB = rs.getString("vehiculo");
 				String discapacidadDB = rs.getString("discapacidad");
-				String nombreRolDB = rs.getString("nombre_rol");
+				int idRolDB = rs.getInt("id_rol");
 
-				if (nombreRolDB.equalsIgnoreCase("voluntario")) {
+				if (idRolDB==1) {
 
 					LocalDate fechaNac = null;
 					if (fechaNacDB != null) {
@@ -95,7 +95,7 @@ public class AccesoBD {
 					sesionUsuario = new Voluntario(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB,
 							discapacidadDB, vehiculoDB, fechaNac);
 
-				} else if (nombreRolDB.equalsIgnoreCase("organizador")) {
+				} else if (idRolDB==2) {
 					sesionUsuario = new Organizador(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB, empresaDB);
 
 				}
