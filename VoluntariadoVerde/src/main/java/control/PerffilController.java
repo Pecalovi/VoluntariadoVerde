@@ -112,68 +112,7 @@ public class PerffilController extends HttpServlet {
 			break;
 		case "editar-cuenta":
 
-		    if (user == null) {
-		        response.sendRedirect(request.getContextPath() + "/login");
-		        return;
-		    }
-
-		    String nombre = request.getParameter("fname");
-		    String apellido = request.getParameter("fsurname");
-		    String fechaString = request.getParameter("fedad");
-		    String email = request.getParameter("femail");
-		    String vehiculo = request.getParameter("fvehiculo");
-		    String discapacidad = request.getParameter("fdisc");
-		    String empresa = request.getParameter("fenterprise");
-
-		    int tlf = 0;
-		    String tlfStr = request.getParameter("fphone");
-		    if (tlfStr != null && !tlfStr.isBlank()) {
-		        tlf = Integer.parseInt(tlfStr);
-		    }
-
-		    LocalDate fechaNac = null;
-		    if (fechaString != null && !fechaString.isEmpty()) {
-		        try {
-		            fechaNac = LocalDate.parse(fechaString);
-		        } catch (Exception e) {
-		            fechaNac = null;
-		        }
-		    }
-
-		    user.setNombre(nombre);
-		    user.setApellidos(apellido);
-		    user.setEmail(email);
-		    user.setNumTelf(tlf);
-
-		    if (user instanceof Voluntario v) {
-		        v.setFechaNac(fechaNac);
-		        v.setVehiculo(vehiculo);
-		        v.setDiscapacidad(discapacidad);
-		    }
-
-		    if (user instanceof Organizador o) {
-		        o.setEntidad(empresa);
-		    }
-
-		    try {
-		        bd = new AccesoBD();
-
-		        if (bd.editarDatosUsuario(user)) {
-		            session.setAttribute("usuario", user);
-		            response.sendRedirect(request.getContextPath() + "/perfil");
-		        } else {
-		            request.setAttribute("error", "Error al editar los datos.");
-		            request.getRequestDispatcher("/index.jsp").forward(request, response);
-		        }
-
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        request.setAttribute("error", "Error al editar los datos.");
-		        request.getRequestDispatcher("/index.jsp").forward(request, response);
-		    }
-
-		    break;
-
+		    
 		}
 
 	}

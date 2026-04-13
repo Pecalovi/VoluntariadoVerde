@@ -468,56 +468,8 @@ public class AccesoBD {
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
+		return false;
 
-		String sql = "UPDATE usuarios SET " + "nombre = ?, apellidos = ?, email = ?, telefono = ? "
-				+ "WHERE id_usuario = ?";
-
-		try (PreparedStatement ps = con.prepareStatement(sql)) {
-
-			ps.setString(1, u.getNombre());
-			ps.setString(2, u.getApellidos());
-			ps.setString(3, u.getEmail());
-			ps.setInt(4, u.getNumTelf());
-			ps.setInt(5, u.getId());
-
-			ps.executeUpdate();
-
-			// Si es Voluntario
-			if (u instanceof Voluntario v) {
-
-				String sqlV = "UPDATE usuarios SET fechaNac = ?, vehiculo = ?, discapacidad = ? "
-						+ "WHERE id_usuario = ?";
-
-				try (PreparedStatement ps2 = con.prepareStatement(sqlV)) {
-
-					ps2.setDate(1, v.getFechaNac() != null ? Date.valueOf(v.getFechaNac()) : null);
-					ps2.setString(2, v.getVehiculo());
-					ps2.setString(3, v.getDiscapacidad());
-					ps2.setInt(4, u.getId());
-
-					ps2.executeUpdate();
-				}
-			}
-
-			// Si es Organizador
-			if (u instanceof Organizador o) {
-
-				String sqlO = "UPDATE usuarios SET empresa = ? WHERE id_usuario = ?";
-
-				try (PreparedStatement ps3 = con.prepareStatement(sqlO)) {
-
-					ps3.setString(1, o.getEntidad());
-					ps3.setInt(2, u.getId());
-
-					ps3.executeUpdate();
-				}
-			}
-
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+		
 	}
 }
