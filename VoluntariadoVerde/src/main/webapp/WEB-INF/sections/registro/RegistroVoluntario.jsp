@@ -14,7 +14,7 @@
 
 		<!-- DATOS DE CONTACTO -->
 		<input type="tel" id="fphone" name="fphone"
-			placeholder="Número de teléfono" pattern="[0-9]{9}" required>
+			placeholder="Número de teléfono" pattern="[6-9][0-9]{8}" required>
 		<input type="email" id="femail" name="femail" placeholder="Correo"
 			required>
 

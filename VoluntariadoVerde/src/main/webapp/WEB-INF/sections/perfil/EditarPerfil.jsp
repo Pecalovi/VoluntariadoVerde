@@ -7,7 +7,7 @@ Usuario user = (Usuario) session.getAttribute("usuario");
 boolean esOrganizador = (user != null && user instanceof Organizador);
 %>
 
-<form action="<%=request.getContextPath()%>/perfil" method="post"
+<form action="<%=request.getContextPath()%>/ServPerfil" method="post"
 	id="editarPerfil">
 	<input type="hidden" name="accion" value="editar-cuenta" />
 
@@ -43,9 +43,9 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 
 		<label for="fechaNac">Fecha de Nacimiento</label> <input type="date"
 			id="fechaNac" name="fedad"
-			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac() : ""%>"
-			readonly> <label for="vehiculo">Vehículo</label> <input
-			type="text" id="vehiculo" name="fvehiculo" maxlength="2"
+			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac().toString() : ""%>"
+			pattern="[6-9][0-9]{8}" readonly> <label for="vehiculo">Vehículo</label>
+		<input type="text" id="vehiculo" name="fvehiculo" maxlength="2"
 			value="<%=((Voluntario) user).getVehiculo()%>" readonly> <label
 			for="discapacidad">Discapacidad</label> <input type="text"
 			id="discapacidad" name="fdisc"

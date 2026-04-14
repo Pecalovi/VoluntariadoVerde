@@ -84,36 +84,7 @@ public class PerffilController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Usuario user = (Usuario) session.getAttribute("usuario");
-		String accion = request.getParameter("accion");
-		AccesoBD bd;
-
-		switch (accion) {
-		case "eliminar-cuenta":
-
-			try {
-				bd = new AccesoBD();
-				bd.borrarDatosUsuario(user.getId());
-
-				// Cerrar sesión
-				session.invalidate();
-
-				// Mandar mensaje de info al home
-				response.sendRedirect(request.getContextPath() + "/home?parametro=2");
-
-				return;
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-				request.setAttribute("error", "No se pudo eliminar la cuenta.");
-			}
-
-			// ir al home con un success de eliminar cuenta
-			break;
-		case "editar-cuenta":
-
-		    
-		}
+		doGet(request, response);
 
 	}
 

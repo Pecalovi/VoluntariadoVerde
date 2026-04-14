@@ -10,7 +10,7 @@
 			placeholder="Apellidos"> <input type="text" id="fenterprise"
 			name="fenterprise" placeholder="Empresa (Opcional)"> <input
 			type="tel" id="fphone" name="fphone" placeholder="Número de teléfono"
-			pattern="^(\+?\s?34\s?)?(\s*\d\s*){9}$" required> <input
+			pattern="[6-9][0-9]{8}" required> <input
 			type="email" id="femail" name="femail" placeholder="Correo" required>
 		<input type="password" id="fpwd" name="fpwd" placeholder="Contraseña"
 			required> <label> <input type="checkbox" name="terms"

@@ -468,8 +468,61 @@ public class AccesoBD {
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
-		return false;
+	    try {
 
-		
+	        String sql = "UPDATE usuarios SET email=?, nombre=?, apellidos=?, telefono=? WHERE id_usuario=?";
+	        PreparedStatement ps = con.prepareStatement(sql);
+
+	        ps.setString(1, u.getEmail());
+	        ps.setString(2, u.getNombre());
+	        ps.setString(3, u.getApellidos());
+	        ps.setInt(4, u.getNumTelf());
+	        ps.setInt(5, u.getId());
+
+	        ps.executeUpdate();
+	        ps.close();
+
+	        if (u instanceof Organizador) {
+
+	            Organizador org = (Organizador) u;
+
+	            String sqlOrg = "UPDATE usuarios SET empresa=? WHERE id_usuario=?";
+	            PreparedStatement psOrg = con.prepareStatement(sqlOrg);
+
+	            psOrg.setString(1, org.getEntidad());
+	            psOrg.setInt(2, org.getId());
+
+	            psOrg.executeUpdate();
+	            psOrg.close();
+	        }
+
+	        else if (u instanceof Voluntario) {
+
+	            Voluntario vol = (Voluntario) u;
+
+	            String sqlVol = "UPDATE usuarios SET vehiculo=?, discapacidad=?, fechaNac=? WHERE id_usuario=?";
+	            PreparedStatement psVol = con.prepareStatement(sqlVol);
+
+	            psVol.setString(1, vol.getVehiculo());
+	            psVol.setString(2, vol.getDiscapacidad());
+
+	            if (vol.getFechaNac() != null) {
+	                psVol.setDate(3, java.sql.Date.valueOf(vol.getFechaNac()));
+	            } else {
+	                psVol.setDate(3, null);
+	            }
+
+	            psVol.setInt(4, vol.getId());
+
+	            psVol.executeUpdate();
+	            psVol.close();
+	        }
+
+	        return true;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 }
