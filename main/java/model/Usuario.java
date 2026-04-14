@@ -11,8 +11,7 @@ public abstract class Usuario {
 	protected int numTelf;
 	protected String email;
 	protected String pass;
-	
-	
+
 	// Constructor
 	public Usuario(String nombre, String apellidos, int id, int numTelf, String email, String pass) {
 		super();
@@ -23,72 +22,84 @@ public abstract class Usuario {
 		this.email = email;
 		this.pass = pass;
 	}
-	
-    // Getters y Setters
-    public String getNombre() {
-        return nombre;
-    }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	// Getters y Setters
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getApellidos() {
-        return apellidos;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
+	public String getApellidos() {
+		return apellidos;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public int getNumTelf() {
-        return numTelf;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setNumTelf(int numTelf) {
-        this.numTelf = numTelf;
-    }
+	public int getNumTelf() {
+		return numTelf;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setNumTelf(int numTelf) {
+		this.numTelf = numTelf;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPass() {
-        return pass;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-    
-    public static String sha256(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(password.getBytes());
+	public String getPass() {
+		return pass;
+	}
 
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
 
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public static String sha256(String password) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			byte[] hash = md.digest(password.getBytes());
+
+			StringBuilder hexString = new StringBuilder();
+			for (byte b : hash) {
+				String hex = Integer.toHexString(0xff & b);
+				if (hex.length() == 1)
+					hexString.append('0');
+				hexString.append(hex);
+			}
+			return hexString.toString();
+
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String capitalizarTexto(String str) {
+		String[] palabras = str.toLowerCase().split(" ");
+		StringBuilder resultado = new StringBuilder();
+		for (String palabra : palabras) {
+			if (palabra.length() > 0) {
+				resultado.append(Character.toUpperCase(palabra.charAt(0))).append(palabra.substring(1)).append(" ");
+			}
+		}
+		return resultado.toString().trim();
+	}
 
 }
