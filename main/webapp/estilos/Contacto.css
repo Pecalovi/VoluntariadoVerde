@@ -14,8 +14,15 @@ main {
 #info {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 46%;
     text-align: justify;
+    background-color: #006E00;
+    padding: 0px 40px;
+    border-radius: 15px;
+}
+
+#contactanosh1{
+color: white;	
 }
 
 .img {
@@ -24,18 +31,39 @@ main {
     align-items: center;
     justify-content: center;
 }
+#contacto_descripcion p{
+	color: white;
+}
+#contacto_info{
+	margin-top: 26px;
+}
 
 #contacto_info a,
 #contacto_info p {
     text-align: left;
     text-decoration: none;
-    color: rgb(99, 99, 99);
+    color: white;
+}
+img{
+	width: 20px;
+	height: 20px;
+}
+.icono_texto{
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+#barra{
+	color: white;
+	margin-top: 10px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 46%;
 }
 
 form label{
@@ -45,15 +73,17 @@ form label{
 input, select {
     outline: none;
     padding-block: 7px;
-    padding-left: 15px;
-    padding-right: 10px;
+    padding-left: 12px;
+    padding-bottom: 12px;
     color: rgb(86, 86, 86);
     margin: 10px;
     backdrop-filter: blur(100px);
     font-family: "Poppins", sans-serif;
-
-    border-radius: 100px;
-    border: 1px #005900ff solid;
+    border-radius: 0px 0px 0px 8px;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px #005900ff solid;
+    border-left: 1px #005900ff solid;
 }
 
 textarea {
