@@ -1,19 +1,51 @@
-/* INDEX.HTML */
-#imagen-index {
-	background-image: url('../src/index_running.jpg');
-	background-size: cover;
-	background-position: center;
-	background-color: rgba(0, 0, 0, 0.5);
-	background-blend-mode: darken;
-	height: 300px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.eslogan {
+    position: relative;
+    z-index: 2;   
+    text-align: center;
+    color: #fff;
+    padding: 0 2rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
-#imagen-index h1 {
-	color: var(--blanco);
+.eslogan h1 {
+    font-size: 75px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
 }
+
+#imagen-index {
+    position: relative;
+    width: 100%;
+    height: 35vh;
+    overflow: hidden;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#imagen-index::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+#videoFondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+
+    filter: blur(1.5px);
+    transform: scale(1.05); 
+}
+
+
 
 #container-eventos {
 	display: flex;

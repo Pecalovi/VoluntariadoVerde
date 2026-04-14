@@ -11,9 +11,13 @@ boolean es = "es".equals(lang);
 %>
 
 <section id="imagen-index">
-	<h1>
-		<%=es ? "Te damos la bienvenida a Voluntariado Verde" : "Welcome to Voluntariado Verde"%>
-	</h1>
+    <video autoplay muted loop playsinline id="videoFondo">
+        <source src="<%= request.getContextPath() %>/videos/fondo.mp4" type="video/mp4">
+    </video>
+
+    <div class="eslogan">
+        <h1><%= es ? "Juntos, mejorando el mundo" : "Together, improving the world" %></h1>
+    </div>
 </section>
 
 <section id="container-eventos">
