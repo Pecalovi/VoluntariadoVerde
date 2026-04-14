@@ -47,17 +47,14 @@ public class PerffilController extends HttpServlet {
 		case "mis-eventos":
 			seccion = "MisEventos.jsp";
 			opcion = "eventos";
-			try {
-				AccesoBD bd = new AccesoBD();
-				List<Evento> eventos = AccesoBD.obtenerEventosUsuario(user.getId());
-				request.setAttribute("eventos", eventos);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+			List<Evento> eventos = AccesoBD.obtenerEventosUsuario(user.getId());
+			request.setAttribute("eventos", eventos);
 			break;
 		case "gestionar-eventos":
 			seccion = "GestionarEventos.jsp";
 			opcion = "gestionar";
+			List<Evento> eventosOrg = AccesoBD.obtenerEventos("id_organizador", user.getId());
+			request.setAttribute("eventos", eventosOrg);
 			break;
 		case "eliminar-cuenta":
 			seccion = "EliminarCuenta.jsp";
@@ -68,17 +65,16 @@ public class PerffilController extends HttpServlet {
 			opcion = "perfil";
 			break;
 		}
-		// 2. Cargar la vista
+	// 2. Cargar la vista
 
-		request.setAttribute("view", "perfil/Perfil.jsp");
+	request.setAttribute("view","perfil/Perfil.jsp");
 
-		request.setAttribute("perfilView", seccion);
-		request.setAttribute("opcion", opcion);
+	request.setAttribute("perfilView",seccion);request.setAttribute("opcion",opcion);
 
-		request.setAttribute("estilo", "estilos/Perfil.css");
+	request.setAttribute("estilo","estilos/Perfil.css");
 
-		// Encadenar la petición y cargar otro recurso
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+	// Encadenar la petición y cargar otro recurso
+	request.getRequestDispatcher("/index.jsp").forward(request,response);
 
 	}
 

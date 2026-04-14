@@ -84,7 +84,7 @@ public class AccesoBD {
 				String discapacidadDB = rs.getString("discapacidad");
 				int idRolDB = rs.getInt("id_rol");
 
-				if (idRolDB==1) {
+				if (idRolDB == 1) {
 
 					LocalDate fechaNac = null;
 					if (fechaNacDB != null) {
@@ -95,7 +95,7 @@ public class AccesoBD {
 					sesionUsuario = new Voluntario(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB,
 							discapacidadDB, vehiculoDB, fechaNac);
 
-				} else if (idRolDB==2) {
+				} else if (idRolDB == 2) {
 					sesionUsuario = new Organizador(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB, empresaDB);
 
 				}
@@ -204,72 +204,79 @@ public class AccesoBD {
 		}
 	}
 
-	public static ArrayList<Evento> obtenerEventos(String atributo, String valor) {
+	public static ArrayList<Evento> obtenerEventos(String atributo, Object valor) {
 
-		String sql = "SELECT * FROM eventos";
-		Evento evento = null;
-		ArrayList<Evento> eventos = new ArrayList<>();
+	    String sql = "SELECT * FROM eventos";
+	    ArrayList<Evento> eventos = new ArrayList<>();
+	    boolean filtrar = false;
 
-		try {
-			AccesoBD bd = new AccesoBD();
-			if (atributo != null && !atributo.isEmpty() && valor != null && !valor.isEmpty()) {
+	    try {
+	        AccesoBD bd = new AccesoBD();
 
-				if (atributo.equals("nombre") || atributo.equals("tipo") || atributo.equals("lugar")) {
+	        if (atributo != null && !atributo.isEmpty() && valor != null) {
 
-					if (atributo.equals("nombre") || atributo.equals("lugar")) {
-						sql += " WHERE " + atributo + " LIKE ?";
-					} else {
-						sql += " WHERE " + atributo + " = ?";
-					}
-				}
-			}
+	            switch (atributo) {
+	                case "nombre":
+	                case "lugar":
+	                    sql += " WHERE " + atributo + " LIKE ?";
+	                    filtrar = true;
+	                    break;
 
-			sql += " ORDER BY fecha";
+	                case "id_organizador":
+	                case "capacidad_maxima":
+	                case "tipo":
+	                    sql += " WHERE " + atributo + " = ?";
+	                    filtrar = true;
+	                    break;
+	            }
+	        }
 
-			PreparedStatement ps = bd.con.prepareStatement(sql);
+	        sql += " ORDER BY fecha";
 
-			if (atributo != null && !atributo.isEmpty() && valor != null && !valor.isEmpty()) {
+	        PreparedStatement ps = bd.con.prepareStatement(sql);
 
-				if (atributo.equals("nombre") || atributo.equals("lugar")) {
-					ps.setString(1, "%" + valor + "%");
-				} else {
-					ps.setString(1, valor);
-				}
-			}
+	        if (filtrar) {
 
-			ResultSet rs = ps.executeQuery();
+	            if ("nombre".equals(atributo) || "lugar".equals(atributo)) {
+	                ps.setString(1, "%" + valor.toString() + "%");
+	            } else if (valor instanceof Integer) {
+	                ps.setInt(1, (Integer) valor);
+	            } else if (valor instanceof String) {
+	                ps.setString(1, (String) valor);
+	            } else {
+	                ps.setObject(1, valor);
+	            }
+	        }
 
-			while (rs.next()) {
+	        ResultSet rs = ps.executeQuery();
 
-				int idEventoDB = rs.getInt("id_evento");
-				String nombreEventoDB = rs.getString("nombre");
-				String tipoDB = rs.getString("tipo");
-				String descripcionDB = rs.getString("descripcion");
-				Date fechaDB = rs.getDate("fecha");
-				String lugarDB = rs.getString("lugar");
-				int capacidadMaximaDB = rs.getInt("capacidad_maxima");
+	        while (rs.next()) {
 
-				LocalDate fecha = null;
-				if (fechaDB != null) {
-					fecha = fechaDB.toLocalDate();
-				}
+	            int idEventoDB = rs.getInt("id_evento");
+	            String nombreEventoDB = rs.getString("nombre");
+	            String tipoDB = rs.getString("tipo");
+	            String descripcionDB = rs.getString("descripcion");
+	            Date fechaDB = rs.getDate("fecha");
+	            String lugarDB = rs.getString("lugar");
+	            int capacidadMaximaDB = rs.getInt("capacidad_maxima");
 
-				// Instanciar el evento
-				evento = new Evento(nombreEventoDB, lugarDB, fecha, tipoDB, idEventoDB, descripcionDB,
-						capacidadMaximaDB, 0, 0);
+	            LocalDate fecha = (fechaDB != null) ? fechaDB.toLocalDate() : null;
 
-				eventos.add(evento);
-			}
+	            eventos.add(new Evento(
+	                nombreEventoDB, lugarDB, fecha, tipoDB,
+	                idEventoDB, descripcionDB, capacidadMaximaDB, 0, 0
+	            ));
+	        }
 
-			rs.close();
-			ps.close();
-			bd.disconnect();
+	        rs.close();
+	        ps.close();
+	        bd.disconnect();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 
-		return eventos;
+	    return eventos;
 	}
 
 	public static Evento obtenerEvento(int id) {
@@ -468,61 +475,61 @@ public class AccesoBD {
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
-	    try {
+		try {
 
-	        String sql = "UPDATE usuarios SET email=?, nombre=?, apellidos=?, telefono=? WHERE id_usuario=?";
-	        PreparedStatement ps = con.prepareStatement(sql);
+			String sql = "UPDATE usuarios SET email=?, nombre=?, apellidos=?, telefono=? WHERE id_usuario=?";
+			PreparedStatement ps = con.prepareStatement(sql);
 
-	        ps.setString(1, u.getEmail());
-	        ps.setString(2, u.getNombre());
-	        ps.setString(3, u.getApellidos());
-	        ps.setInt(4, u.getNumTelf());
-	        ps.setInt(5, u.getId());
+			ps.setString(1, u.getEmail());
+			ps.setString(2, u.getNombre());
+			ps.setString(3, u.getApellidos());
+			ps.setInt(4, u.getNumTelf());
+			ps.setInt(5, u.getId());
 
-	        ps.executeUpdate();
-	        ps.close();
+			ps.executeUpdate();
+			ps.close();
 
-	        if (u instanceof Organizador) {
+			if (u instanceof Organizador) {
 
-	            Organizador org = (Organizador) u;
+				Organizador org = (Organizador) u;
 
-	            String sqlOrg = "UPDATE usuarios SET empresa=? WHERE id_usuario=?";
-	            PreparedStatement psOrg = con.prepareStatement(sqlOrg);
+				String sqlOrg = "UPDATE usuarios SET empresa=? WHERE id_usuario=?";
+				PreparedStatement psOrg = con.prepareStatement(sqlOrg);
 
-	            psOrg.setString(1, org.getEntidad());
-	            psOrg.setInt(2, org.getId());
+				psOrg.setString(1, org.getEntidad());
+				psOrg.setInt(2, org.getId());
 
-	            psOrg.executeUpdate();
-	            psOrg.close();
-	        }
+				psOrg.executeUpdate();
+				psOrg.close();
+			}
 
-	        else if (u instanceof Voluntario) {
+			else if (u instanceof Voluntario) {
 
-	            Voluntario vol = (Voluntario) u;
+				Voluntario vol = (Voluntario) u;
 
-	            String sqlVol = "UPDATE usuarios SET vehiculo=?, discapacidad=?, fechaNac=? WHERE id_usuario=?";
-	            PreparedStatement psVol = con.prepareStatement(sqlVol);
+				String sqlVol = "UPDATE usuarios SET vehiculo=?, discapacidad=?, fechaNac=? WHERE id_usuario=?";
+				PreparedStatement psVol = con.prepareStatement(sqlVol);
 
-	            psVol.setString(1, vol.getVehiculo());
-	            psVol.setString(2, vol.getDiscapacidad());
+				psVol.setString(1, vol.getVehiculo());
+				psVol.setString(2, vol.getDiscapacidad());
 
-	            if (vol.getFechaNac() != null) {
-	                psVol.setDate(3, java.sql.Date.valueOf(vol.getFechaNac()));
-	            } else {
-	                psVol.setDate(3, null);
-	            }
+				if (vol.getFechaNac() != null) {
+					psVol.setDate(3, java.sql.Date.valueOf(vol.getFechaNac()));
+				} else {
+					psVol.setDate(3, null);
+				}
 
-	            psVol.setInt(4, vol.getId());
+				psVol.setInt(4, vol.getId());
 
-	            psVol.executeUpdate();
-	            psVol.close();
-	        }
+				psVol.executeUpdate();
+				psVol.close();
+			}
 
-	        return true;
+			return true;
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

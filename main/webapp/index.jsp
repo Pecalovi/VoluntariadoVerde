@@ -57,63 +57,6 @@ if (lang != null) {
 
 	<jsp:include page="/WEB-INF/sections/Footer.jsp" />
 
-	<script>
-<%String success = (String) request.getAttribute("success");
-String error = (String) request.getAttribute("error");
-String info = (String) request.getAttribute("info");
-String parametro = request.getParameter("parametro");%>
-
-<%if (success != null) {%>
-Swal.fire({
-	icon: 'success',
-	text: '<%=success.replace("'", "\\'")%>',
-	confirmButtonText: 'Aceptar'
-});
-<%}%>
-
-<%if ("1".equals(parametro)) {%>
-Swal.fire({
-    icon: 'success',
-    text: 'Has cerrado sesión correctamente.',
-    confirmButtonText: 'Aceptar'
-}).then(() => {
-    const url = new URL(window.location);
-    url.searchParams.delete('parametro');
-    window.history.replaceState({}, document.title, url);
-});
-<%}%>
-
-<%if ("2".equals(parametro)) {%>
-Swal.fire({
-    icon: 'success',
-    text: 'Se ha eliminado tu cuenta correctamente.',
-    confirmButtonText: 'Aceptar'
-}).then(() => {
-    const url = new URL(window.location);
-    url.searchParams.delete('parametro');
-    window.history.replaceState({}, document.title, url);
-});
-<%}%>
-
-<%if (error != null) {%>
-Swal.fire({
-	icon: 'error',
-	text: '<%=error.replace("'", "\\'")%>',
-	confirmButtonText: 'Aceptar'
-});
-<%}%>
-
-<%if (info != null) {%>
-Swal.fire({
-	icon: 'info',
-	text: '<%=info.replace("'", "\\'")%>
-		',
-			confirmButtonText : 'Aceptar'
-		});
-	<%}%>
-		
-	</script>
-
 	<script src="scripts/main.js"></script>
 
 </body>

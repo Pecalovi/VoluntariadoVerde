@@ -43,7 +43,7 @@ public class ServPerfil extends HttpServlet {
 				return;
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "No se pudo eliminar la cuenta.");
+				session.setAttribute("error", "No se pudo eliminar la cuenta.");
 			}
 
 			// ir al home con un success de eliminar cuenta
@@ -74,7 +74,7 @@ public class ServPerfil extends HttpServlet {
 		                    LocalDate fechaLocal = LocalDate.parse(fecha);
 		                    vol.setFechaNac(fechaLocal);
 		                } catch (Exception e) {
-		                    request.setAttribute("error", "Fecha inválida");
+		                    session.setAttribute("error", "Fecha inválida");
 		                }
 		            }
 		        }
@@ -82,13 +82,14 @@ public class ServPerfil extends HttpServlet {
 		        bd.editarDatosUsuario(user);
 
 		        session.setAttribute("usuario", user);
+		        session.setAttribute("success", "Se ha editado el perfil.");
 
-		        response.sendRedirect(request.getContextPath() + "/perfil?success=1");
+		        response.sendRedirect(request.getContextPath() + "/perfil");
 		        return;
 
 		    } catch (ClassNotFoundException | SQLException e) {
 		        e.printStackTrace();
-		        request.setAttribute("error", "No se pudo actualizar el perfil.");
+		        session.setAttribute("error", "No se ha podido actualizar el perfil.");
 		    }
 		    break;
 			

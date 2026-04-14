@@ -70,7 +70,6 @@ li {
 /* IMÁGENES */
 img {
 	max-width: 100%;
-	display: block;
 	height: auto;
 	border-radius: 4px;
 }
