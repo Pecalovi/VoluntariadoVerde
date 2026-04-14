@@ -44,9 +44,9 @@ if (lang == null) lang = "es";
 				<p>+34 123 45 67 89</p>
 			</a>
 
-			<a href="mailto:correoelectronico@gmail.com" class="icon">
+			<a href="mailto:voluntariadoverv@gmail.com" class="icon">
 				<img src="<%=request.getContextPath()%>/src/email.png">
-				<p>voluntariadoverde@gmail.com</p>
+				<p>voluntariadoverdev@gmail.com</p>
 			</a>
 
 			<a href="https://www.google.com/maps/place/cpes+SAN+LUIS+LH+bhip+-+Bachillerato+y+Formaci%C3%B3n+Profesional/"
