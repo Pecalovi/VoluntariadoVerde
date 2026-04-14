@@ -74,10 +74,3 @@ if (lang == null)
 	</div>
 
 </header>
-
-<div class="menu-movil">
-	<a href="<%=request.getContextPath()%>/home"> <img
-		src="src/IconoBlanco.png" alt="Home"> <span><%=lang.equals("es") ? "Inicio" : "Home"%></span>
-	</a>
-
-</div>
