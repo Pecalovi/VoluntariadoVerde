@@ -91,8 +91,7 @@ public class ServPerfil extends HttpServlet {
 		        e.printStackTrace();
 		        session.setAttribute("error", "No se ha podido actualizar el perfil.");
 		    }
-		    break;
-			
+		    break;			
 		}
 	}
 

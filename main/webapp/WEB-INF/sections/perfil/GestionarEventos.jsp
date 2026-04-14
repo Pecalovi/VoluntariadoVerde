@@ -9,9 +9,8 @@
 		<c:forEach var="evento" items="${eventos}">
 			<div class="evento-tarjeta">
 				<a
-					href="${pageContext.request.contextPath}/evento?id=${evento.idEvento}">
+					href="${pageContext.request.contextPath}/perfil?opcion=gestionar-evento&id=${evento.idEvento}">
 					<h2>${evento.nombre}</h2>
-					<p class="evento-fecha">${evento.fechaFormateada}</p>
 				</a>
 			</div>
 		</c:forEach>

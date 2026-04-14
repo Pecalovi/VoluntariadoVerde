@@ -34,9 +34,9 @@
 
 .menu-perfil a.activo {
 	background-color: rgb(246, 245, 244);
-	border-right: 3px solid #007bff;
+	border-right: 3px solid var(--azul);
 	font-weight: bold;
-	border-right: 3px solid #007bff;
+	border-right: 3px solid var(--azul);
 }
 
 .menu-perfil a.eliminar:hover {
@@ -118,11 +118,11 @@ section form input[readonly] {
 
 section form input:not([readonly]) {
 	background-color: #fff;
-	border: 1px solid #007bff;
+	border: 1px solid var(--azul);
 }
 
 section form input:focus:not([readonly]) {
-	border-color: #007bff;
+	border-color: var(--azul);
 	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
 }
 
@@ -135,16 +135,13 @@ section form input[readonly]:focus {
 .evento-tarjeta {
 	border: 1px solid #ccc;
 	border-radius: 12px;
-	padding: 20px;
 	margin-bottom: 20px;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
 	background-color: #fff;
 	cursor: pointer;
-	display: flex; /* activamos flexbox en la tarjeta */
-	align-items: center; /* centra verticalmente su contenido */
-	justify-content: center; /* opcional: centra horizontalmente */
-	min-height: 100px;
-	/* altura mínima para que se note el centrado vertical */
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .evento-tarjeta:hover {
@@ -158,6 +155,8 @@ section form input[readonly]:focus {
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	padding: 20px;
+	height: 100%;
 }
 
 .evento-tarjeta h2 {
@@ -202,7 +201,6 @@ section form input[readonly]:focus {
 	transition: background-color 0.3s ease;
 }
 
-/* HOVER */
 .crearevento:hover .tooltiptext {
 	visibility: visible;
 	opacity: 1;
@@ -215,6 +213,21 @@ section form input[readonly]:focus {
 	transition: filter 0.3s ease;
 	color: white;
 }
+
+.menu-evento{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+	padding-block: 20px;
+	background-color: var(--azul); 
+	border-radius: 8px;
+}
+
+.menu-evento a{
+	color: white;
+}
+
 
 @media ( max-width : 768px) {
 	.tarjeta-perfil {
@@ -246,7 +259,7 @@ section form input[readonly]:focus {
 		width: 104px;
 	}
 	.menu-perfil a.activo {
-		border-bottom: 3px solid #007bff;
+		border-bottom: 3px solid var(--azul);
 		border-right: none;
 	}
 	.menu-perfil a.eliminar.activo {

@@ -16,12 +16,13 @@
 
 #contador-impacto {
     width: 1000px;
-    padding: 50px 20px;
+    padding: 50px 40px;
     text-align: center;
     margin-top: 65px;
     margin-bottom: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
+    border-radius: 8px;
 }
 
 #contador-impacto:hover {
