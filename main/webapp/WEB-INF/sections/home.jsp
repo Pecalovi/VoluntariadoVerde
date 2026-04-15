@@ -73,7 +73,7 @@ boolean es = "es".equals(lang);
 
 <section id="container-eventos">
 	<h1>
-		<%=es ? "Eventos destacados" : "Top events"%>
+		<%=es ? "Eventos destacados" : "Upcoming events"%>
 	</h1>
 
 	<div class="eventos">

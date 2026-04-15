@@ -52,7 +52,11 @@ if (lang == null) lang = "es";
 			<a href="https://www.google.com/maps/place/cpes+SAN+LUIS+LH+bhip+-+Bachillerato+y+Formaci%C3%B3n+Profesional/"
 			   class="icon">
 				<img src="<%=request.getContextPath()%>/src/mapa.png">
-				<p class="maps">Licenciado Poza Kalea 31, Bilbao</p>
+				
+				<p class="maps">
+				<%= lang.equals("es") 
+				? "Licenciado Poza Kalea 31, Bilbao" 
+				: "Licenciado Poza Street 31, Bilbao" %></p>
 			</a>
 
 		</div>
