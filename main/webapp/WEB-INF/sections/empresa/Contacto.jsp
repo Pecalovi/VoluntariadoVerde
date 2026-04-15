@@ -24,12 +24,6 @@ if (lang == null)
 
     <p id="barra">_________________________________________________</p>
 
-    <% if(request.getAttribute("mensajeStatus") != null) { %>
-        <p style="color: blue; font-weight: bold;">
-            <%= request.getAttribute("mensajeStatus") %>
-        </p>
-    <% } %>
-
     <div id="contacto_info">
         <div class="icono_texto">
             <img alt="" src="src/ubiblanco.png">
@@ -74,4 +68,10 @@ if (lang == null)
 
     <input type="submit" class="botones" 
            value="<%=lang.equals("en") ? "Send" : "Enviar"%>">
+           
+           <% if(request.getAttribute("mensajeStatus") != null) { %>
+        <p style="color: blue; font-weight: bold;">
+            <%= request.getAttribute("mensajeStatus") %>
+        </p>
+    <% } %>
 </form>
