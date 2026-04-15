@@ -38,23 +38,22 @@ public class ServInscripcion extends HttpServlet {
 	    Usuario user = (Usuario) session.getAttribute("usuario");
 	    int idUsuario = user.getId();
 	    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-	    String accion = request.getParameter("accion"); // Recogemos la acción del JSP
+	    String accion = request.getParameter("accion");
 
 	    try {
 	        AccesoBD bd = new AccesoBD();
 	        
 	        if ("cancelar".equals(accion)) {
-	            // Lógica para cancelar
+	           
 	            bd.cancelarInscripcion(idUsuario, idEvento);
 	        } else {
-	            // Lógica para inscribir
+	            
 	            bd.inscribir(idUsuario, idEvento);
 	        }
 	        
 	        bd.disconnect();
 	        
-	        // LA CLAVE: Redirigimos de vuelta al EventoController con el ID
-	        // Esto hace que la página se "refresque" en el mismo sitio
+
 	        response.sendRedirect(request.getContextPath() + "/evento?id=" + idEvento);
 	        
 	    } catch (ClassNotFoundException | SQLException e) {
