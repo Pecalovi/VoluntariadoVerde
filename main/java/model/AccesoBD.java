@@ -36,7 +36,7 @@ public class AccesoBD {
 
 		Class.forName(DRIVER_MYSQL);
 		con = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + db + "?serverTimezone=UTC",
-				user, pass);// ruta, usuario, contraseña
+				user, pass);
 	}
 
 	public void disconnect() {
@@ -342,10 +342,8 @@ public class AccesoBD {
 			ps.setInt(2, punto.getTipoPunto());
 			ps.setDouble(3, punto.getKmPunto());
 
-			// Ejecutar consulta
 			ps.executeUpdate();
 
-			// Cerrar recursos
 			ps.close();
 			return true;
 
@@ -357,32 +355,26 @@ public class AccesoBD {
 	}
 
 	public boolean inscribir(int idUser, int idEvento) {
-
-		String sql = "INSERT INTO inscripciones (id_usuario, id_evento) VALUES ( ?, ?)";
+		String sql = "INSERT INTO inscripciones (id_usuario, id_evento, estado) VALUES (?, ?, 'pendiente') "
+				+ "ON DUPLICATE KEY UPDATE estado = 'pendiente'";
 
 		try {
-
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, idUser);
 			ps.setInt(2, idEvento);
 
-			// Ejecutar consulta
 			ps.executeUpdate();
-
-			// Cerrar recursos
 			ps.close();
 			return true;
-
 		} catch (Exception m) {
+			System.err.println("Error en inscribir: " + m.getMessage());
 			m.printStackTrace();
 			return false;
 		}
-
 	}
 
 	public boolean usuarioInscrito(int idUsuario, int idEvento) {
-
-		String sql = "SELECT * FROM inscripciones WHERE id_usuario = ? AND id_evento = ?";
+		String sql = "SELECT * FROM inscripciones WHERE id_usuario = ? AND id_evento = ? AND estado != 'cancelado'";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -403,17 +395,16 @@ public class AccesoBD {
 		ArrayList<Integer> idsEventos = new ArrayList<>();
 
 		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setInt(1, id_usuario);
 		ResultSet rs = ps.executeQuery();
 
-		ps.setInt(1, id_usuario);
-		ps.executeQuery();
-
-		if (rs.next()) {
+		while (rs.next()) {
 			idsEventos.add(rs.getInt("id_evento"));
 		}
 
+		rs.close();
+		ps.close();
 		return idsEventos;
-
 	}
 
 	public void borrarDatosUsuario(int idUsuario) throws SQLException {
@@ -515,7 +506,8 @@ public class AccesoBD {
 					fechaNac = fechaNacDB.toLocalDate();
 				}
 
-				Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo, fechaNac, estado);
+				Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo,
+						fechaNac, estado);
 
 				voluntarios.add(v);
 			}
@@ -532,69 +524,72 @@ public class AccesoBD {
 	}
 
 	public void cambiarEstadoInscripcion(int idUsuario, int idEvento, String estado) {
-	    String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
+		String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
 
-	    try {
-	        PreparedStatement ps = con.prepareStatement(sql);
-	        ps.setString(1, estado);
-	        ps.setInt(2, idUsuario);
-	        ps.setInt(3, idEvento);
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, estado);
+			ps.setInt(2, idUsuario);
+			ps.setInt(3, idEvento);
 
-	        ps.executeUpdate();
-	        ps.close();
+			ps.executeUpdate();
+			ps.close();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public static int contadorHome(String tabla, Integer idRol) {
-	    int numContador = 0;
-	    String sql;
+		int numContador = 0;
+		String sql;
 
-	    if (idRol != null) {
-	        sql = "SELECT COUNT(*) FROM " + tabla + " WHERE id_rol = ?";
-	    } else {
-	        sql = "SELECT COUNT(*) FROM " + tabla;
-	    }
+		if (idRol != null) {
+			sql = "SELECT COUNT(*) FROM " + tabla + " WHERE id_rol = ?";
+		} else {
+			sql = "SELECT COUNT(*) FROM " + tabla;
+		}
 
-	    try {
-	        AccesoBD bd = new AccesoBD();
-	        PreparedStatement ps = bd.con.prepareStatement(sql);
+		try {
+			AccesoBD bd = new AccesoBD();
+			PreparedStatement ps = bd.con.prepareStatement(sql);
 
-	        if (idRol != null) {
-	            ps.setInt(1, idRol);
-	        }
+			if (idRol != null) {
+				ps.setInt(1, idRol);
+			}
 
-	        ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 
-	        if (rs.next()) {
-	            numContador = rs.getInt(1);
-	        }
+			if (rs.next()) {
+				numContador = rs.getInt(1);
+			}
 
-	        rs.close();
-	        ps.close();
-	        bd.disconnect();
+			rs.close();
+			ps.close();
+			bd.disconnect();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	    return numContador;
+		return numContador;
 	}
-	
+
 	public boolean cancelarInscripcion(int idUser, int idEvento) {
-	    String sql = "DELETE FROM inscripciones WHERE id_usuario = ? AND id_evento = ?";
-	    try {
-	        PreparedStatement ps = con.prepareStatement(sql);
-	        ps.setInt(1, idUser);
-	        ps.setInt(2, idEvento);
-	        ps.executeUpdate();
-	        ps.close();
-	        return true;
-	    } catch (Exception m) {
-	        m.printStackTrace();
-	        return false;
-	    }
+		String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, "cancelado");
+			ps.setInt(2, idUser);
+			ps.setInt(3, idEvento);
+
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		} catch (Exception m) {
+			System.err.println("Error en cancelarInscripcion: " + m.getMessage());
+			m.printStackTrace();
+			return false;
+		}
 	}
 }

@@ -1,5 +1,5 @@
-<%@ page language="java" import="model.Usuario, model.Organizador"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="model.Usuario, model.Organizador"%>
 <%
 Usuario user = (Usuario) session.getAttribute("usuario");
 String lang = (String) session.getAttribute("lang");
@@ -14,22 +14,18 @@ if (lang == null)
 		</a>
 	</div>
 	<div class="menu">
-		
+
 		<a href="<%=request.getContextPath()%>/eventos"
-		class="<%= "eventos".equals(request.getAttribute("activePage")) ? "activo" : "" %>"
-		> <%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
-		</a> 
-		
-		<a href="<%=request.getContextPath()%>/sobrenosotros" 
-		class="<%= "sobrenosotros".equals(request.getAttribute("activePage")) ? "activo" : "" %>"> 
-		<%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
-		</a> 
-		
-		<a href="<%=request.getContextPath()%>/contacto" 
-		class="<%= "contacto".equals(request.getAttribute("activePage")) ? "activo" : "" %>">
-		<%=lang.equals("es") ? "Contacto" : "Contact"%>
+			class="<%="eventos".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
+			<%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
+		</a> <a href="<%=request.getContextPath()%>/sobrenosotros"
+			class="<%="sobrenosotros".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
+			<%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
+		</a> <a href="<%=request.getContextPath()%>/contacto"
+			class="<%="contacto".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
+			<%=lang.equals("es") ? "Contacto" : "Contact"%>
 		</a>
-		
+
 		<%
 		if (user != null) {
 		%>
@@ -61,9 +57,12 @@ if (lang == null)
 		%>
 		<div class="idioma">
 			<a href="<%=request.getContextPath()%>/idioma?lang=es"
-				class="idiom-opcion-es <%=lang.equals("es") ? "active" : ""%>">🇪🇸</a>
-			<a href="<%=request.getContextPath()%>/idioma?lang=en"
-				class="idiom-opcion-en <%=lang.equals("en") ? "active" : ""%>">🇬🇧</a>
+				class="idiom-opcion-es <%=lang.equals("es") ? "active" : ""%>">
+				<img src="https://flagcdn.com/w40/es.png" width="30" alt="ES">
+			</a> <a href="<%=request.getContextPath()%>/idioma?lang=en"
+				class="idiom-opcion-en <%=lang.equals("en") ? "active" : ""%>">
+				<img src="https://flagcdn.com/w40/gb.png" width="30" alt="EN">
+			</a>
 		</div>
 	</div>
 	<button class="hamburger-btn" id="hamburgerBtn" aria-label="Menú">
