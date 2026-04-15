@@ -23,9 +23,9 @@
 			required>
 
 		<!-- INFORMACIÓN ADICIONAL -->
-		<label id="vehitxt">¿Tienes vehículo?</label>
+		
 		<div id="vehiculo">
-
+			<label id="vehitxt">¿Tienes vehículo?</label>
 			<input type="radio" id="vehiculo-si" name="fvehiculo" value="si"
 				required> <label for="vehiculo-si">Sí</label> <input
 				type="radio" id="vehiculo-no" name="fvehiculo" value="no"> <label
@@ -37,7 +37,7 @@
 			funcional, indícalo debajo.</label> <input type="textarea" id="fdisc"
 			name="fdisc" placeholder="Indícanos tu caso o tus necesidades">
 
-		<label> <input type="checkbox" name="terms" required>
+		<label id="terminos"> <input type="checkbox" name="terms" required>
 			Acepto los <a
 			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">términos
 				y condiciones</a> y la <a

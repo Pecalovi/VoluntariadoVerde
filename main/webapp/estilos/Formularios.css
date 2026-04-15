@@ -50,7 +50,7 @@ input {
 	border: none;
 	border-bottom: 1px solid #b2b2b2;
 	outline: none;
-	width: 75%;
+	width: 85%;
 }
 
 .cajas {
@@ -92,29 +92,33 @@ p {
 	margin: 10px;
 }
 
-main a {
-	font-size: 0.9em;
-	font-weight: 300;
-	margin: 10px;
-}
-
 footer {
 	background: #ebeeef;
 }
 
-#vehitxt {
-	display: flex;
-	justify-content: center;
+#vehiculo label{
+	align-content: center;
+	align-items: center;
 }
 
-#vehiculo {
-	display: flex;
-	justify-content: center;
+[type="radio"]{
+	width: 50px;
 }
 
 #diversidad {
 	font-size: small;
+	margin-top: 15px;
+	margin-right: 110px;
+} 
+#terminos {
+	display: flex;
+    align-items: center;
+    gap: 5px;            
+    white-space: nowrap;
 }
+#terminos input {
+    margin: 0;
+  }
 
 /*---------------MEDIA QUERIES SMARTPHONE---------------*/
 @media ( max-width :768px) {
