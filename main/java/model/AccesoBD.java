@@ -10,9 +10,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AccesoBD {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -582,5 +580,20 @@ public class AccesoBD {
 	    }
 
 	    return numContador;
+	}
+	
+	public boolean cancelarInscripcion(int idUser, int idEvento) {
+	    String sql = "DELETE FROM inscripciones WHERE id_usuario = ? AND id_evento = ?";
+	    try {
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setInt(1, idUser);
+	        ps.setInt(2, idEvento);
+	        ps.executeUpdate();
+	        ps.close();
+	        return true;
+	    } catch (Exception m) {
+	        m.printStackTrace();
+	        return false;
+	    }
 	}
 }

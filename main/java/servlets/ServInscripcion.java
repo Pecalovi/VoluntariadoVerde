@@ -14,9 +14,6 @@ import model.AccesoBD;
 import model.Usuario;
 import model.Voluntario;
 
-/**
- * Servlet implementation class ServInscripcion
- */
 @WebServlet("/ServInscripcion")
 public class ServInscripcion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,41 +27,40 @@ public class ServInscripcion extends HttpServlet {
 		}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession(false);
+	    
+	    HttpSession session = request.getSession(false);
 	    if (session == null || !(session.getAttribute("usuario") instanceof Voluntario)) {
-	    	// Establecer atributo para mostrar mensaje
 	        request.setAttribute("info", "Inicia sesion como voluntario para inscribirte.");
-
-	        // Forward al login
 	        request.getRequestDispatcher("/login").forward(request, response);
 	        return;
 	    }
-	    	
+	        
 	    Usuario user = (Usuario) session.getAttribute("usuario");
-	    
 	    int idUsuario = user.getId();
 	    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-	    	
+	    String accion = request.getParameter("accion"); // Recogemos la acción del JSP
+
 	    try {
-			AccesoBD bd = new AccesoBD();
-			if(bd.inscribir(idUsuario, idEvento)) {
-				
-				request.setAttribute("success", "Inscripción realizada correctamente.");
-				request.getRequestDispatcher("/home").forward(request, response);
-		        return;
-			}else {
-				request.setAttribute("error", "Fallo en la inscripción.");
-				request.getRequestDispatcher("/evento").forward(request, response);
-		        return;
-			}
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			
-			
-			e.printStackTrace();
-		}
-	       
+	        AccesoBD bd = new AccesoBD();
+	        
+	        if ("cancelar".equals(accion)) {
+	            // Lógica para cancelar
+	            bd.cancelarInscripcion(idUsuario, idEvento);
+	        } else {
+	            // Lógica para inscribir
+	            bd.inscribir(idUsuario, idEvento);
+	        }
+	        
+	        bd.disconnect();
+	        
+	        // LA CLAVE: Redirigimos de vuelta al EventoController con el ID
+	        // Esto hace que la página se "refresque" en el mismo sitio
+	        response.sendRedirect(request.getContextPath() + "/evento?id=" + idEvento);
+	        
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        response.sendRedirect(request.getContextPath() + "/home");
+	    }
 	}
 
 }

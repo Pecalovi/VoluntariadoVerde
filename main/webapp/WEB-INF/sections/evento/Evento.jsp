@@ -28,28 +28,28 @@
 		<p id="descripcion">${evento.descripcion}</p>
 
 		<div id="inscripcion">
-			<p>${evento.inscritos}/${evento.plazasTotales} inscritos</p>
-			<form action="${pageContext.request.contextPath}/ServInscripcion"
-				method="post">
-				<input type="hidden" name="idEvento" value="${evento.idEvento}">
+    <p>${evento.inscritos}/${evento.plazasTotales} inscritos</p>
+    
+    <form action="${pageContext.request.contextPath}/ServInscripcion" method="post">
+        <input type="hidden" name="idEvento" value="${evento.idEvento}">
 
-				<%
-				Boolean inscrito = (Boolean) request.getAttribute("inscrito");
-				if (inscrito) {
-				%>
-				<input type="button" class="botones" value="¡Ya estas inscrito!" disabled
-					style="background-color: #ccc; color: #666; border: 1px solid #999; cursor: not-allowed; margin-top: 0;">
-
-				<%
-				} else {
-				%>
-				<input type="submit" class="botones" value="Inscribete"
-					style="margin-top: 0;">
-				<%
-				}
-				%>
-			</form>
-		</div>
+        <%
+        Boolean inscrito = (Boolean) request.getAttribute("inscrito");
+        if (inscrito != null && inscrito) {
+        %>
+            <input type="hidden" name="accion" value="cancelar">
+            <input type="submit" class="botones" value="Cancelar inscripción" 
+                   style="background-color: #d9534f; color: white; border: 1px solid #d43f3a; margin-top: 0; cursor: pointer;">
+        <%
+        } else {
+        %>
+            <input type="hidden" name="accion" value="inscribir">
+            <input type="submit" class="botones" value="Inscríbete" style="margin-top: 0;">
+        <%
+        }
+        %>
+    </form>
+</div>
 	</div>
 
 </div>
