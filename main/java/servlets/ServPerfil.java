@@ -55,11 +55,13 @@ public class ServPerfil extends HttpServlet {
 				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));
 				user.setApellidos(Usuario.capitalizarTexto(request.getParameter("fsurname")));
 				user.setEmail(request.getParameter("femail"));
-				try {
-					user.setNumTelf(Integer.parseInt(request.getParameter("fphone")));
-				} catch (Exception e) {
-					session.setAttribute("error", "Teléfono inválido");
+				String telefono = request.getParameter("fphone");
+
+				if (telefono != null) {
+					telefono = telefono.trim();
 				}
+
+				user.setNumTelf(telefono);
 
 				if (user instanceof Organizador) {
 					Organizador org = (Organizador) user;

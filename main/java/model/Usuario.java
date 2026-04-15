@@ -8,12 +8,12 @@ public abstract class Usuario {
 	protected String nombre;
 	protected String apellidos;
 	protected int id;
-	protected int numTelf;
+	protected String numTelf;
 	protected String email;
 	protected String pass;
 
 	// Constructor
-	public Usuario(String nombre, String apellidos, int id, int numTelf, String email, String pass) {
+	public Usuario(String nombre, String apellidos, int id, String numTelf, String email, String pass) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -48,11 +48,11 @@ public abstract class Usuario {
 		this.id = id;
 	}
 
-	public int getNumTelf() {
+	public String getNumTelf() {
 		return numTelf;
 	}
 
-	public void setNumTelf(int numTelf) {
+	public void setNumTelf(String numTelf) {
 		this.numTelf = numTelf;
 	}
 
@@ -92,13 +92,18 @@ public abstract class Usuario {
 	}
 
 	public static String capitalizarTexto(String str) {
+		if (str == null || str.trim().isEmpty())
+			return "";
+
 		String[] palabras = str.toLowerCase().split(" ");
 		StringBuilder resultado = new StringBuilder();
+
 		for (String palabra : palabras) {
-			if (palabra.length() > 0) {
+			if (!palabra.isEmpty()) {
 				resultado.append(Character.toUpperCase(palabra.charAt(0))).append(palabra.substring(1)).append(" ");
 			}
 		}
+
 		return resultado.toString().trim();
 	}
 

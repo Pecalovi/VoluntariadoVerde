@@ -76,7 +76,7 @@ public class AccesoBD {
 				String nombreDB = rs.getString("nombre");
 				String apellidoDB = rs.getString("apellidos");
 				Date fechaNacDB = rs.getDate("fechaNac");
-				int telefonoDB = rs.getInt("telefono");
+				String telefonoDB = rs.getString("telefono");
 				String empresaDB = rs.getString("empresa");
 				String vehiculoDB = rs.getString("vehiculo");
 				String discapacidadDB = rs.getString("discapacidad");
@@ -147,7 +147,7 @@ public class AccesoBD {
 			ps.setString(3, u.nombre);
 			ps.setString(4, u.apellidos);
 			ps.setDate(5, fechaNac);
-			ps.setLong(6, u.numTelf);
+			ps.setString(6, u.numTelf);
 			ps.setString(7, empresa);
 			ps.setString(8, vehiculo);
 			ps.setString(9, discapacidad);
@@ -433,7 +433,7 @@ public class AccesoBD {
 			ps.setString(1, u.getEmail());
 			ps.setString(2, u.getNombre());
 			ps.setString(3, u.getApellidos());
-			ps.setInt(4, u.getNumTelf());
+			ps.setString(4, u.getNumTelf());
 			ps.setInt(5, u.getId());
 
 			ps.executeUpdate();
@@ -503,6 +503,7 @@ public class AccesoBD {
 				String nombre = rs.getString("nombre");
 				String apellidos = rs.getString("apellidos");
 				String email = rs.getString("email");
+				String telefono = rs.getString("telefono");
 				String pass = rs.getString("pass");
 				String discapacidad = rs.getString("discapacidad");
 				String vehiculo = rs.getString("vehiculo");
@@ -514,7 +515,7 @@ public class AccesoBD {
 					fechaNac = fechaNacDB.toLocalDate();
 				}
 
-				Voluntario v = new Voluntario(nombre, apellidos, id, 0, email, pass, discapacidad, vehiculo, fechaNac, estado);
+				Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo, fechaNac, estado);
 
 				voluntarios.add(v);
 			}

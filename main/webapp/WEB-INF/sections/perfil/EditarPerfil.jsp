@@ -22,9 +22,9 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 			type="email" id="email" name="femail"
 			value="<%=user != null ? user.getEmail() : ""%>" required readonly>
 
-		<label for="numTelf">Teléfono</label> <input type="tel" id="numTelf"
+		<label for="numTelf">Numero de teléfono</label> <input type="tel" id="numTelf"
 			name="fphone" value="<%=user != null ? user.getNumTelf() : ""%>"
-			required readonly>
+			readonly>
 	</div>
 
 	<!-- DERECHA -->
@@ -44,8 +44,8 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 		<label for="fechaNac">Fecha de Nacimiento</label> <input type="date"
 			id="fechaNac" name="fedad"
 			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac().toString() : ""%>"
-			pattern="[6-9][0-9]{8}" readonly> <label for="vehiculo">Vehículo</label>
-		<input type="text" id="vehiculo" name="fvehiculo" maxlength="2"
+			readonly> <label for="vehiculo">Vehículo</label> <input
+			type="text" id="vehiculo" name="fvehiculo" maxlength="2"
 			value="<%=((Voluntario) user).getVehiculo()%>" readonly> <label
 			for="discapacidad">Discapacidad</label> <input type="text"
 			id="discapacidad" name="fdisc"

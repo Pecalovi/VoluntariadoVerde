@@ -8,7 +8,7 @@ public class Voluntario extends Usuario {
 	private String discapacidad, vehiculo, estado;
 	private LocalDate fechaNac;
 
-	public Voluntario(String nombre, String apellidos, int id, int numTelf, String email, String pass,
+	public Voluntario(String nombre, String apellidos, int id, String numTelf, String email, String pass,
 			String discapacidad, String vehiculo, LocalDate fechaNac, String estado) {
 		super(nombre, apellidos, id, numTelf, email, pass);
 		this.discapacidad = discapacidad;

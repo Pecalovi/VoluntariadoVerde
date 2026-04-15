@@ -32,12 +32,8 @@ public class ServRegister extends HttpServlet {
 		String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
 		String apellido = Usuario.capitalizarTexto(request.getParameter("fsurname"));
 		String fechaString = request.getParameter("fedad");
-		int tlf = 0;
-		try {
-		    tlf = Integer.parseInt(request.getParameter("fphone"));
-		} catch (NumberFormatException e) {
-		    tlf = 0;
-		}
+		String tlf = request.getParameter("fphone");
+		System.out.println("TELF RECIBIDO: [" + tlf + "]");
 		String email = request.getParameter("femail");
 		String pass = request.getParameter("fpwd");
 		String vehiculo = request.getParameter("fvehiculo");

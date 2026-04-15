@@ -13,8 +13,8 @@
 			name="fedad" placeholder="Edad" required>
 
 		<!-- DATOS DE CONTACTO -->
-		<input type="tel" id="fphone" name="fphone"
-			placeholder="Número de teléfono" pattern="[6-9][0-9]{8}" required>
+		<input type="tel" name="fphone" maxlength="9" pattern="[0-9]{9}"
+			inputmode="numeric" placeholder="Numero de teléfono" required>
 		<input type="email" id="femail" name="femail" placeholder="Correo"
 			required>
 
@@ -23,22 +23,22 @@
 			required>
 
 		<!-- INFORMACIÓN ADICIONAL -->
-		
+
 		<div id="vehiculo">
-			<label id="vehitxt">¿Tienes vehículo?</label>
-			<input type="radio" id="vehiculo-si" name="fvehiculo" value="si"
-				required> <label for="vehiculo-si">Sí</label> <input
-				type="radio" id="vehiculo-no" name="fvehiculo" value="no"> <label
-				for="vehiculo-no">No</label>
+			<label id="vehitxt">¿Tienes vehículo?</label> <input type="radio"
+				id="vehiculo-si" name="fvehiculo" value="si" required> <label
+				for="vehiculo-si">Sí</label> <input type="radio" id="vehiculo-no"
+				name="fvehiculo" value="no"> <label for="vehiculo-no">No</label>
 
 		</div>
 
 		<label id="diversidad">En caso de tener alguna diversidad
-			funcional, indícalo debajo.</label> <input type="textarea" id="fdisc"
-			name="fdisc" placeholder="Indícanos tu caso o tus necesidades">
+			funcional, indícalo debajo.</label>
+		<textarea id="fdisc" name="fdisc"
+			placeholder="Indícanos tu caso o tus necesidades"></textarea>
 
-		<label id="terminos"> <input type="checkbox" name="terms" required>
-			Acepto los <a
+		<label id="terminos"> <input type="checkbox" name="terms"
+			required> Acepto los <a
 			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">términos
 				y condiciones</a> y la <a
 			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">política
@@ -50,16 +50,3 @@
 	</form>
 
 </div>
-
-<script>
-	const hoy = new Date();
-
-	// Restar 16 años
-	hoy.setFullYear(hoy.getFullYear() - 16);
-	hoy.setHours(0, 0, 0, 0);
-
-	// Formato YYYY-MM-DD
-	const fechaMaxima = hoy.toISOString().split("T")[0];
-
-	document.getElementById("edad").max = fechaMaxima;
-</script>
