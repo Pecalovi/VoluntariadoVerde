@@ -65,25 +65,25 @@
 
     <div class="ods-contenedor">
         <div class="ods-item ods-8">
-            <a href="https://www.pactomundial.org/ods/8-trabajo-decente-y-crecimiento-economico/">
-                <img src="src/ods-8.jpg" alt="SDG 8">
+            <a href="https://globalgoals.org/goals/8-decent-work-and-economic-growth//">
+                <img src="src/ods/8.png" alt="SDG 8">
             </a>
         </div>
 
         <div class="ods-item ods-10">
-            <a href="https://www.pactomundial.org/ods/10-reduccion-de-las-desigualdades/">
-                <img src="src/ods-10.jpg" alt="SDG 10">
+            <a href="https://globalgoals.org/goals/10-reduced-inequalities/">
+                <img src="src/ods/10.png" alt="SDG 10">
             </a>
         </div>
 
         <div class="ods-item ods-11">
-            <a href="https://www.pactomundial.org/ods/11-ciudades-y-comunidades-sostenibles/">
-                <img src="src/ods-11.jpg" alt="SDG 11">
+            <a href="https://globalgoals.org/goals/11-sustainable-cities-and-communities/">
+                <img src="src/ods/11.png" alt="SDG 11">
             </a>
         </div>
         <div class="ods-item ods-13">
-            <a href="https://www.pactomundial.org/ods/13-accion-por-el-clima/">
-                <img src="src/ods-13.jpg" alt="SDG 13">
+            <a href="https://globalgoals.org/goals/13-climate-action/">
+                <img src="src/ods/13.png" alt="SDG 13">
             </a>
         </div>
     </div>

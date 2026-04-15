@@ -294,7 +294,7 @@ em {
 		justify-content: space-between;
 		box-shadow: 0 6px 14px rgba(46, 42, 42, 0.08);
 	}
-	.ods-item img {
+	a img {
 		width: 160px;
 	}
 	.ods-item:hover img {
