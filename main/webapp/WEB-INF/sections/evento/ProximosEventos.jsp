@@ -42,7 +42,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 	<!-- PANEL DE FILTROS -->
 	<div id="panel-filtros" class="oculto">
 		<select name="tipo" form="formBuscar">
-			<option value="" disabled selected><%=lang.equals("es") ?%>Selecciona tipo de evento "Buscar evento..." <%: %> "Find event..."</option>
+			<option value="" disabled selected><%=lang.equals("es") ? "Selecciona tipo de evento." : "Select event type."%></option>
 			<option value="Motocros">Motocross</option>
 			<option value="Maraton">Maratón</option>
 			<option value="Ciclismo">Ciclismo</option>
@@ -66,7 +66,8 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 			class="evento_index1 animate__animated animate__bounceInLeft"
 			style="animation-delay: <%=delay%>s;">
 			<div class="evento_index">
-				<img src="src/eventos/<%=evento.getTipo()%>.jpg" alt="<%=evento.getTipo()%>">
+				<img src="src/eventos/<%=evento.getTipo()%>.jpg"
+					alt="<%=evento.getTipo()%>">
 				<div class="informacion-evento">
 					<p><%=evento.getTipo()%></p>
 					<h2><%=evento.getNombre()%></h2>
@@ -124,6 +125,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 	});
 	
 	function resetFiltros() {
-	    window.location.href = "<%=request.getContextPath()%>/eventos";
+	    window.location.href = "<%=request.getContextPath()%>
+	/eventos";
 	}
 </script>
