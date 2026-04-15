@@ -10,6 +10,7 @@ if (lang == null)
 String accion = (String) request.getAttribute("accion");
 %>
 
+<h1>${evento.nombre}</h1>
 <div class="menu-evento">
 	<a
 		href="${pageContext.request.contextPath}/perfil?opcion=gestionar-evento&id=${evento.idEvento}&accion=gestionar-voluntarios"

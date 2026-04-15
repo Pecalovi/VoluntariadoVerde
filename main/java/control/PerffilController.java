@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import model.AccesoBD;
 import model.Evento;
 import model.Usuario;
+import model.Voluntario;
 
 @WebServlet("/perfil")
 public class PerffilController extends HttpServlet {
@@ -99,8 +100,10 @@ public class PerffilController extends HttpServlet {
 			case "gestionar-voluntarios":
 				eventoView = "GestionarVoluntarios.jsp";
 				accion = "voluntarios";
+				int idEvento = Integer.parseInt(request.getParameter("id"));
+				List<Voluntario> voluntarios = AccesoBD.obtenerVoluntarios(idEvento);
+				request.setAttribute("voluntarios", voluntarios);
 				break;
-
 			default:
 				eventoView = "GestionarVoluntarios.jsp";
 				accion = "ver";

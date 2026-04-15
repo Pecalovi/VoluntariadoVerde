@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,12 +45,14 @@ public class EventoController extends HttpServlet {
 			return;
 		}
 
-		Evento e = AccesoBD.obtenerEvento(id);
+		List<Evento> eventos = AccesoBD.obtenerEventos("id_evento", id);
 
-		if (e == null) {
-			response.sendRedirect(contextPath + "/home");
-			return;
+		if (eventos.isEmpty()) {
+		    response.sendRedirect(contextPath + "/home");
+		    return;
 		}
+
+		Evento e = eventos.get(0);
 
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute("usuario");
