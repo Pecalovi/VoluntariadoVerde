@@ -85,20 +85,25 @@
 	<h2>Nuestro compromiso con los ODS</h2>
 
 	<div class="ods-contenedor">
-			<a
-				href="https://www.pactomundial.org/ods/8-trabajo-decente-y-crecimiento-economico/">
+        <div class="ods-item ods-8">
+            <a href="https://www.pactomundial.org/ods/8-trabajo-decente-y-crecimiento-economico/">
 				<img src="src/ods/ods-8.jpg" alt="ODS 8">
-			</a>
+            </a>
+        </div>
+        <div class="ods-item ods-10">
 			<a
 				href="https://www.pactomundial.org/ods/10-reduccion-de-las-desigualdades/">
 				<img src="src/ods/ods-10.jpg" alt="ODS 10">
 			</a>
+			</div>
+			<div class="ods-item ods-11">
 			<a
 				href="https://www.pactomundial.org/ods/11-ciudades-y-comunidades-sostenibles/">
 				<img src="src/ods/ods-11.jpg" alt="ODS 11">
-			</a>
+			</a></div>
+			<div class="ods-item ods-13">
 			<a href="https://www.pactomundial.org/ods/13-accion-por-el-clima/">
 				<img src="src/ods/ods-13.jpg" alt="ODS 13">
-			</a>
+			</a></div>
 	</div>
 </div>

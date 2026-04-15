@@ -62,20 +62,18 @@
 </div>
 <div class="seccion-ods">
     <h2>Our commitment to the SDGs</h2>
-
+    
     <div class="ods-contenedor">
         <div class="ods-item ods-8">
-            <a href="https://globalgoals.org/goals/8-decent-work-and-economic-growth//">
+            <a href="https://globalgoals.org/goals/8-decent-work-and-economic-growth/">
                 <img src="src/ods/8.png" alt="SDG 8">
             </a>
         </div>
-
         <div class="ods-item ods-10">
             <a href="https://globalgoals.org/goals/10-reduced-inequalities/">
                 <img src="src/ods/10.png" alt="SDG 10">
             </a>
         </div>
-
         <div class="ods-item ods-11">
             <a href="https://globalgoals.org/goals/11-sustainable-cities-and-communities/">
                 <img src="src/ods/11.png" alt="SDG 11">
