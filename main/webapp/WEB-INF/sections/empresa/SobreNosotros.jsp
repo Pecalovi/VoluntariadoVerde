@@ -87,7 +87,7 @@
 	<div class="ods-contenedor">
         <div class="ods-item ods-8">
             <a href="https://www.pactomundial.org/ods/8-trabajo-decente-y-crecimiento-economico/">
-				<img src="src/ods/ods-8.jpg" alt="ODS 8">
+				<img src="src/ods/ods-8.png" alt="ODS 8">
             </a>
         </div>
         <div class="ods-item ods-10">
