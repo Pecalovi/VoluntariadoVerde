@@ -42,7 +42,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 	<!-- PANEL DE FILTROS -->
 	<div id="panel-filtros" class="oculto">
 		<select name="tipo" form="formBuscar">
-			<option value="" disabled selected>Selecciona tipo de evento</option>
+			<option value="" disabled selected><%=lang.equals("es") ?%>Selecciona tipo de evento "Buscar evento..." <%: %> "Find event..."</option>
 			<option value="Motocros">Motocross</option>
 			<option value="Maraton">Maratón</option>
 			<option value="Ciclismo">Ciclismo</option>
