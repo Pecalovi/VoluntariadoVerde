@@ -5,7 +5,7 @@ public class Inscripcion {
 	// Atributos
 	private Voluntario voluntario;
 	private Evento evento;
-	private String fechaInscripcion;
+	private String fechaInscripcion, estado;
 
 	// Constructor
 	public Inscripcion(Voluntario voluntario, Evento evento, String fechaInscripcion) {

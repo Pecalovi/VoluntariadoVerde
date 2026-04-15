@@ -32,15 +32,14 @@
 						<button type="submit">Aceptar</button>
 					</form>
 
-					<!-- RECHAZAR -->
-					<form
-						action="${pageContext.request.contextPath}/ServPerfil"
+					<!-- LISTA DE ESPERA -->
+					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
 						<input type="hidden" name="idUsuario" value="${v.id}"> <input
 							type="hidden" name="accionVoluntario" value="rechazar"> <input
 							type="hidden" name="idEvento" value="${param.id}">
-						<button type="submit">Rechazar</button>
+						<button type="submit">Lista de espera</button>
 					</form>
 					<br />
 				</c:if>
@@ -74,7 +73,7 @@
 
 		<div>
 			<h3>
-				Solicitudes rechazadas (
+				Lista de espera (
 				<c:forEach var="v" items="${voluntarios}">
 					<c:if test="${v.estado == 'Rechazado'}">
 						<c:set var="rechazados" value="${rechazados + 1}" />
@@ -85,6 +84,35 @@
 
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Rechazado'}">
+					<span>${v.nombre} ${v.apellidos}</span>
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post" style="display: inline;">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.id}"> <input
+							type="hidden" name="accionVoluntario" value="aceptar"> <input
+							type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit">Aceptar</button>
+					</form>
+					<br />
+				</c:if>
+			</c:forEach>
+		</div>
+
+		<c:set var="cancelados" value="0" />
+
+		<div>
+			<h3>
+				Solicitudes canceladas por el voluntario (
+				<c:forEach var="v" items="${voluntarios}">
+					<c:if test="${v.estado == 'Cancelado'}">
+						<c:set var="cancelados" value="${cancelados + 1}" />
+					</c:if>
+				</c:forEach>
+				${cancelados} )
+			</h3>
+
+			<c:forEach var="v" items="${voluntarios}">
+				<c:if test="${v.estado == 'Cancelado'}">
 					<span>${v.nombre} ${v.apellidos}</span>
 					<br />
 				</c:if>
