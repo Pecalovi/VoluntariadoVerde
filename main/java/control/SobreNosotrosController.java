@@ -27,6 +27,7 @@ public class SobreNosotrosController extends HttpServlet {
 		} else {
 			request.setAttribute("view", "EN/SobreNosotros.jsp");
 		}
+		request.setAttribute("activePage", "sobrenosotros");
 		request.setAttribute("estilo", "estilos/SobreNosotros.css");;
 
 		//Encadenar la petición y cargar otro recurso

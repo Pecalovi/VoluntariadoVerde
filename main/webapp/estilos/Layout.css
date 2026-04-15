@@ -191,6 +191,18 @@ header.isla {
 	opacity: 1;
 	font-size: 30px;
 }
+/*Header resaltado al estar activo*/
+a.activo {
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    text-decoration: none; 
+    border-bottom: 2px solid white; 
+    padding-bottom: 4px;           
+    display: inline-block;       
+
+}
+
 .idiom-barra {
 	font-size: 30px;
 	color: var(--blanco);

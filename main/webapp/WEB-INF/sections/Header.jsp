@@ -14,10 +14,22 @@ if (lang == null)
 		</a>
 	</div>
 	<div class="menu">
-		<a href="<%=request.getContextPath()%>/eventos"> <%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
-		</a> <a href="<%=request.getContextPath()%>/sobrenosotros"> <%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
-		</a> <a href="<%=request.getContextPath()%>/contacto"> <%=lang.equals("es") ? "Contacto" : "Contact"%>
+		
+		<a href="<%=request.getContextPath()%>/eventos"
+		class="<%= "eventos".equals(request.getAttribute("activePage")) ? "activo" : "" %>"
+		> <%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
+		</a> 
+		
+		<a href="<%=request.getContextPath()%>/sobrenosotros" 
+		class="<%= "sobrenosotros".equals(request.getAttribute("activePage")) ? "activo" : "" %>"> 
+		<%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
+		</a> 
+		
+		<a href="<%=request.getContextPath()%>/contacto" 
+		class="<%= "contacto".equals(request.getAttribute("activePage")) ? "activo" : "" %>">
+		<%=lang.equals("es") ? "Contacto" : "Contact"%>
 		</a>
+		
 		<%
 		if (user != null) {
 		%>

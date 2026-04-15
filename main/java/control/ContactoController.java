@@ -24,7 +24,7 @@ public class ContactoController extends HttpServlet {
 		}
 
 		request.setAttribute("view", "empresa/Contacto.jsp");
-
+		request.setAttribute("activePage", "contacto");
 		request.setAttribute("estilo", "estilos/Contacto.css");
 
 		// Encadenar la petición y cargar otro recurso

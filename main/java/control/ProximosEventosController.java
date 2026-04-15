@@ -33,6 +33,7 @@ public class ProximosEventosController extends HttpServlet {
 		// 2. Cargar la vista
 		request.setAttribute("eventos", eventos);
 		request.setAttribute("view", "evento/ProximosEventos.jsp");
+		request.setAttribute("activePage", "eventos");
 		request.setAttribute("estilo", "estilos/ProximosEventos.css");
 
 		// Encadenar la petición y cargar otro recurso

@@ -85,6 +85,7 @@ public class EventoController extends HttpServlet {
 		} else {
 			request.setAttribute("view", "EN/Evento.jsp");
 		}
+		
 		request.setAttribute("estilo", "estilos/Evento.css");
 		;
 
