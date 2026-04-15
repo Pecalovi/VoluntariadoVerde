@@ -4,6 +4,7 @@
 	--blanco: #ffffff;
 	--gris-oscuro: #333333;
 	--gris-claro: #999999;
+	--azul: #007bff;
 }
 /* RESETEO GLOBAL Y BASE */
 * {
@@ -70,7 +71,6 @@ li {
 /* IMÁGENES */
 img {
 	max-width: 100%;
-	display: block;
 	height: auto;
 	border-radius: 4px;
 }

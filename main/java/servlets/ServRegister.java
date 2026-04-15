@@ -29,15 +29,20 @@ public class ServRegister extends HttpServlet {
 		String contextPath = request.getContextPath();
 		
 		String tipo = request.getParameter("tipo");
-		String nombre = request.getParameter("fname");
-		String apellido = request.getParameter("fsurname");
+		String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
+		String apellido = Usuario.capitalizarTexto(request.getParameter("fsurname"));
 		String fechaString = request.getParameter("fedad");
-		int tlf = Integer.parseInt(request.getParameter("fphone"));
+		int tlf = 0;
+		try {
+		    tlf = Integer.parseInt(request.getParameter("fphone"));
+		} catch (NumberFormatException e) {
+		    tlf = 0;
+		}
 		String email = request.getParameter("femail");
 		String pass = request.getParameter("fpwd");
 		String vehiculo = request.getParameter("fvehiculo");
 		String discapacidad = request.getParameter("fdisc");
-		String empresa = request.getParameter("fenterprise");
+		String empresa = Usuario.capitalizarTexto(request.getParameter("fenterprise"));
 		
 		LocalDate fechaNac = null;
 
@@ -52,9 +57,9 @@ public class ServRegister extends HttpServlet {
 			AccesoBD bd = new AccesoBD();
 			Usuario u = null;
 			
-			if (tipo.equals("voluntario")) {
+			if ("voluntario".equals(tipo)) {
 				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac);
-			} else if (tipo.equals("organizador")) {
+			} else if ("organizador".equals(tipo)) {
 				u = new Organizador(nombre, apellido, 0, tlf, email, passCifrada, empresa);
 			}
 

@@ -15,8 +15,8 @@
 				</a>
 			</div>
 		</c:forEach>
+		
 	</c:when>
-
 	<c:otherwise>
 		<p>
 			<c:choose>

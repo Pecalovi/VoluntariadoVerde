@@ -43,55 +43,61 @@ public class ServPerfil extends HttpServlet {
 				return;
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "No se pudo eliminar la cuenta.");
+				session.setAttribute("error", "No se pudo eliminar la cuenta.");
 			}
 
 			// ir al home con un success de eliminar cuenta
 			break;
 		case "editar-cuenta":
 			try {
-		        bd = new AccesoBD();
+				bd = new AccesoBD();
 
-		        user.setNombre(request.getParameter("fname"));
-		        user.setApellidos(request.getParameter("fsurname"));
-		        user.setEmail(request.getParameter("femail"));
-		        user.setNumTelf(Integer.parseInt(request.getParameter("fphone")));
-		        
-		        if (user instanceof Organizador) {
-		            Organizador org = (Organizador) user;
-		            org.setEntidad(request.getParameter("fenterprise"));
-		        }
-		        if (user instanceof Voluntario) {
-		            Voluntario vol = (Voluntario) user;
+				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));
+				user.setApellidos(Usuario.capitalizarTexto(request.getParameter("fsurname")));
+				user.setEmail(request.getParameter("femail"));
+				try {
+					user.setNumTelf(Integer.parseInt(request.getParameter("fphone")));
+				} catch (Exception e) {
+					session.setAttribute("error", "Teléfono inválido");
+				}
 
-		            vol.setVehiculo(request.getParameter("fvehiculo"));
-		            vol.setDiscapacidad(request.getParameter("fdisc"));
+				if (user instanceof Organizador) {
+					Organizador org = (Organizador) user;
+					org.setEntidad(Usuario.capitalizarTexto(request.getParameter("fenterprise")));
+				}
+				if (user instanceof Voluntario) {
+					Voluntario vol = (Voluntario) user;
 
-		            String fecha = request.getParameter("fedad");
+					vol.setVehiculo(request.getParameter("fvehiculo"));
+					vol.setDiscapacidad(request.getParameter("fdisc"));
 
-		            if (fecha != null && !fecha.isEmpty()) {
-		                try {
-		                    LocalDate fechaLocal = LocalDate.parse(fecha);
-		                    vol.setFechaNac(fechaLocal);
-		                } catch (Exception e) {
-		                    request.setAttribute("error", "Fecha inválida");
-		                }
-		            }
-		        }
+					String fecha = request.getParameter("fedad");
 
-		        bd.editarDatosUsuario(user);
+					if (fecha != null && !fecha.isEmpty()) {
+						try {
+							LocalDate fechaLocal = LocalDate.parse(fecha);
+							vol.setFechaNac(fechaLocal);
+						} catch (Exception e) {
+							session.setAttribute("error", "Fecha inválida");
+							response.sendRedirect(request.getContextPath() + "/perfil");
+							return;
+						}
+					}
+				}
 
-		        session.setAttribute("usuario", user);
+				bd.editarDatosUsuario(user);
 
-		        response.sendRedirect(request.getContextPath() + "/perfil?success=1");
-		        return;
+				session.setAttribute("usuario", user);
+				session.setAttribute("success", "Se ha editado el perfil.");
 
-		    } catch (ClassNotFoundException | SQLException e) {
-		        e.printStackTrace();
-		        request.setAttribute("error", "No se pudo actualizar el perfil.");
-		    }
-		    break;
-			
+				response.sendRedirect(request.getContextPath() + "/perfil");
+				return;
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+				session.setAttribute("error", "No se ha podido actualizar el perfil.");
+			}
+			break;
 		}
 	}
 
