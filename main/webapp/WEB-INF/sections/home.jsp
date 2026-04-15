@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="model.Evento"%>
+<%@ page import="model.Evento, model.AccesoBD"%>
 
 <%
 ArrayList<Evento> eventos = (ArrayList<Evento>) request.getAttribute("eventos");
@@ -23,8 +23,10 @@ boolean es = "es".equals(lang);
 
 <div class="container text-center">
 	<div class="row">
-		<div class="col-md-7">
-			<p><%=es ? "Cada dia haciendo del mundo un lugar sostenible" : "Every day building a better world"%></p>
+		<div class="col-md-5">
+			<p class="frase"><%=es
+		? "Cada dia haciendo del mundo un lugar <span class=\"frase-verde\">sostenible</span>"
+		: "Every day building a <span class=\"frase-verde\">better world</span>"%></p>
 		</div>
 		<div class="col-6 col-md-5">
 
@@ -36,13 +38,13 @@ boolean es = "es".equals(lang);
 						<div class="row">
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="1200">0</span>
+									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("usuarios", 1) %>">0</span>
 									<p><%=es ? "Voluntarios" : "Volunteers"%></p>
 								</div>
 							</div>
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="340">0</span>
+									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("eventos", null) %>">0</span>
 									<p><%=es ? "Eventos realizados" : "Events held"%></p>
 								</div>
 							</div>
@@ -51,14 +53,14 @@ boolean es = "es".equals(lang);
 
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="85">0</span>
+									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("usuarios", 2) %>">0</span>
 									<p><%=es ? "Organizaciones" : "Organizations"%></p>
 								</div>
 							</div>
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
 									<span class="impacto-numero" data-target="15">0</span>
-									<p><%=es ? "Ciudades recorridas" : "Visited cities"%></p>
+									<p><%=es ? "Inscripciones" : "Inscription"%></p>
 								</div>
 							</div>
 						</div>
@@ -113,6 +115,12 @@ boolean es = "es".equals(lang);
 		}
 		%>
 	</div>
+</section>
+
+<section class="mapa">
+	<iframe
+		src="https://www.google.com/maps/d/u/1/embed?mid=1u2CIR7cbPodUWkWd8Y64IERjAgK79OI&ehbc=2E312F&noprof=1"
+		width="940" height="480"></iframe>
 </section>
 
 

@@ -548,4 +548,39 @@ public class AccesoBD {
 	        e.printStackTrace();
 	    }
 	}
+	
+	public static int contadorHome(String tabla, Integer idRol) {
+	    int numContador = 0;
+	    String sql;
+
+	    if (idRol != null) {
+	        sql = "SELECT COUNT(*) FROM " + tabla + " WHERE id_rol = ?";
+	    } else {
+	        sql = "SELECT COUNT(*) FROM " + tabla;
+	    }
+
+	    try {
+	        AccesoBD bd = new AccesoBD();
+	        PreparedStatement ps = bd.con.prepareStatement(sql);
+
+	        if (idRol != null) {
+	            ps.setInt(1, idRol);
+	        }
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            numContador = rs.getInt(1);
+	        }
+
+	        rs.close();
+	        ps.close();
+	        bd.disconnect();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return numContador;
+	}
 }

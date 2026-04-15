@@ -1,3 +1,24 @@
+.mapa{
+	margin-left: 25%;
+}
+.frase {
+    color: black;
+    font-weight: 500;
+    font-size: 3rem;
+    text-align: left;
+    padding-left: 1rem;
+    margin-top: 20%;
+}
+
+.col-md-7{
+	margin: auto;
+}
+
+.frase-verde {
+    color: var(--verde-principal);
+    font-style: italic;
+}
+
 .eslogan {
 	position: relative;
 	z-index: 2;
@@ -23,6 +44,7 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
     border-radius: 8px;
+    margin-left: 30%;
 }
 
 #contador-impacto:hover {
@@ -233,4 +255,10 @@
     }
     .col-md-7{
     display: none;}
+    .frase {
+    display: none;
+    }
+    .mapa{
+    display: none;}
+}
 }
