@@ -98,6 +98,39 @@ public class ServPerfil extends HttpServlet {
 				session.setAttribute("error", "No se ha podido actualizar el perfil.");
 			}
 			break;
+		case "gestionar-voluntarios":
+
+			try {
+				bd = new AccesoBD();
+
+				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				String accionVoluntario = request.getParameter("accionVoluntario");
+
+				String estado;
+
+				if ("aceptar".equals(accionVoluntario)) {
+					estado = "Aceptado";
+				} else if ("rechazar".equals(accionVoluntario)) {
+					estado = "Rechazado";
+				} else {
+					response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento
+							+ "&accion=gestionar-voluntarios");
+					return;
+				}
+
+				bd.cambiarEstadoInscripcion(idUsuario, idEvento, estado);
+
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento
+						+ "&accion=gestionar-voluntarios");
+				return;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				session.setAttribute("error", "No se pudo actualizar el estado.");
+			}
+
+			break;
 		}
 	}
 

@@ -58,7 +58,7 @@ public class ServRegister extends HttpServlet {
 			Usuario u = null;
 			
 			if ("voluntario".equals(tipo)) {
-				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac);
+				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac, null);
 			} else if ("organizador".equals(tipo)) {
 				u = new Organizador(nombre, apellido, 0, tlf, email, passCifrada, empresa);
 			}

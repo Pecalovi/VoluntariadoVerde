@@ -531,4 +531,21 @@ public class AccesoBD {
 
 		return voluntarios;
 	}
+
+	public void cambiarEstadoInscripcion(int idUsuario, int idEvento, String estado) {
+	    String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
+
+	    try {
+	        PreparedStatement ps = con.prepareStatement(sql);
+	        ps.setString(1, estado);
+	        ps.setInt(2, idUsuario);
+	        ps.setInt(3, idEvento);
+
+	        ps.executeUpdate();
+	        ps.close();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

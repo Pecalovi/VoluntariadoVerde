@@ -22,6 +22,26 @@
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Pendiente'}">
 					<span>${v.nombre} ${v.apellidos}</span>
+					<!-- ACEPTAR -->
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post" style="display: inline;">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.id}"> <input
+							type="hidden" name="accionVoluntario" value="aceptar"> <input
+							type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit">Aceptar</button>
+					</form>
+
+					<!-- RECHAZAR -->
+					<form
+						action="${pageContext.request.contextPath}/ServPerfil"
+						method="post" style="display: inline;">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.id}"> <input
+							type="hidden" name="accionVoluntario" value="rechazar"> <input
+							type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit">Rechazar</button>
+					</form>
 					<br />
 				</c:if>
 			</c:forEach>
