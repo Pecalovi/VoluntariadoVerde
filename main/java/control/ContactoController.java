@@ -42,8 +42,8 @@ public class ContactoController extends HttpServlet {
         String mensaje = request.getParameter("Text1");
 
         boolean enviadoAmi = Mailer.send("voluntariadoverdev@gmail.com", 
-                "Nuevo mensaje de: " + nombre, 
-                "Has recibido una duda.\n\nAsunto: " + asunto + "\nCuerpo: " + mensaje);
+                "Nuevo mensaje de: " + nombre,
+                "Has recibido una duda."+ "\nDe: "+ emailCliente +"\n\nAsunto: " + asunto + "\nCuerpo: " + mensaje);
 
         // --- CORREO 2: Para el CLIENTE (Confirmación) ---
         if (enviadoAmi) {
