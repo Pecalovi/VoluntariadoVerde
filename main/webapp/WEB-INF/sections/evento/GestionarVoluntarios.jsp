@@ -5,7 +5,6 @@
 
 	<div>
 
-		<!-- PENDIENTES -->
 		<c:set var="pendientes" value="0" />
 
 		<div>
@@ -22,7 +21,9 @@
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Pendiente'}">
 					<span>${v.nombre} ${v.apellidos}</span>
-					<!-- ACEPTAR -->
+					
+					<form style="display: inline;"><button type="button">Ver perfil</button></form>
+					
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
@@ -32,7 +33,6 @@
 						<button type="submit">Aceptar</button>
 					</form>
 
-					<!-- LISTA DE ESPERA -->
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
@@ -46,7 +46,6 @@
 			</c:forEach>
 		</div>
 
-		<!-- ACEPTADOS -->
 		<c:set var="aceptados" value="0" />
 
 		<div>
@@ -63,12 +62,12 @@
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Aceptado'}">
 					<span>${v.nombre} ${v.apellidos}</span>
+					<form style="display: inline;"><button type="button">Ver perfil</button></form>
 					<br />
 				</c:if>
 			</c:forEach>
 		</div>
 
-		<!-- RECHAZADOS -->
 		<c:set var="rechazados" value="0" />
 
 		<div>
@@ -85,6 +84,8 @@
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Rechazado'}">
 					<span>${v.nombre} ${v.apellidos}</span>
+					<form style="display: inline;"><button type="button">Ver perfil</button></form>
+					
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
