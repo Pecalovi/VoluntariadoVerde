@@ -13,7 +13,7 @@
 			inputmode="numeric" placeholder="Numero de teléfono" required> <input type="email" id="femail"
 			name="femail" placeholder="Correo" required> <input
 			type="password" id="fpwd" name="fpwd" placeholder="Contraseña"
-			required> <label> <input type="checkbox" name="terms"
+			required> <label id="termorg"> <input type="checkbox" name="terms"
 			required> Acepto los <a
 			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">términos
 				y condiciones</a> y la <a
