@@ -25,19 +25,16 @@
 		<!-- INFORMACIÓN ADICIONAL -->
 
 		<div id="vehiculo">
-			<label id="vehitxt">¿Tienes vehículo?</label> <input type="radio"
-				id="vehiculo-si" name="fvehiculo" value="si" required> <label
-				for="vehiculo-si">Sí</label> <input type="radio" id="vehiculo-no"
-				name="fvehiculo" value="no"> <label for="vehiculo-no">No</label>
-
+			<label>¿Tienes vehículo?</label> <input type="checkbox"
+				name="fvehiculo" value="true"> <label>Sí</label>
 		</div>
 
-		<label id="diversidad">En caso de tener alguna diversidad
-			funcional, indícalo debajo.</label>
-		<textarea id="fdisc" name="fdisc"
-			placeholder="Indícanos tu caso o tus necesidades"></textarea>
-
-		<label id="terminos"> <input type="checkbox" name="terms"
+		<label>Discapacidad</label> <select name="fdisc">
+			<option value="0">Ninguna</option>
+			<option value="1">Leve</option>
+			<option value="2">Moderada</option>
+			<option value="3">Severa</option>
+		</select> <label id="terminos"> <input type="checkbox" name="terms"
 			required> Acepto los <a
 			href="https://drive.google.com/file/d/1Pul60eAL7ZasHGLtT0SkbltUSnCWCsiu/view?usp=sharing">términos
 				y condiciones</a> y la <a

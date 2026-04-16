@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
@@ -22,63 +21,83 @@ public class ServPerfil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute("usuario");
+
 		String accion = request.getParameter("accion");
-		AccesoBD bd;
 
-		switch (accion) {
-		case "eliminar-cuenta":
+		if (accion == null) {
+			response.sendRedirect(request.getContextPath() + "/perfil");
+			return;
+		}
 
-			try {
+		try {
+			AccesoBD bd;
+
+			switch (accion) {
+
+			// =========================
+			// ELIMINAR CUENTA
+			// =========================
+			case "eliminar-cuenta":
+
 				bd = new AccesoBD();
 				bd.borrarDatosUsuario(user.getId());
 
-				// Cerrar sesión
 				session.invalidate();
-
-				// Mandar mensaje de info al home
 				response.sendRedirect(request.getContextPath() + "/home?parametro=2");
-
 				return;
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-				session.setAttribute("error", "No se pudo eliminar la cuenta.");
-			}
 
-			// ir al home con un success de eliminar cuenta
-			break;
-		case "editar-cuenta":
-			try {
+			// =========================
+			// EDITAR CUENTA
+			// =========================
+			case "editar-cuenta":
+
 				bd = new AccesoBD();
 
 				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));
 				user.setApellidos(Usuario.capitalizarTexto(request.getParameter("fsurname")));
 				user.setEmail(request.getParameter("femail"));
-				String telefono = request.getParameter("fphone");
 
+				String telefono = request.getParameter("fphone");
 				if (telefono != null) {
-					telefono = telefono.trim();
+					user.setNumTelf(telefono.trim());
 				}
 
-				user.setNumTelf(telefono);
-
+				// =========================
+				// ORGANIZADOR
+				// =========================
 				if (user instanceof Organizador) {
+
 					Organizador org = (Organizador) user;
 					org.setEntidad(Usuario.capitalizarTexto(request.getParameter("fenterprise")));
 				}
+
+				// =========================
+				// VOLUNTARIO
+				// =========================
 				if (user instanceof Voluntario) {
+
 					Voluntario vol = (Voluntario) user;
 
-					vol.setVehiculo(request.getParameter("fvehiculo"));
-					vol.setDiscapacidad(request.getParameter("fdisc"));
+					boolean vehiculo = request.getParameter("fvehiculo") != null;
+					vol.setVehiculo(vehiculo);
+
+					int discapacidad = 0;
+					String discStr = request.getParameter("fdisc");
+
+					if (discStr != null && !discStr.isEmpty()) {
+						discapacidad = Integer.parseInt(discStr);
+					}
+
+					vol.setDiscapacidad(discapacidad);
 
 					String fecha = request.getParameter("fedad");
 
 					if (fecha != null && !fecha.isEmpty()) {
 						try {
-							LocalDate fechaLocal = LocalDate.parse(fecha);
-							vol.setFechaNac(fechaLocal);
+							vol.setFechaNac(LocalDate.parse(fecha));
 						} catch (Exception e) {
 							session.setAttribute("error", "Fecha inválida");
 							response.sendRedirect(request.getContextPath() + "/perfil");
@@ -95,14 +114,11 @@ public class ServPerfil extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/perfil");
 				return;
 
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-				session.setAttribute("error", "No se ha podido actualizar el perfil.");
-			}
-			break;
-		case "gestionar-voluntarios":
+			// =========================
+			// GESTIONAR INSCRIPCIONES
+			// =========================
+			case "gestionar-voluntarios":
 
-			try {
 				bd = new AccesoBD();
 
 				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
@@ -126,13 +142,12 @@ public class ServPerfil extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento
 						+ "&accion=gestionar-voluntarios");
 				return;
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				session.setAttribute("error", "No se pudo actualizar el estado.");
 			}
 
-			break;
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("error", "Error en la operación.");
+			response.sendRedirect(request.getContextPath() + "/perfil");
 		}
 	}
 

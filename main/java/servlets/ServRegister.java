@@ -27,26 +27,34 @@ public class ServRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String contextPath = request.getContextPath();
-		
-		String tipo = request.getParameter("tipo");
-		String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
-		String apellido = Usuario.capitalizarTexto(request.getParameter("fsurname"));
-		String fechaString = request.getParameter("fedad");
-		String tlf = request.getParameter("fphone");
-		System.out.println("TELF RECIBIDO: [" + tlf + "]");
-		String email = request.getParameter("femail");
-		String pass = request.getParameter("fpwd");
-		String vehiculo = request.getParameter("fvehiculo");
-		String discapacidad = request.getParameter("fdisc");
-		String empresa = Usuario.capitalizarTexto(request.getParameter("fenterprise"));
-		
-		LocalDate fechaNac = null;
 
-		if (fechaString != null && !fechaString.isEmpty()) {
-		    fechaNac = LocalDate.parse(fechaString);
-		}
+	    String tipo = request.getParameter("tipo");
+	    String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
+	    String apellido = Usuario.capitalizarTexto(request.getParameter("fsurname"));
+	    String fechaString = request.getParameter("fedad");
+	    String tlf = request.getParameter("fphone");
+	    String email = request.getParameter("femail");
+	    String pass = request.getParameter("fpwd");
 
-		String passCifrada = Usuario.sha256(pass);
+	    String empresa = Usuario.capitalizarTexto(request.getParameter("fenterprise"));
+
+	    // ✔ FECHA
+	    LocalDate fechaNac = null;
+	    if (fechaString != null && !fechaString.isEmpty()) {
+	        fechaNac = LocalDate.parse(fechaString);
+	    }
+
+	    // ✔ VEHÍCULO (checkbox o radio)
+	    boolean vehiculo = request.getParameter("fvehiculo") != null;
+
+	    // ✔ DISCAPACIDAD (seguro)
+	    int discapacidad = 0;
+	    String discStr = request.getParameter("fdisc");
+	    if (discStr != null && !discStr.isEmpty()) {
+	        discapacidad = Integer.parseInt(discStr);
+	    }
+
+	    String passCifrada = Usuario.sha256(pass);
 		
 		try {
 			
@@ -54,7 +62,7 @@ public class ServRegister extends HttpServlet {
 			Usuario u = null;
 			
 			if ("voluntario".equals(tipo)) {
-				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac, null);
+				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac);
 			} else if ("organizador".equals(tipo)) {
 				u = new Organizador(nombre, apellido, 0, tlf, email, passCifrada, empresa);
 			}

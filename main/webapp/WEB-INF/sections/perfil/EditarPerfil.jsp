@@ -22,9 +22,9 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 			type="email" id="email" name="femail"
 			value="<%=user != null ? user.getEmail() : ""%>" required readonly>
 
-		<label for="numTelf">Numero de teléfono</label> <input type="tel" id="numTelf"
-			name="fphone" value="<%=user != null ? user.getNumTelf() : ""%>"
-			readonly>
+		<label for="numTelf">Numero de teléfono</label> <input type="tel"
+			id="numTelf" name="fphone"
+			value="<%=user != null ? user.getNumTelf() : ""%>" readonly>
 	</div>
 
 	<!-- DERECHA -->
@@ -43,13 +43,22 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 
 		<label for="fechaNac">Fecha de Nacimiento</label> <input type="date"
 			id="fechaNac" name="fedad"
-			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac().toString() : ""%>"
+			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac() : ""%>"
 			readonly> <label for="vehiculo">Vehículo</label> <input
-			type="text" id="vehiculo" name="fvehiculo" maxlength="2"
-			value="<%=((Voluntario) user).getVehiculo()%>" readonly> <label
-			for="discapacidad">Discapacidad</label> <input type="text"
-			id="discapacidad" name="fdisc"
-			value="<%=((Voluntario) user).getDiscapacidad()%>" readonly>
+			type="checkbox" id="vehiculo" name="fvehiculo" value="true"
+			<%=((Voluntario) user).getVehiculo() ? "checked" : ""%> disabled>
+
+		<label for="discapacidad">Discapacidad</label> <select
+			id="discapacidad" name="fdisc" disabled>
+			<option value="0"
+				<%=((Voluntario) user).getDiscapacidad() == 0 ? "selected" : ""%>>Ninguna</option>
+			<option value="1"
+				<%=((Voluntario) user).getDiscapacidad() == 1 ? "selected" : ""%>>Leve</option>
+			<option value="2"
+				<%=((Voluntario) user).getDiscapacidad() == 2 ? "selected" : ""%>>Moderada</option>
+			<option value="3"
+				<%=((Voluntario) user).getDiscapacidad() == 3 ? "selected" : ""%>>Severa</option>
+		</select>
 
 		<%
 		}
@@ -69,14 +78,20 @@ let editando = false;
 
 function toggleEdicion() {
     const form = document.getElementById("editarPerfil");
-    const inputs = document.querySelectorAll("#editarPerfil input:not([type='hidden'])");
+    const inputs = form.querySelectorAll("input, select");
     const btn = document.getElementById("btnEditar");
 
     editando = !editando;
 
     if (editando) {
-        inputs.forEach(i => i.removeAttribute("readonly"));
+
+        inputs.forEach(i => {
+            i.removeAttribute("readonly");
+            i.removeAttribute("disabled");
+        });
+
         btn.textContent = "Guardar";
+
     } else {
 
         if (!form.checkValidity()) {
@@ -84,9 +99,21 @@ function toggleEdicion() {
             return;
         }
 
-        inputs.forEach(i => i.setAttribute("readonly", true));
-        btn.textContent = "Editar";
+        // 🔥 IMPORTANTE: asegurar envío correcto
+        document.getElementById("vehiculo").disabled = false;
+        document.getElementById("discapacidad").disabled = false;
 
+        inputs.forEach(i => {
+            if (i.type !== "hidden") {
+                if (i.tagName === "INPUT" && i.type !== "checkbox") {
+                    i.setAttribute("readonly", true);
+                } else {
+                    i.setAttribute("disabled", true);
+                }
+            }
+        });
+
+        btn.textContent = "Editar";
         form.submit();
     }
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,51 +57,73 @@ public class AccesoBD {
 
 	public static Usuario iniciarSesion(String email, String pass) {
 
-		String sql = "SELECT * FROM usuarios WHERE LOWER(TRIM(email)) = ? AND pass = ?";
-
 		Usuario sesionUsuario = null;
 
 		try {
 			AccesoBD bd = new AccesoBD();
-			PreparedStatement ps = bd.con.prepareStatement(sql);
-			ps.setString(1, email);
-			ps.setString(2, pass);
 
-			ResultSet rs = ps.executeQuery();
+			// =========================
+			// 1. BUSCAR EN VOLUNTARIOS
+			// =========================
+			String sqlVol = "SELECT * FROM voluntarios WHERE LOWER(TRIM(email)) = ? AND pass = ?";
+			PreparedStatement psVol = bd.con.prepareStatement(sqlVol);
 
-			if (rs.next()) {
+			psVol.setString(1, email.toLowerCase().trim());
+			psVol.setString(2, pass);
 
-				int idDB = rs.getInt("id_usuario");
-				String emailDB = rs.getString("email");
-				String passDB = rs.getString("pass");
-				String nombreDB = rs.getString("nombre");
-				String apellidoDB = rs.getString("apellidos");
-				Date fechaNacDB = rs.getDate("fechaNac");
-				String telefonoDB = rs.getString("telefono");
-				String empresaDB = rs.getString("empresa");
-				String vehiculoDB = rs.getString("vehiculo");
-				String discapacidadDB = rs.getString("discapacidad");
-				int idRolDB = rs.getInt("id_rol");
+			ResultSet rsVol = psVol.executeQuery();
 
-				if (idRolDB == 1) {
+			if (rsVol.next()) {
 
-					LocalDate fechaNac = null;
-					if (fechaNacDB != null) {
-						fechaNac = fechaNacDB.toLocalDate();
-					}
+				int id = rsVol.getInt("id_voluntario");
+				String nombre = rsVol.getString("nombre");
+				String apellidos = rsVol.getString("apellidos");
+				String telefono = rsVol.getString("telefono");
+				Date fechaNacDB = rsVol.getDate("fechaNac");
+				boolean vehiculo = rsVol.getBoolean("vehiculo");
+				int discapacidad = rsVol.getInt("discapacidad");
 
-					// Instanciar un voluntario
-					sesionUsuario = new Voluntario(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB,
-							discapacidadDB, vehiculoDB, fechaNac, null);
-
-				} else if (idRolDB == 2) {
-					sesionUsuario = new Organizador(nombreDB, apellidoDB, idDB, telefonoDB, emailDB, passDB, empresaDB);
-
+				LocalDate fechaNac = null;
+				if (fechaNacDB != null) {
+					fechaNac = fechaNacDB.toLocalDate();
 				}
+
+				sesionUsuario = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo,
+						fechaNac);
+
+				rsVol.close();
+				psVol.close();
+				bd.disconnect();
+				return sesionUsuario;
 			}
 
-			rs.close();
-			ps.close();
+			rsVol.close();
+			psVol.close();
+
+			// =========================
+			// 2. BUSCAR EN ORGANIZADORES
+			// =========================
+			String sqlOrg = "SELECT * FROM organizadores WHERE LOWER(TRIM(email)) = ? AND pass = ?";
+			PreparedStatement psOrg = bd.con.prepareStatement(sqlOrg);
+
+			psOrg.setString(1, email.toLowerCase().trim());
+			psOrg.setString(2, pass);
+
+			ResultSet rsOrg = psOrg.executeQuery();
+
+			if (rsOrg.next()) {
+
+				int id = rsOrg.getInt("id_organizador");
+				String nombre = rsOrg.getString("nombre");
+				String apellidos = rsOrg.getString("apellidos");
+				String telefono = rsOrg.getString("telefono");
+				String empresa = rsOrg.getString("empresa");
+
+				sesionUsuario = new Organizador(nombre, apellidos, id, telefono, email, pass, empresa);
+			}
+
+			rsOrg.close();
+			psOrg.close();
 			bd.disconnect();
 
 		} catch (Exception e) {
@@ -111,62 +134,66 @@ public class AccesoBD {
 	}
 
 	public boolean registrar(Usuario u) {
-		//
-		Date fechaNac = null;
-		String empresa = null;
-		String vehiculo = null;
-		String discapacidad = null;
-		int idRol = 0;
-
-		if (u instanceof Voluntario) {
-			Voluntario v = (Voluntario) u;
-			vehiculo = v.getVehiculo();
-			discapacidad = v.getDiscapacidad();
-
-			fechaNac = java.sql.Date.valueOf(v.getFechaNac());
-
-			idRol = 1;
-		}
-
-		if (u instanceof Organizador) {
-			Organizador o = (Organizador) u;
-			empresa = o.getEntidad();
-			idRol = 2;
-		}
-
-		String sql = "INSERT INTO usuarios (email, pass, nombre, apellidos, fechaNac, telefono, empresa, vehiculo, discapacidad, id_rol) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 
-			// 1. Insertar usuario (es id 1 el voluntario)
-			PreparedStatement ps = con.prepareStatement(sql);
+			// =========================
+			// VOLUNTARIO
+			// =========================
+			if (u instanceof Voluntario) {
 
-			ps.setString(1, u.email);
-			ps.setString(2, u.pass);
-			ps.setString(3, u.nombre);
-			ps.setString(4, u.apellidos);
-			ps.setDate(5, fechaNac);
-			ps.setString(6, u.numTelf);
-			ps.setString(7, empresa);
-			ps.setString(8, vehiculo);
-			ps.setString(9, discapacidad);
-			ps.setInt(10, idRol);
+				Voluntario v = (Voluntario) u;
 
-			// Ejecutar consulta
-			ps.executeUpdate();
+				String sql = "INSERT INTO voluntarios (email, pass, nombre, apellidos, fechaNac, telefono, vehiculo, discapacidad) "
+						+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-			// Cerrar recursos
-			ps.close();
-			return true;
-		} catch (SQLIntegrityConstraintViolationException e) {
+				PreparedStatement ps = con.prepareStatement(sql);
+
+				ps.setString(1, v.getEmail());
+				ps.setString(2, v.getPass());
+				ps.setString(3, v.getNombre());
+				ps.setString(4, v.getApellidos());
+				ps.setDate(5, java.sql.Date.valueOf(v.getFechaNac()));
+				ps.setString(6, v.getNumTelf());
+				ps.setBoolean(7, v.getVehiculo());
+				ps.setInt(8, v.getDiscapacidad());
+
+				ps.executeUpdate();
+				ps.close();
+
+				return true;
+			}
+
+			// =========================
+			// ORGANIZADOR
+			// =========================
+			else if (u instanceof Organizador) {
+
+				Organizador o = (Organizador) u;
+
+				String sql = "INSERT INTO organizadores (email, pass, nombre, apellidos, telefono, empresa) "
+						+ "VALUES (?, ?, ?, ?, ?, ?)";
+
+				PreparedStatement ps = con.prepareStatement(sql);
+
+				ps.setString(1, o.getEmail());
+				ps.setString(2, o.getPass());
+				ps.setString(3, o.getNombre());
+				ps.setString(4, o.getApellidos());
+				ps.setString(5, o.getNumTelf());
+				ps.setString(6, o.getEntidad());
+
+				ps.executeUpdate();
+				ps.close();
+
+				return true;
+			}
 
 			return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-
 		}
 	}
 
@@ -416,57 +443,67 @@ public class AccesoBD {
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
+
 		try {
 
-			String sql = "UPDATE usuarios SET email=?, nombre=?, apellidos=?, telefono=? WHERE id_usuario=?";
-			PreparedStatement ps = con.prepareStatement(sql);
-
-			ps.setString(1, u.getEmail());
-			ps.setString(2, u.getNombre());
-			ps.setString(3, u.getApellidos());
-			ps.setString(4, u.getNumTelf());
-			ps.setInt(5, u.getId());
-
-			ps.executeUpdate();
-			ps.close();
-
+			// =========================
+			// ORGANIZADOR
+			// =========================
 			if (u instanceof Organizador) {
+
+				String sql = "UPDATE organizadores SET email=?, nombre=?, apellidos=?, telefono=?, empresa=? WHERE id_organizador=?";
+
+				PreparedStatement ps = con.prepareStatement(sql);
 
 				Organizador org = (Organizador) u;
 
-				String sqlOrg = "UPDATE usuarios SET empresa=? WHERE id_usuario=?";
-				PreparedStatement psOrg = con.prepareStatement(sqlOrg);
+				ps.setString(1, org.getEmail());
+				ps.setString(2, org.getNombre());
+				ps.setString(3, org.getApellidos());
+				ps.setString(4, org.getNumTelf());
+				ps.setString(5, org.getEntidad());
+				ps.setInt(6, org.getId());
 
-				psOrg.setString(1, org.getEntidad());
-				psOrg.setInt(2, org.getId());
+				ps.executeUpdate();
+				ps.close();
 
-				psOrg.executeUpdate();
-				psOrg.close();
+				return true;
 			}
 
+			// =========================
+			// VOLUNTARIO
+			// =========================
 			else if (u instanceof Voluntario) {
+
+				String sql = "UPDATE voluntarios SET email=?, nombre=?, apellidos=?, telefono=?, vehiculo=?, discapacidad=?, fechaNac=? WHERE id_voluntario=?";
+
+				PreparedStatement ps = con.prepareStatement(sql);
 
 				Voluntario vol = (Voluntario) u;
 
-				String sqlVol = "UPDATE usuarios SET vehiculo=?, discapacidad=?, fechaNac=? WHERE id_usuario=?";
-				PreparedStatement psVol = con.prepareStatement(sqlVol);
+				ps.setString(1, vol.getEmail());
+				ps.setString(2, vol.getNombre());
+				ps.setString(3, vol.getApellidos());
+				ps.setString(4, vol.getNumTelf());
 
-				psVol.setString(1, vol.getVehiculo());
-				psVol.setString(2, vol.getDiscapacidad());
+				ps.setBoolean(5, vol.getVehiculo());
+				ps.setInt(6, vol.getDiscapacidad());
 
 				if (vol.getFechaNac() != null) {
-					psVol.setDate(3, java.sql.Date.valueOf(vol.getFechaNac()));
+					ps.setDate(7, java.sql.Date.valueOf(vol.getFechaNac()));
 				} else {
-					psVol.setDate(3, null);
+					ps.setDate(7, null);
 				}
 
-				psVol.setInt(4, vol.getId());
+				ps.setInt(8, vol.getId());
 
-				psVol.executeUpdate();
-				psVol.close();
+				ps.executeUpdate();
+				ps.close();
+
+				return true;
 			}
 
-			return true;
+			return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -474,11 +511,12 @@ public class AccesoBD {
 		}
 	}
 
-	public static List<Voluntario> obtenerVoluntarios(int idEvento) {
+	public static List<Inscripcion> obtenerVoluntarios(int idEvento) {
 
-		String sql = "SELECT u.*, i.estado FROM usuarios u JOIN inscripciones i ON u.id_usuario = i.id_usuario WHERE i.id_evento = ?";
+		String sql = "SELECT i.*, v.* " + "FROM inscripciones i "
+				+ "JOIN voluntarios v ON i.id_voluntario = v.id_voluntario " + "WHERE i.id_evento = ?";
 
-		List<Voluntario> voluntarios = new ArrayList<>();
+		List<Inscripcion> inscripciones = new ArrayList<>();
 
 		try {
 			AccesoBD bd = new AccesoBD();
@@ -490,26 +528,39 @@ public class AccesoBD {
 
 			while (rs.next()) {
 
-				int id = rs.getInt("id_usuario");
+				// =========================
+				// DATOS VOLUNTARIO
+				// =========================
+				int idVol = rs.getInt("id_voluntario");
 				String nombre = rs.getString("nombre");
 				String apellidos = rs.getString("apellidos");
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String pass = rs.getString("pass");
-				String discapacidad = rs.getString("discapacidad");
-				String vehiculo = rs.getString("vehiculo");
-				Date fechaNacDB = rs.getDate("fechaNac");
-				String estado = rs.getString("estado");
 
+				int discapacidad = rs.getInt("discapacidad");
+				boolean vehiculo = rs.getBoolean("vehiculo");
+
+				Date fechaNacDB = rs.getDate("fechaNac");
 				LocalDate fechaNac = null;
 				if (fechaNacDB != null) {
 					fechaNac = fechaNacDB.toLocalDate();
 				}
 
-				Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo,
-						fechaNac, estado);
+				Voluntario v = new Voluntario(nombre, apellidos, idVol, telefono, email, pass, discapacidad, vehiculo,
+						fechaNac);
 
-				voluntarios.add(v);
+				// =========================
+				// DATOS INSCRIPCIÓN
+				// =========================
+				int idIns = rs.getInt("id_inscripcion");
+				LocalDateTime fechaIns = rs.getTimestamp("fecha_inscripcion").toLocalDateTime();
+				String estado = rs.getString("estado");
+				Integer valoracion = rs.getObject("valoracion") != null ? rs.getInt("valoracion") : null;
+
+				Inscripcion ins = new Inscripcion(idIns, v, idEvento, fechaIns, estado, valoracion);
+
+				inscripciones.add(ins);
 			}
 
 			rs.close();
@@ -520,7 +571,7 @@ public class AccesoBD {
 			e.printStackTrace();
 		}
 
-		return voluntarios;
+		return inscripciones;
 	}
 
 	public void cambiarEstadoInscripcion(int idUsuario, int idEvento, String estado) {

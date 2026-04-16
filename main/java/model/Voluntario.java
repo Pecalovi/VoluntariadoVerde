@@ -1,35 +1,34 @@
 package model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Voluntario extends Usuario {
 
-	private String discapacidad, vehiculo, estado;
+	private int discapacidad;
 	private LocalDate fechaNac;
+	private boolean vehiculo;
 
 	public Voluntario(String nombre, String apellidos, int id, String numTelf, String email, String pass,
-			String discapacidad, String vehiculo, LocalDate fechaNac, String estado) {
+			int discapacidad, boolean vehiculo, LocalDate fechaNac) {
 		super(nombre, apellidos, id, numTelf, email, pass);
 		this.discapacidad = discapacidad;
 		this.vehiculo = vehiculo;
 		this.fechaNac = fechaNac;
-		this.setEstado(estado);
 	}
 
-	public String getDiscapacidad() {
+	public int getDiscapacidad() {
 		return discapacidad;
 	}
 
-	public void setDiscapacidad(String discapacidad) {
+	public void setDiscapacidad(int discapacidad) {
 		this.discapacidad = discapacidad;
 	}
 
-	public String getVehiculo() {
+	public boolean getVehiculo() {
 		return vehiculo;
 	}
 
-	public void setVehiculo(String vehiculo) {
+	public void setVehiculo(boolean vehiculo) {
 		this.vehiculo = vehiculo;
 	}
 
@@ -39,13 +38,5 @@ public class Voluntario extends Usuario {
 
 	public void setFechaNac(LocalDate fechaNac) {
 		this.fechaNac = fechaNac;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
 	}
 }
