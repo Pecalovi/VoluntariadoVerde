@@ -53,7 +53,7 @@ p {
 }
 /* ENLACES */
 a {
-	text-decoration: none;
+	text-decoration:none;
 	color: var(--verde-principal);
 	transition: color 0.2s ease;
 }

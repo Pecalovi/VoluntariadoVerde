@@ -23,7 +23,6 @@ if (lang == null)
     </div>
 
     <p id="barra">_________________________________________________</p>
-
     <div id="contacto_info">
         <div class="icono_texto">
             <img alt="" src="src/ubiblanco.png">

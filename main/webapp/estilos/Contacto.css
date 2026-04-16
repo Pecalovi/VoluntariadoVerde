@@ -125,21 +125,51 @@ iframe{
 }
 
 @media(max-width: 768px) {
-
+	
     #info {
-        width: 100%;
+        width: 112%;
+        align-items: center;
+        margin-left: -14px;
+        margin-top: 50px;
         
+    }
+    
+    #contacto_descripcion{
+    	width: 121%;
+    }
+    
+    #barra{
+    display: none;
+    }
+    
+    #contacto_info{
+    margin-top: 0px;
+    margin-left: -35px;
+    margin-right: -36px;
+    background-color: #005900;
+    width: 289px;
+    height: 150px;
+    border-radius: 0px 0Px 15px 15px;
+    padding-top: 13px;
+    padding-left: 13px;
+    }
+    
+    .icono_texto{
+    margin-bottom:-7px;
     }
 
     form {
         width: 100%;
 
     }
+    
 
     main{
         margin-inline: 15px;
         flex-direction: column;
+        border: none;
     }
+    
     input{
         font-size: 1rem;
     }
