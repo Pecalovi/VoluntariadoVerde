@@ -49,9 +49,11 @@ if (lang == null)
 		<%
 		} else {
 		%>
+		<p>
 		<a href="<%=request.getContextPath()%>/login"> <%=lang.equals("es") ? "Iniciar sesión" : "Log in"%>
-		</a> <a href="<%=request.getContextPath()%>/registro"> <%=lang.equals("es") ? "Registrate" : "Sign in"%>
+		</a> / <a href="<%=request.getContextPath()%>/registro"> <%=lang.equals("es") ? "Registrate" : "Sign in"%>
 		</a>
+		</p>
 		<%
 		}
 		%>
