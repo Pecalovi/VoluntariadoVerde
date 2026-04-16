@@ -27,7 +27,6 @@ menu.querySelectorAll('a').forEach(function(link) {
 	});
 });
 
-
 //Edad minima 16 años
 const edad = document.getElementById("edad");
 
