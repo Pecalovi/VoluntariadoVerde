@@ -59,7 +59,7 @@ boolean es = "es".equals(lang);
 							</div>
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="15">0</span>
+									<span class="impacto-numero" data-target="<%=AccesoBD.contadorInscripciones()%>">0</span>
 									<p><%=es ? "Inscripciones" : "Inscription"%></p>
 								</div>
 							</div>
@@ -123,6 +123,48 @@ boolean es = "es".equals(lang);
 		width="940" height="480"></iframe>
 </section>
 
+<section id="faq">
+    <h1><%=es ? "Preguntas frecuentes" : "Frequently asked questions"%></h1>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Qué es esta plataforma?" : "What is this platform?"%></h4>
+        <p><%=es ? "Una plataforma de voluntariado donde organizaciones publican eventos y voluntarios pueden inscribirse para participar." 
+                 : "A volunteering platform where organizations publish events and volunteers can sign up to participate."%></p>
+    </div>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Es gratuito?" : "Is it free?"%></h4>
+        <p><%=es ? "Sí, tanto el registro como la inscripción a eventos es completamente gratuito." 
+                 : "Yes, both registration and signing up for events is completely free."%></p>
+    </div>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Necesito una cuenta para ver los eventos?" : "Do I need an account to view events?"%></h4>
+        <p><%=es ? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás crear una cuenta." 
+                 : "You can browse events without registering, but to sign up you will need to create an account."%></p>
+    </div>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Cómo me inscribo en un evento?" : "How do I sign up for an event?"%></h4>
+        <p><%=es ? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la confirme." 
+                 : "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer confirms it."%></p>
+    </div>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Puedo cancelar mi inscripción?" : "Can I cancel my registration?"%></h4>
+        <p><%=es ? "Sí, puedes cancelar tu inscripción desde tu perfil en cualquier momento antes del evento." 
+                 : "Yes, you can cancel your registration from your profile at any time before the event."%></p>
+    </div>
+
+    <div class="faq-item">
+        <h4><%=es ? "¿Cómo puedo crear un evento?" : "How can I create an event?"%></h4>
+        <p><%=es ? "Regístrate como organizador y desde tu perfil encontrarás la opción de crear un nuevo evento." 
+                 : "Register as an organizer and from your profile you will find the option to create a new event."%></p>
+    </div>
+
+</section>
+
+
 
 <script>
     const observerImpacto = new IntersectionObserver((entries) => {
@@ -146,4 +188,14 @@ boolean es = "es".equals(lang);
         });
     }, { threshold: 0.3 });
     observerImpacto.observe(document.getElementById('contador-impacto'));
+</script>
+<script>
+    document.querySelectorAll('.faq-item h4').forEach(pregunta => {
+        pregunta.addEventListener('click', () => {
+            const item = pregunta.parentElement;
+            const estaAbierto = item.classList.contains('abierto');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('abierto'));
+            if (!estaAbierto) item.classList.add('abierto');
+        });
+    });
 </script>

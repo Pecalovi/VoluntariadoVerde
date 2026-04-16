@@ -575,21 +575,28 @@ public class AccesoBD {
 		return numContador;
 	}
 
-	public boolean cancelarInscripcion(int idUser, int idEvento) {
-		String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, "cancelado");
-			ps.setInt(2, idUser);
-			ps.setInt(3, idEvento);
+	public static int contadorInscripciones() {
+	    int numContador = 0;
+	    String sql = "SELECT COUNT(*) FROM inscripciones WHERE estado != 'cancelado'";
 
-			ps.executeUpdate();
-			ps.close();
-			return true;
-		} catch (Exception m) {
-			System.err.println("Error en cancelarInscripcion: " + m.getMessage());
-			m.printStackTrace();
-			return false;
-		}
+	    try {
+	        AccesoBD bd = new AccesoBD();
+	        PreparedStatement ps = bd.con.prepareStatement(sql);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            numContador = rs.getInt(1);
+	        }
+
+	        rs.close();
+	        ps.close();
+	        bd.disconnect();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return numContador;
 	}
 }
