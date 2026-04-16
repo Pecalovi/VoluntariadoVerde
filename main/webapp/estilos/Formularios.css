@@ -137,6 +137,7 @@ textarea {
     align-items: center;
     white-space: nowrap;
     gap: 8px;
+    margin-top: 15px;
 }
 
 /*---------------MEDIA QUERIES SMARTPHONE---------------*/
