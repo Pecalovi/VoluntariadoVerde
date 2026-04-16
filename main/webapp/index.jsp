@@ -55,6 +55,8 @@ if (lang != null) {
 	</main>
 
 	<jsp:include page="/WEB-INF/sections/Footer.jsp" />
+	
+	<script src="<%=request.getContextPath()%>/scripts/main.js"></script>
 
 </body>
 </html>

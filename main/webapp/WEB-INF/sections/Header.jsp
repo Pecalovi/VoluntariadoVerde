@@ -98,18 +98,3 @@ if (lang == null)
 			class="<%=lang.equals("en") ? "active" : ""%>">🇬🇧</a>
 	</div>
 </nav>
-<!-- EL JAVASCRIPT PARA EL MENU -->
-<script>
-	const btn = document.getElementById('hamburgerBtn');
-	const menu = document.getElementById('menuMovil');
-	btn.addEventListener('click', function() {
-		btn.classList.toggle('open');
-		menu.classList.toggle('open');
-	});
-	menu.querySelectorAll('a').forEach(function(link) {
-		link.addEventListener('click', function() {
-			btn.classList.remove('open');
-			menu.classList.remove('open');
-		});
-	});
-</script>
