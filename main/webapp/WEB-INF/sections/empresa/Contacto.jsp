@@ -61,9 +61,7 @@ if (lang == null)
     <input type="text" class="inputcont" name="fasunto" 
            placeholder="<%=lang.equals("en") ? "Subject" : "Asunto"%>" required>
 
-    <textarea class="inputcont" name="Text1" rows="4" 
-              placeholder="<%=lang.equals("en") ? "Write your message..." : "Escribe tu mensaje..."%>" required>
-    </textarea>
+    <textarea class="inputcont" name="Text1" rows="4" placeholder="<%=lang.equals("en") ? "Write your message..." : "Escribe tu mensaje..."%>" required></textarea>
 
     <input type="submit" class="botones" 
            value="<%=lang.equals("en") ? "Send" : "Enviar"%>">
