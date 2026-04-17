@@ -129,43 +129,40 @@ boolean es = "es".equals(lang);
     <div class="faq-item">
         <h4><%=es ? "¿Qué es esta plataforma?" : "What is this platform?"%></h4>
         <p><%=es ? "Una plataforma de voluntariado donde organizaciones publican eventos y voluntarios pueden inscribirse para participar." 
-                 : "A volunteering platform where organizations publish events and volunteers can sign up to participate."%></p>
+                 : "A volunteering platform where event organizers publish events and volunteers can sign up to participate in them."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Es gratuito?" : "Is it free?"%></h4>
         <p><%=es ? "Sí, tanto el registro como la inscripción a eventos son completamente gratuitos." 
-                 : "Yes, both registration and signing up for events is completely free."%></p>
+                 : "Yes, both signing up and inscribing for events are completely free."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Necesito una cuenta para ver los eventos?" : "Do I need an account to view events?"%></h4>
         <p><%=es ? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás una cuenta." 
-                 : "You can browse events without registering, but to sign up you will need to create an account."%></p>
+                 : "You can take a look at events without signing up, but in order to request your participation you need to have an account."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Cómo me inscribo en un evento?" : "How do I sign up for an event?"%></h4>
         <p><%=es ? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la acepte." 
-                 : "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer confirms it."%></p>
+                 : "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer accepts it."%></p>
     </div>
 
     <div class="faq-item">
-        <h4><%=es ? "¿Puedo cancelar mi inscripción?" : "Can I cancel my registration?"%></h4>
+        <h4><%=es ? "¿Puedo cancelar mi inscripción a un evento?" : "Can I cancel my inscription to an event?"%></h4>
         <p><%=es ? "Sí, puedes cancelar tu inscripción desde tu perfil en cualquier momento antes del evento." 
-                 : "Yes, you can cancel your registration from your profile at any time before the event."%></p>
+                 : "Yes, you can cancel your inscription from your profile at any time before the event."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Cómo puedo crear un evento?" : "How can I create an event?"%></h4>
         <p><%=es ? "Regístrate como organizador y desde tu perfil encontrarás la opción de crear un nuevo evento." 
-                 : "Register as an organizer and from your profile you will find the option to create a new event."%></p>
+                 : "Sign in as an organizer and in your profile you will find the option to create an event."%></p>
     </div>
 
 </section>
-
-
-
 <script>
     const observerImpacto = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
