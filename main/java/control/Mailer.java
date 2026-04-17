@@ -6,16 +6,15 @@ import jakarta.mail.internet.*;
 
 public class Mailer {
     public static boolean send(String para, String asunto, String cuerpo) {
-        // 1. Configuración del Servidor SMTP
+    	
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com"); // Servidor de Gmail
-        props.put("mail.smtp.port", "587");            // Puerto TLS
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 
-        // 2. Credenciales (Usa "Contraseña de Aplicación" de Google)
         final String usuario = "voluntariadoverdev@gmail.com"; 
-        final String clave = "whff tdew fluk hvyj"; // Tu clave de 16 letras
+        final String clave = "whff tdew fluk hvyj";
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override

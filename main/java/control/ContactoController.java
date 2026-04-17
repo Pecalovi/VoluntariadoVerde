@@ -17,6 +17,12 @@ public class ContactoController extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String lang = (String) session.getAttribute("lang");
+	    
+	    String status = (String) session.getAttribute("mensajeStatus");
+	    if (status != null) {
+	        request.setAttribute("mensajeStatus", status);
+	        session.removeAttribute("mensajeStatus");
+	    }
 
 		if (lang == null) {
 			lang = "es";
@@ -27,7 +33,6 @@ public class ContactoController extends HttpServlet {
 		request.setAttribute("activePage", "contacto");
 		request.setAttribute("estilo", "estilos/Contacto.css");
 
-		// Encadenar la petición y cargar otro recurso
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
@@ -35,7 +40,6 @@ public class ContactoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // 1. Recoger parámetros del formulario (nombres coinciden con el 'name' de tus inputs)
         String nombre = request.getParameter("funame");
         String emailCliente = request.getParameter("femail");
         String asunto = request.getParameter("fasunto");
@@ -45,7 +49,6 @@ public class ContactoController extends HttpServlet {
                 "Nuevo mensaje de: " + nombre,
                 "Has recibido una duda."+ "\nDe: "+ emailCliente +"\n\nAsunto: " + asunto + "\nCuerpo: " + mensaje);
 
-        // --- CORREO 2: Para el CLIENTE (Confirmación) ---
         if (enviadoAmi) {
             String asuntoConfirmacion = "Hemos recibido tu consulta: " + asunto;
             String cuerpoConfirmacion = "Hola " + nombre + ",\n\n" +
@@ -58,18 +61,17 @@ public class ContactoController extends HttpServlet {
                                         "Te responderemos lo antes posible.\n" +
                                         "Saludos, el equipo de Voluntariado Verde.";
 
-            // Enviamos al correo que el usuario puso en el input 'femail'
             Mailer.send(emailCliente, asuntoConfirmacion, cuerpoConfirmacion);
         }
 
-        // 3. Resultado final para la web
         if (enviadoAmi) {
-            request.setAttribute("mensajeStatus", "¡Mensaje enviado! Revisa tu bandeja de entrada.");
+            // En lugar de request.setAttribute, usamos la sesión para que sobreviva a la redirección
+            request.getSession().setAttribute("mensajeStatus", "¡Mensaje enviado!");
         } else {
-            request.setAttribute("mensajeStatus", "Error al procesar el envío.");
+            request.getSession().setAttribute("mensajeStatus", "Error al procesar el envío.");
         }
+        response.sendRedirect(request.getContextPath() + "/contacto");
         
-        doGet(request, response);
     }
 
 }
