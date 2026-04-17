@@ -602,9 +602,9 @@ public class AccesoBD {
 			ps.executeUpdate();
 			ps.close();
 			return true;
-		} catch (Exception m) {
-			System.err.println("Error en cancelarInscripcion: " + m.getMessage());
-			m.printStackTrace();
+		} catch (Exception e) {
+			System.err.println("Error en cancelarInscripcion: " + e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -668,4 +668,119 @@ public class AccesoBD {
 
 		return numContador;
 	}
+
+	// Método para listar voluntarios, organizadores y eventos según variable
+	public ArrayList<Object> PanelAdmin(String tabla) {
+		ArrayList<Object> lista = new ArrayList<>();
+		String sql;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		sql = "SELECT * FROM " + tabla;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			switch (tabla) {
+			case "voluntarios":
+				while (rs.next()) {
+					int id = rs.getInt("id_voluntario");
+					String nombre = rs.getString("nombre");
+					String apellidos = rs.getString("apellidos");
+					String telefono = rs.getString("telefono");
+					String email = rs.getString("email");
+					Date fechaNacDB = rs.getDate("fechaNac");
+					boolean vehiculo = rs.getBoolean("vehiculo");
+					int discapacidad = rs.getInt("discapacidad");
+
+					LocalDate fechaNac = null;
+					if (fechaNacDB != null) {
+						fechaNac = fechaNacDB.toLocalDate();
+					}
+
+					Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, null, discapacidad, vehiculo,
+							fechaNac);
+
+					lista.add(v);
+
+				}
+				break;
+
+			case "organizadores":
+				while (rs.next()) {
+					int id = rs.getInt("id_organizador");
+					String nombre = rs.getString("nombre");
+					String apellidos = rs.getString("apellidos");
+					String telefono = rs.getString("telefono");
+					String empresa = rs.getString("empresa");
+					String email = rs.getString("email");
+
+					lista.add(new Organizador(nombre, apellidos, id, telefono, email, null, empresa));
+				}
+				break;
+
+			case "eventos":
+				while (rs.next()) {
+
+					int idEventoDB = rs.getInt("id_evento");
+					String nombreEventoDB = rs.getString("nombre");
+					String tipoDB = rs.getString("tipo");
+					String descripcionDB = rs.getString("descripcion");
+					Date fechaDB = rs.getDate("fecha");
+					String lugarDB = rs.getString("lugar");
+					int capacidadMaximaDB = rs.getInt("capacidad_maxima");
+
+					LocalDate fecha = (fechaDB != null) ? fechaDB.toLocalDate() : null;
+
+					lista.add(new Evento(nombreEventoDB, lugarDB, fecha, tipoDB, idEventoDB, descripcionDB,
+							capacidadMaximaDB, 0, 0));
+				}
+				break;
+
+			default:
+				break;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return lista;
+	}
+
+	public boolean valorarVoluntario(int idInscripcion, int nota) {
+		// Validar que la nota sea lógica (de 1 a 5)
+		if (nota < 1 || nota > 5)
+			return false;
+
+		String sql = "UPDATE inscripciones SET valoracion = ? WHERE id_inscripcion = ?";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+
+			ps.setInt(1, nota);
+			ps.setInt(2, idInscripcion);
+
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

@@ -59,7 +59,11 @@ public class ServLogin extends HttpServlet {
 			boolean esOrganizador = (user != null && user instanceof Organizador);
 			
 			if (esOrganizador) {
-				response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");
+				if(user.getEmail().equals("voluntariadoverdev@gmail.com")) {
+					response.sendRedirect(contextPath + "/admin");
+				}else {
+					response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");				}
+			
 			}else {
 				response.sendRedirect(contextPath + "/home");
 			}
