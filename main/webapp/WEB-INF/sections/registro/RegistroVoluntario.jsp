@@ -9,7 +9,8 @@
 		<!-- DATOS PERSONALES -->
 		<input type="text" id="fname" name="fname" placeholder="Nombre"
 			required> <input type="text" id="fsurname" name="fsurname"
-			placeholder="Apellidos"> <input type="date" id="edad"
+			placeholder="Primer apellido"><input type="text" id="fsurname2" name="fsurname2"
+			placeholder="Segundo apellido"> <input type="date" id="edad"
 			name="fedad" placeholder="Edad" required>
 
 		<!-- DATOS DE CONTACTO -->
@@ -26,8 +27,7 @@
 
 		<div id="vehiculo">
 			<label>¿Tienes vehículo?</label>
-			<input type="radio" name="fvehiculo" value="true"> <label>Sí</label>
-			<input type="radio" name="fvehiculo" value="false"> <label>No</label>
+			<input type="checkbox" name="fvehiculo" value="true"> <label>Sí</label>
 		</div>
 
 		<label>Discapacidad</label> <select name="fdisc">
