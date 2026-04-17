@@ -7,12 +7,12 @@
 			<p>
 				<strong>Somos una empresa comprometida con la
 					sostenibilidad y el deporte.</strong> Hemos creado una aplicación que
-				conecta a voluntarios con eventos deportivos, permitiendo que puedan
-				participar y colaborar para hacer de cada evento una experiencia más
+				conecta a voluntarios con eventos, permitiendo que puedan
+				participar y colaborar para hacer de cada evento sea una experiencia más
 				ecológica, responsable y solidaria.
 			</p>
 			<p>Nuestro objetivo es promover el voluntariado en el ámbito
-				deportivo, fomentando el trabajo en equipo, el respeto por el medio
+				de organización de eventos, fomentando el trabajo en equipo, el respeto por el medio
 				ambiente y la conciencia social en cada actividad.</p>
 		</div>
 	</div>
@@ -25,7 +25,7 @@
 		<p>
 			Voluntariado Verde nació en <strong>2025</strong> de la mano de un
 			grupo de deportistas y activistas medioambientales que compartían una
-			misma visión: transformar los eventos deportivos en motores de cambio
+			misma visión: Transformar los eventos en motores de cambio
 			positivo para nuestro planeta. Lo que comenzó como una pequeña
 			iniciativa local en <em>Bilbao</em>, hoy se ha convertido en una red
 			de más de <strong>5.000</strong> voluntarios activos en toda <em>España</em>.
@@ -33,7 +33,7 @@
 		<p>
 			Cada año colaboramos en más de <strong>200</strong> eventos
 			deportivos, desde maratones y triatlones hasta competiciones de surf
-			y ciclismo de montaña, asegurando que cada competición deje una
+			y ciclismo de montaña, asegurándonos de que cada competición deja una
 			huella positiva en el medio ambiente y en la comunidad local.
 		</p>
 	</div>
@@ -73,7 +73,7 @@
 			<li><strong>Comunidad activa:</strong> Forma parte de una red de
 				personas comprometidas con el deporte y el medio ambiente.</li>
 			<li><strong>Certificaciones:</strong> Obtén certificados de
-				voluntariado reconocidos que enriquecen tu currículum.</li>
+				voluntariado reconocidos que enriquezcan tu currículum.</li>
 			<li><strong>Impacto real:</strong> Cada acción cuenta.
 				Contribuye directamente a hacer del deporte una actividad más
 				sostenible.</li>

@@ -25,7 +25,7 @@ boolean es = "es".equals(lang);
 	<div class="row">
 		<div class="col-md-5">
 			<p class="frase"><%=es
-		? "Cada dia haciendo del mundo un lugar <span class=\"frase-verde\">sostenible</span>"
+		? "Cada día haciendo del mundo un lugar <span class=\"frase-verde\">sostenible</span>"
 		: "Every day building a <span class=\"frase-verde\">better world</span>"%></p>
 		</div>
 		<div class="col-6 col-md-5">
@@ -54,7 +54,7 @@ boolean es = "es".equals(lang);
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
 									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("usuarios", 2) %>">0</span>
-									<p><%=es ? "Organizaciones" : "Organizations"%></p>
+									<p><%=es ? "Entidades organizadoras" : "Organizers"%></p>
 								</div>
 							</div>
 							<div id="impacto-texto" class="col-6 col-sm-3">
@@ -134,19 +134,19 @@ boolean es = "es".equals(lang);
 
     <div class="faq-item">
         <h4><%=es ? "¿Es gratuito?" : "Is it free?"%></h4>
-        <p><%=es ? "Sí, tanto el registro como la inscripción a eventos es completamente gratuito." 
+        <p><%=es ? "Sí, tanto el registro como la inscripción a eventos son completamente gratuitos." 
                  : "Yes, both registration and signing up for events is completely free."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Necesito una cuenta para ver los eventos?" : "Do I need an account to view events?"%></h4>
-        <p><%=es ? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás crear una cuenta." 
+        <p><%=es ? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás una cuenta." 
                  : "You can browse events without registering, but to sign up you will need to create an account."%></p>
     </div>
 
     <div class="faq-item">
         <h4><%=es ? "¿Cómo me inscribo en un evento?" : "How do I sign up for an event?"%></h4>
-        <p><%=es ? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la confirme." 
+        <p><%=es ? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la acepte." 
                  : "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer confirms it."%></p>
     </div>
 

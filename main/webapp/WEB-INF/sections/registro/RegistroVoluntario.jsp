@@ -14,8 +14,8 @@
 
 		<!-- DATOS DE CONTACTO -->
 		<input type="tel" name="fphone" maxlength="9" pattern="[0-9]{9}"
-			inputmode="numeric" placeholder="Numero de teléfono" required>
-		<input type="email" id="femail" name="femail" placeholder="Correo"
+			inputmode="numeric" placeholder="Número de teléfono" required>
+		<input type="email" id="femail" name="femail" placeholder="Correo electrónico"
 			required>
 
 		<!-- ACCESO -->
@@ -25,8 +25,9 @@
 		<!-- INFORMACIÓN ADICIONAL -->
 
 		<div id="vehiculo">
-			<label>¿Tienes vehículo?</label> <input type="checkbox"
-				name="fvehiculo" value="true"> <label>Sí</label>
+			<label>¿Tienes vehículo?</label>
+			<input type="checkbox" name="fvehiculo" value="true"> <label>Sí</label>
+			<input type="checkbox" name="fvehiculo" value="true"> <label>No</label>
 		</div>
 
 		<label>Discapacidad</label> <select name="fdisc">

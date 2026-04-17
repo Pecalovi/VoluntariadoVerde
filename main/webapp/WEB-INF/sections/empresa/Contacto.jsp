@@ -18,7 +18,7 @@ if (lang == null)
         <p>
             <%=lang.equals("en") ? 
             "Fill in this form so we can get in touch with you."
-            : "Rellena este formulario para poder ponernos en contacto contigo."%>
+            : "Rellena este formulario para que podamos ponernos en contacto contigo."%>
         </p>
     </div>
 

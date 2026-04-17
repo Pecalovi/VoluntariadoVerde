@@ -17,7 +17,7 @@ if (lang == null)
 
 		<a href="<%=request.getContextPath()%>/eventos"
 			class="<%="eventos".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
-			<%=lang.equals("es") ? "Proximos eventos" : "Upcoming events"%>
+			<%=lang.equals("es") ? "Próximos eventos" : "Upcoming events"%>
 		</a> <a href="<%=request.getContextPath()%>/sobrenosotros"
 			class="<%="sobrenosotros".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
 			<%=lang.equals("es") ? "Sobre nosotros" : "About us"%>
