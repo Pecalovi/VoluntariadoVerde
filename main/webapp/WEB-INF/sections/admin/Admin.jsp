@@ -19,18 +19,17 @@
 	<section>
 		<c:choose>
 			<c:when test="${empty tablas}">
-				<p>
-					No hay
-					<c:out value="${opcion}" />
-					.
-				</p>
+				<p>No hay <c:out value="${opcion}" />.</p>
 			</c:when>
 
 			<c:when test="${opcion == 'voluntarios'}">
 				<c:forEach var="item" items="${tablas}">
-					<div class="evento-tarjeta">
+					<div class="admin-tarjeta">
+						<h2>${item.id}. ${item.apellidos}, ${item.nombre}</h2>
 						<div>
-							<a><h2>${item.nombre} ${item.apellidos}</h2></a>
+							<button type="button" class="btn btn-link">Ver datos</button>
+							<button type="button" class="btn btn-danger">Eliminar
+								cuenta</button>
 						</div>
 					</div>
 				</c:forEach>
@@ -38,11 +37,13 @@
 
 			<c:when test="${opcion == 'organizadores'}">
 				<c:forEach var="item" items="${tablas}">
-					<div class="evento-tarjeta">
+					<div class="admin-tarjeta">
+						<h2>${item.entidad}</h2>
 						<div>
-							<h2>${item.nombre}${item.apellidos}</h2>
-							<p class="evento-fecha">${item.email}</p>
-							<p>${item.entidad}</p>
+							<button type="button" class="btn btn-link">Ver
+								organizadores</button>
+							<button type="button" class="btn btn-danger">Eliminar
+								organización</button>
 						</div>
 					</div>
 				</c:forEach>
@@ -50,7 +51,7 @@
 
 			<c:when test="${opcion == 'eventos'}">
 				<c:forEach var="item" items="${tablas}">
-					<div class="tarjeta">
+					<div class="admin-tarjeta">
 						<p>${item.nombre}</p>
 						<p>${item.lugar}</p>
 						<p>${item.fecha}</p>

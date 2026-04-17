@@ -41,7 +41,7 @@ public class AdminController extends HttpServlet {
 
         String opcion = request.getParameter("opcion");
         if (opcion == null || opcion.isEmpty()) {
-            opcion = "perfil";
+            opcion = "voluntarios";
         }
 
         if (bd != null) {

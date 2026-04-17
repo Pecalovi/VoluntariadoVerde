@@ -33,6 +33,7 @@ public class ServRegister extends HttpServlet {
 		String tipo = request.getParameter("tipo");
 		String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
 		String apellido = Usuario.capitalizarTexto(request.getParameter("fsurname"));
+		String apellido2 = Usuario.capitalizarTexto(request.getParameter("fsurname2"));
 		String fechaString = request.getParameter("fedad");
 		String tlf = request.getParameter("fphone");
 		String email = request.getParameter("femail");
@@ -40,21 +41,20 @@ public class ServRegister extends HttpServlet {
 
 		String empresa = Usuario.capitalizarTexto(request.getParameter("fenterprise"));
 
-		// ✔ FECHA
 		LocalDate fechaNac = null;
 		if (fechaString != null && !fechaString.isEmpty()) {
 			fechaNac = LocalDate.parse(fechaString);
 		}
 
-		// ✔ VEHÍCULO (checkbox o radio)
 		boolean vehiculo = request.getParameter("fvehiculo") != null;
 
-		// ✔ DISCAPACIDAD (seguro)
 		int discapacidad = 0;
 		String discStr = request.getParameter("fdisc");
 		if (discStr != null && !discStr.isEmpty()) {
 			discapacidad = Integer.parseInt(discStr);
 		}
+		
+		String apellidos = apellido + " " + apellido2;
 
 		String passCifrada = Usuario.sha256(pass);
 
@@ -64,9 +64,9 @@ public class ServRegister extends HttpServlet {
 			Usuario u = null;
 
 			if ("voluntario".equals(tipo)) {
-				u = new Voluntario(nombre, apellido, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac);
+				u = new Voluntario(nombre, apellidos, 0, tlf, email, passCifrada, discapacidad, vehiculo, fechaNac);
 			} else if ("organizador".equals(tipo)) {
-				u = new Organizador(nombre, apellido, 0, tlf, email, passCifrada, empresa);
+				u = new Organizador(nombre, apellidos, 0, tlf, email, passCifrada, empresa);
 			}
 
 			if (bd.registrar(u)) {

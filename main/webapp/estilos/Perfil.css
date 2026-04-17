@@ -214,20 +214,38 @@ section form input[readonly]:focus {
 	color: white;
 }
 
-.menu-evento{
+.menu-evento {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
 	width: 100%;
 	padding-block: 20px;
-	background-color: var(--azul); 
+	background-color: var(--azul);
 	border-radius: 8px;
 }
 
-.menu-evento a{
+.menu-evento a {
 	color: white;
 }
 
+.admin-tarjeta {
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	margin-bottom: 20px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	background-color: #fff;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.admin-tarjeta h2{
+	margin: 0;
+	padding: 0;
+}
 
 @media ( max-width : 768px) {
 	.tarjeta-perfil {
