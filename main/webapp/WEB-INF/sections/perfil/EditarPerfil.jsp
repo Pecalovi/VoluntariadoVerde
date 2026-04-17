@@ -84,36 +84,24 @@ function toggleEdicion() {
     editando = !editando;
 
     if (editando) {
-
         inputs.forEach(i => {
             i.removeAttribute("readonly");
             i.removeAttribute("disabled");
         });
-
         btn.textContent = "Guardar";
-
     } else {
-
         if (!form.checkValidity()) {
             form.reportValidity();
             return;
         }
 
-        // 🔥 IMPORTANTE: asegurar envío correcto
-        document.getElementById("vehiculo").disabled = false;
-        document.getElementById("discapacidad").disabled = false;
-
+        
         inputs.forEach(i => {
-            if (i.type !== "hidden") {
-                if (i.tagName === "INPUT" && i.type !== "checkbox") {
-                    i.setAttribute("readonly", true);
-                } else {
-                    i.setAttribute("disabled", true);
-                }
-            }
+            i.disabled = false;
+            i.readOnly = false;
         });
 
-        btn.textContent = "Editar";
+        btn.textContent = "Enviando...";
         form.submit();
     }
 }
