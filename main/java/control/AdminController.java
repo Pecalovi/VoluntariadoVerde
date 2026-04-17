@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,8 +44,6 @@ public class AdminController extends HttpServlet {
             opcion = "perfil";
         }
 
-        String adminView = "PerfilAdmin.jsp";
-
         if (bd != null) {
             switch (opcion) {
                 case "voluntarios":
@@ -62,7 +59,7 @@ public class AdminController extends HttpServlet {
                     break;
 
                 default:
-                    opcion = "perfil";
+                	request.setAttribute("tablas", bd.PanelAdmin("voluntarios"));
                     break;
             }
         }
@@ -70,7 +67,7 @@ public class AdminController extends HttpServlet {
         // =========================
         // VIEW GLOBAL
         // =========================
-        request.setAttribute("view", "perfil/Admin.jsp");
+        request.setAttribute("view", "admin/Admin.jsp");
         request.setAttribute("opcion", opcion);
         request.setAttribute("estilo", "estilos/Perfil.css");
 
