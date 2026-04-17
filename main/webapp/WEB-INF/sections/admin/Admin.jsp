@@ -7,8 +7,8 @@
 			class="${opcion == 'voluntarios' ? 'activo' : ''}"> <img
 			src="src/editar.png"> ${lang == 'es' ? 'Gestionar voluntarios' : 'Manage volunteers'}
 		</a> <a
-			href="${pageContext.request.contextPath}/admin?opcion=organizadores"
-			class="${opcion == 'organizadores' ? 'activo' : ''}"> <img
+			href="${pageContext.request.contextPath}/admin?opcion=empresas"
+			class="${opcion == 'empresas' ? 'activo' : ''}"> <img
 			src="src/editar_evento.png"> ${lang == 'es' ? 'Gestionar organizadores' : 'Manage organizers'}
 		</a> <a href="${pageContext.request.contextPath}/admin?opcion=eventos"
 			class="${opcion == 'eventos' ? 'activo' : ''}"> <img
@@ -19,13 +19,17 @@
 	<section>
 		<c:choose>
 			<c:when test="${empty tablas}">
-				<p>No hay <c:out value="${opcion}" />.</p>
+				<p>
+					No hay
+					<c:out value="${opcion}" />
+					.
+				</p>
 			</c:when>
 
 			<c:when test="${opcion == 'voluntarios'}">
 				<c:forEach var="item" items="${tablas}">
 					<div class="admin-tarjeta">
-						<h2>${item.id}. ${item.apellidos}, ${item.nombre}</h2>
+						<h2>${item.id}.${item.apellidos}, ${item.nombre}</h2>
 						<div>
 							<button type="button" class="btn btn-link">Ver datos</button>
 							<button type="button" class="btn btn-danger">Eliminar
@@ -35,13 +39,13 @@
 				</c:forEach>
 			</c:when>
 
-			<c:when test="${opcion == 'organizadores'}">
+			<c:when test="${opcion == 'empresas'}">
 				<c:forEach var="item" items="${tablas}">
 					<div class="admin-tarjeta">
-						<h2>${item.entidad}</h2>
+						<h2>${item.empresa}</h2>
 						<div>
-							<button type="button" class="btn btn-link">Ver
-								organizadores</button>
+							<button type="button" class="btn btn-link">
+								Organizadores (${item.total})</button>
 							<button type="button" class="btn btn-danger">Eliminar
 								organización</button>
 						</div>

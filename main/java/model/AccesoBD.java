@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AccesoBD {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -709,16 +711,14 @@ public class AccesoBD {
 				}
 				break;
 
-			case "organizadores":
+			case "empresas":
 				while (rs.next()) {
-					int id = rs.getInt("id_organizador");
-					String nombre = rs.getString("nombre");
-					String apellidos = rs.getString("apellidos");
-					String telefono = rs.getString("telefono");
-					String empresa = rs.getString("empresa");
-					String email = rs.getString("email");
+					Map<String, Object> fila = new HashMap<>();
 
-					lista.add(new Organizador(nombre, apellidos, id, telefono, email, null, empresa));
+					fila.put("empresa", rs.getString("empresa"));
+					fila.put("total", rs.getInt("total_organizadores"));
+
+					lista.add(fila);
 				}
 				break;
 

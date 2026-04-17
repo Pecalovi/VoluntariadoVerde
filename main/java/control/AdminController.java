@@ -50,8 +50,8 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("tablas", bd.PanelAdmin("voluntarios"));
                     break;
 
-                case "organizadores":
-                    request.setAttribute("tablas", bd.PanelAdmin("organizadores"));
+                case "empresas":
+                    request.setAttribute("tablas", bd.PanelAdmin("empresas"));
                     break;
 
                 case "eventos":
@@ -64,9 +64,7 @@ public class AdminController extends HttpServlet {
             }
         }
 
-        // =========================
-        // VIEW GLOBAL
-        // =========================
+
         request.setAttribute("view", "admin/Admin.jsp");
         request.setAttribute("opcion", opcion);
         request.setAttribute("estilo", "estilos/Perfil.css");
