@@ -57,11 +57,16 @@ input {
 		flex-direction: row;	
 }
 
+#vehiculo input{
+	margin-left: -14px;
+}
+
 span{
 	width: 206px;
 	margin-left: -42px;	
-	margin-top: 5px;
+	margin-top: 6px;
 }
+
 .cajas {
 	padding: 100px;
 	text-align: center;

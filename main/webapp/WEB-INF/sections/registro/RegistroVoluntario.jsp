@@ -27,7 +27,7 @@
 
 		<div id="vehiculo">
 			<input type="checkbox"
-				name="fvehiculo" value="true"> <span>Tengo vehículo</span>
+				name="fvehiculo" value="true" id="inputvehiculo"> <span>Tengo vehículo</span>
 		</div>
 
 		<label>Discapacidad: 
