@@ -72,10 +72,9 @@ public class ServRegister extends HttpServlet {
 			if (bd.registrar(u)) {
 
 				String asunto = "¡Bienvenido a Voluntariado Verde!";
-				String cuerpo = "Hola " + nombre + ",\n\n" + "¡Gracias por registrarte como voluntario!\n"
+				String cuerpo = "Hola " + nombre + ",\n\n" + "¡Gracias por registrarte!\n"
 						+ "Tu cuenta ha sido creada correctamente. Ahora formas parte de nuestra "
 						+ "comunidad para mejorar el medio ambiente.\n\n"
-						+ "¡Esperamos que puedas apuntarte a algún evento pronto!\n\n"
 						+ "Saludos,\nEl equipo de Voluntariado Verde.";
 
 				Mailer.send(email, asunto, cuerpo);
