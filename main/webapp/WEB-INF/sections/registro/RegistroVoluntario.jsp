@@ -26,9 +26,8 @@
 		<!-- INFORMACIÓN ADICIONAL -->
 
 		<div id="vehiculo">
-			<label> <span>¿Tienes vehículo?</span> <input type="checkbox"
-				name="fvehiculo" value="true"> <span>Sí</span>
-			</label>
+			<input type="checkbox"
+				name="fvehiculo" value="true"> <span>Tengo vehículo</span>
 		</div>
 
 		<label>Discapacidad: 

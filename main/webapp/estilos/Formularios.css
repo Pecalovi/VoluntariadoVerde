@@ -52,7 +52,16 @@ input {
 	outline: none;
 	width: 85%;
 }
+#vehiculo {
+		display: flex;
+		flex-direction: row;	
+}
 
+span{
+	width: 206px;
+	margin-left: -42px;	
+	margin-top: 5px;
+}
 .cajas {
 	padding: 100px;
 	text-align: center;
@@ -94,14 +103,6 @@ p {
 
 footer {
 	background: #ebeeef;
-}
-
-#vehiculo label {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	white-space: nowrap;
-	margin:10px 0 10px 0;
 }
 
 
