@@ -10,8 +10,8 @@
 			placeholder="Apellidos"> <input type="text" id="fenterprise"
 			name="fenterprise" placeholder="Empresa" required> <input
 			type="tel" name="fphone" maxlength="9" pattern="[0-9]{9}"
-			inputmode="numeric" placeholder="Numero de teléfono" required> <input type="email" id="femail"
-			name="femail" placeholder="Correo" required> <input
+			inputmode="numeric" placeholder="Número de teléfono" required> <input type="email" id="femail"
+			name="femail" placeholder="Correo electrónico" required> <input
 			type="password" id="fpwd" name="fpwd" placeholder="Contraseña"
 			required> <label id="termorg"> <input type="checkbox" name="terms"
 			required> Acepto los <a
