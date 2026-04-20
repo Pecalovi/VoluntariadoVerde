@@ -818,5 +818,33 @@ public class AccesoBD {
 			return false;
 		}
 	}
+	
+	public Voluntario obtenerVoluntarioPorId(int idUsuario) throws SQLException {
+	    Voluntario v = null;
+	    String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?"; 
+	    
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, idUsuario);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                v = new Voluntario(
+	                    rs.getString("nombre"),
+	                    rs.getString("apellidos"),
+	                    rs.getInt("id_voluntario"),
+	                    rs.getString("telefono"),
+	                    rs.getString("email"),
+	                    null, 
+	                    rs.getInt("discapacidad"),
+	                    rs.getBoolean("vehiculo"),
+	                    rs.getDate("fechaNac") != null ? rs.getDate("fechaNac").toLocalDate() : null
+	                );
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
+	    return v;
+	}
 
 }

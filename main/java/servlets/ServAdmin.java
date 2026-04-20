@@ -1,4 +1,5 @@
 package servlets;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ import model.Voluntario;
 @WebServlet("/ServAdmin")
 public class ServAdmin extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
         String accion = request.getParameter("accion");
@@ -35,7 +36,18 @@ public class ServAdmin extends HttpServlet {
                     break;
 
                 case "eliminarCuenta":
-                    bd.borrarVoluntario(idUsuario);
+                	Voluntario vol = bd.obtenerVoluntarioPorId(idUsuario);
+                	if (vol != null) {
+                        bd.borrarVoluntario(idUsuario);
+                        
+                        String asunto = "Baja de Voluntariado Verde";
+                        String cuerpo = "Hola " + vol.getNombre() + ",\n\n"
+                                + "Te informamos de que el administrador ha decidido eliminar tu cuenta.\n\n"
+                                + "En caso de que no estes de acuerdo respondenos a este correo y te ayudaremos."
+                        		+ "Saludos,\nEl equipo de Voluntariado Verde.";
+                        control.Mailer.send(vol.getEmail(), asunto, cuerpo);
+                    }
+                    
                     response.sendRedirect("admin?opcion=voluntarios");
                     break;
             }
