@@ -77,13 +77,13 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 						<div>
 							<img class="icono" src="src/Icono-evento_ubi.png"
 								alt="icono ubicación">
-							<p><%=evento.getUbicacion()%></p>
+							<p><%=evento.getLugar()%></p>
 						</div>
 
 						<div>
 							<img class="icono" src="src/Icono-evento_fecha.png"
 								alt="icono fecha">
-							<p><%=evento.getFechaFormateada()%></p>
+							<p><%=evento.getFecha_inicio()%></p>
 						</div>
 					</div>
 				</div>

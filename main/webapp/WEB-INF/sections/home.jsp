@@ -97,7 +97,7 @@ boolean es = "es".equals(lang);
 				<div class="informacion-evento">
 					<p class="tipo"><%=evento.getTipo()%></p>
 					<h2><%=evento.getNombre()%></h2>
-					<p><%=evento.getFechaFormateada()%></p>
+					<p><%=evento.getFecha_inicio()%></p>
 				</div>
 			</div>
 

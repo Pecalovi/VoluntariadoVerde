@@ -6,76 +6,41 @@ import java.time.format.DateTimeFormatter;
 public class Evento {
 
 	// Atributos
-	private String nombre;
-	private String ubicacion;
-	private LocalDate fecha;
 	private int idEvento;
-	private String descripcion;
-	private int plazasTotales;
+	private String nombre;
 	private String tipo;
-	private int id_usuario;
-	private int inscritos;
+	private String descripcion;
+	private LocalDate fecha_inicio;
+	private LocalDate fecha_fin;
+	private String lugar;
+	private String edicion;
+	private String estado;
+	private int id_organizador;
 
 	// Constructor
-	public Evento(String nombre, String ubicacion, LocalDate fecha, String tipo, int idEvento, String descripcion,
-			int plazasTotales, int id_usuario, int inscritos) {
+	public Evento(int idEvento, String nombre, String tipo, String descripcion, LocalDate fecha_inicio,
+			LocalDate fecha_fin, String lugar, String edicion, String estado, int id_organizador) {
 		super();
-		this.nombre = nombre;
-		this.ubicacion = ubicacion;
-		this.fecha = fecha;
 		this.idEvento = idEvento;
-		this.descripcion = descripcion;
-		this.plazasTotales = plazasTotales;
+		this.nombre = nombre;
 		this.tipo = tipo;
-		this.id_usuario = id_usuario;
-		this.inscritos = inscritos;
+		this.descripcion = descripcion;
+		this.fecha_inicio = fecha_inicio;
+		this.fecha_fin = fecha_fin;
+		this.lugar = lugar;
+		this.edicion = edicion;
+		this.estado = estado;
+		this.id_organizador = id_organizador;
 	}
+
 
 	// Getters y Setters
-
-	public String getUbicacion() {
-		return ubicacion;
-	}
-
-	public void setUbicacion(String ubicacion) {
-		this.ubicacion = ubicacion;
-	}
-
-	public LocalDate getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getFechaFormateada() {
-	    if (fecha == null) return "";
-	    return fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	}
-
 	public int getIdEvento() {
 		return idEvento;
 	}
 
 	public void setIdEvento(int idEvento) {
 		this.idEvento = idEvento;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public int getPlazasTotales() {
-		return plazasTotales;
-	}
-
-	public void setPlazasTotales(int plazasTotales) {
-		this.plazasTotales = plazasTotales;
 	}
 
 	public String getNombre() {
@@ -94,20 +59,60 @@ public class Evento {
 		this.tipo = tipo;
 	}
 
-	public int getId_usuario() {
-		return id_usuario;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setId_usuario(int id_usuario) {
-		this.id_usuario = id_usuario;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public int getInscritos() {
-		return inscritos;
+	public LocalDate getFecha_inicio() {
+		return fecha_inicio;
 	}
 
-	public void setInscritos(int inscritos) {
-		this.inscritos = inscritos;
+	public void setFecha_inicio(LocalDate fecha_inicio) {
+		this.fecha_inicio = fecha_inicio;
 	}
 
+	public LocalDate getFecha_fin() {
+		return fecha_fin;
+	}
+
+	public void setFecha_fin(LocalDate fecha_fin) {
+		this.fecha_fin = fecha_fin;
+	}
+
+	public String getLugar() {
+		return lugar;
+	}
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
+	}
+
+	public String getEdicion() {
+		return edicion;
+	}
+
+	public void setEdicion(String edicion) {
+		this.edicion = edicion;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public int getId_organizador() {
+		return id_organizador;
+	}
+
+	public void setId_organizador(int id_organizador) {
+		this.id_organizador = id_organizador;
+	}
+	
 }

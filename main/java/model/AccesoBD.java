@@ -1,5 +1,6 @@
 package model;
 
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 public class AccesoBD {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -200,10 +202,8 @@ public class AccesoBD {
 
 	public boolean crearEvento(Evento e) {
 
-		Date fecha = java.sql.Date.valueOf(e.getFecha());
-
-		String sql = "INSERT INTO eventos (nombre, tipo, fecha, lugar, capacidad_maxima, descripcion, id_organizador) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO eventos (nombre, tipo, descripcion, fecha_inicio, fecha_fin, lugar, edicion, estado, id_organizador) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 
@@ -211,16 +211,19 @@ public class AccesoBD {
 
 			ps.setString(1, e.getNombre());
 			ps.setString(2, e.getTipo());
-			ps.setDate(3, fecha);
-			ps.setString(4, e.getUbicacion());
-			ps.setInt(5, e.getPlazasTotales());
-			ps.setString(6, e.getDescripcion());
-			ps.setInt(7, e.getId_usuario());
+			ps.setString(3, e.getDescripcion());
+			ps.setDate(4, java.sql.Date.valueOf(e.getFecha_inicio()));
+			if (e.getFecha_fin() != null) {
+				ps.setDate(5, java.sql.Date.valueOf(e.getFecha_fin()));
+			} else {
+				ps.setNull(5, java.sql.Types.DATE);
+			}
+			ps.setString(6, e.getLugar());
+			ps.setString(7, e.getEdicion());
+			ps.setString(8, e.getEstado());
+			ps.setInt(9, e.getId_organizador());
 
-			// Ejecutar consulta
 			ps.executeUpdate();
-
-			// Cerrar recursos
 			ps.close();
 			return true;
 
@@ -244,12 +247,13 @@ public class AccesoBD {
 				switch (atributo) {
 				case "nombre":
 				case "lugar":
+				case "edicion":
+				case "estado":
 					sql += " WHERE " + atributo + " LIKE ?";
 					filtrar = true;
 					break;
 
 				case "id_organizador":
-				case "capacidad_maxima":
 				case "id_evento":
 				case "tipo":
 					sql += " WHERE " + atributo + " = ?";
@@ -258,13 +262,13 @@ public class AccesoBD {
 				}
 			}
 
-			sql += " ORDER BY fecha";
+			sql += " ORDER BY fecha_inicio";
 
 			PreparedStatement ps = bd.con.prepareStatement(sql);
 
 			if (filtrar) {
 
-				if ("nombre".equals(atributo) || "lugar".equals(atributo)) {
+				if ("nombre".equals(atributo) || "lugar".equals(atributo) || "edicion".equals(atributo) || "estado".equals(atributo)) {
 					ps.setString(1, "%" + valor.toString() + "%");
 				} else if (valor instanceof Integer) {
 					ps.setInt(1, (Integer) valor);
@@ -283,14 +287,18 @@ public class AccesoBD {
 				String nombreEventoDB = rs.getString("nombre");
 				String tipoDB = rs.getString("tipo");
 				String descripcionDB = rs.getString("descripcion");
-				Date fechaDB = rs.getDate("fecha");
 				String lugarDB = rs.getString("lugar");
-				int capacidadMaximaDB = rs.getInt("capacidad_maxima");
+				String edicionDB = rs.getString("edicion");
+				String estadoDB = rs.getString("estado");
+				int idOrganizadorDB = rs.getInt("id_organizador");
 
-				LocalDate fecha = (fechaDB != null) ? fechaDB.toLocalDate() : null;
+				Date fechaInicioDB = rs.getDate("fecha_inicio");
+				Date fechaFinDB = rs.getDate("fecha_fin");
+				LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
+				LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
 
-				eventos.add(new Evento(nombreEventoDB, lugarDB, fecha, tipoDB, idEventoDB, descripcionDB,
-						capacidadMaximaDB, 0, 0));
+				eventos.add(new Evento(idEventoDB, nombreEventoDB, tipoDB, descripcionDB, fechaInicio, fechaFin,
+						lugarDB, edicionDB, estadoDB, idOrganizadorDB));
 			}
 
 			rs.close();
@@ -317,9 +325,14 @@ public class AccesoBD {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Evento evento = new Evento(rs.getString("nombre"), rs.getString("lugar"),
-						rs.getDate("fecha").toLocalDate(), rs.getString("tipo"), rs.getInt("id_evento"),
-						rs.getString("descripcion"), rs.getInt("capacidad_maxima"), 0, 0);
+				Date fechaInicioDB = rs.getDate("fecha_inicio");
+				Date fechaFinDB = rs.getDate("fecha_fin");
+				LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
+				LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
+
+				Evento evento = new Evento(rs.getInt("id_evento"), rs.getString("nombre"), rs.getString("tipo"),
+						rs.getString("descripcion"), fechaInicio, fechaFin, rs.getString("lugar"),
+						rs.getString("edicion"), rs.getString("estado"), rs.getInt("id_organizador"));
 				eventos.add(evento);
 			}
 
@@ -729,14 +742,19 @@ public class AccesoBD {
 					String nombreEventoDB = rs.getString("nombre");
 					String tipoDB = rs.getString("tipo");
 					String descripcionDB = rs.getString("descripcion");
-					Date fechaDB = rs.getDate("fecha");
 					String lugarDB = rs.getString("lugar");
-					int capacidadMaximaDB = rs.getInt("capacidad_maxima");
-
-					LocalDate fecha = (fechaDB != null) ? fechaDB.toLocalDate() : null;
-
-					lista.add(new Evento(nombreEventoDB, lugarDB, fecha, tipoDB, idEventoDB, descripcionDB,
-							capacidadMaximaDB, 0, 0));
+					String edicionDB = rs.getString("edicion");
+					String estadoDB = rs.getString("estado");
+					int idOrganizadorDB = rs.getInt("id_organizador");
+					
+					Date fecha_inicioDB = rs.getDate("fecha_inicio");
+					Date fecha_finDB = rs.getDate("fecha_fin");
+					LocalDate fechaInicio = (fecha_inicioDB != null) ? fecha_inicioDB.toLocalDate() : null;
+					LocalDate fechaFin = (fecha_finDB != null) ? fecha_finDB.toLocalDate() : null;
+					
+					lista.add(new Evento(idEventoDB, nombreEventoDB, tipoDB, descripcionDB, fechaInicio, fechaFin,
+							lugarDB, edicionDB, estadoDB, idOrganizadorDB));
+					
 				}
 				break;
 
