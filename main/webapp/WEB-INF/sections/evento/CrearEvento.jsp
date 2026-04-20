@@ -2,7 +2,7 @@
 <div class="indicador-pasos">
 	<div class="paso activo">
 		<span>1</span>
-		<p>Datos</p>
+		<p>Datos y descripción</p>
 	</div>
 	<div class="paso">
 		<span>2</span>
