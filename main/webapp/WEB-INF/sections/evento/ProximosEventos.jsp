@@ -25,14 +25,13 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 		<img src="src/lupa.png"> <input type="text" name="nombre"
 			placeholder="<%=lang.equals("es") ? "Buscar evento..." : "Find event..."%>">
 
-		<img src="src/filtrar.png" class="icono-filtro"
-			onclick="toggleFiltros(); return false;">
+		<img src="src/filtrar.png" class="icono-filtro" id="btn-toggle-filtro">
 
 		<%
 		if (hayFiltros) {
 		%>
 		<img src="src/limpiar-filtro.png" class="icono-filtro"
-			onclick="resetFiltros(); return false;">
+			id="btn-reset-filtro">
 		<%
 		}
 		%>
@@ -43,11 +42,8 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 	<div id="panel-filtros" class="oculto">
 		<select name="tipo" form="formBuscar">
 			<option value="" disabled selected>Selecciona tipo de evento</option>
-			<option value="Motocros">Motocross</option>
-			<option value="Maraton">Maratón</option>
-			<option value="Ciclismo">Ciclismo</option>
-			<option value="Senderismo">Senderismo / Trail</option>
-			<option value="Otro">Otro</option>
+			<option value="Estatico">Estático</option>
+			<option value="Dinamico">Dinámico</option>
 		</select> <input type="text" name="ciudad" placeholder="Ciudad"
 			form="formBuscar">
 
@@ -109,23 +105,32 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 </section>
 
 <script>
-	// Abrir / cerrar panel al hacer click en el icono
-	function toggleFiltros() {
-		document.getElementById("panel-filtros").classList.toggle("activo");
-	}
+document.addEventListener("DOMContentLoaded", function() {
+    const panel = document.getElementById("panel-filtros");
+    const btnToggle = document.getElementById("btn-toggle-filtro");
+    const btnReset = document.getElementById("btn-reset-filtro");
 
-	// Cerrar panel al hacer click fuera
-	document.addEventListener("click", function(e) {
-		const panel = document.getElementById("panel-filtros");
-		const icono = document.querySelector(".icono-filtro");
+    // Abrir/Cerrar
+    if (btnToggle) {
+        btnToggle.addEventListener("click", function(e) {
+            e.preventDefault();
+            panel.classList.toggle("activo");
+        });
+    }
 
-		if (!panel.contains(e.target) && !icono.contains(e.target)) {
-			panel.classList.remove("activo");
+    // Resetear (si existe el botón)
+    if (btnReset) {
+        btnReset.addEventListener("click", function() {
+            window.location.href = "<%=request.getContextPath()%>/eventos";
+			});
 		}
+
+		// Cerrar al hacer clic fuera
+		document.addEventListener("click", function(e) {
+			if (!panel.contains(e.target)
+					&& !e.target.classList.contains("icono-filtro")) {
+				panel.classList.remove("activo");
+			}
+		});
 	});
-	
-	function resetFiltros() {
-	    window.location.href = "<%=request.getContextPath()%>
-	/eventos";
-	}
 </script>

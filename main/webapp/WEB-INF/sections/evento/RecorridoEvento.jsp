@@ -15,13 +15,10 @@
                 <span>1</span>
                 <p>Datos</p>
             </div>
-<<<<<<< Updated upstream
-=======
             <div class="paso completado">
                 <span>2</span>
                 <p>Tareas</p>
             </div>
->>>>>>> Stashed changes
             <div class="paso activo">
                 <span>2</span>
                 <p>Recorrido</p>
