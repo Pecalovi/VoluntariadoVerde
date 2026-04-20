@@ -25,13 +25,10 @@
     <input id="fdate" type="date" name="fdate" placeholder="Fecha"  required>
     <select name="ftype" required>
         <option value="" disabled selected>Selecciona tipo</option>
-        <option value="Motocros">Motocross</option>
-        <option value="Maraton">Maratón</option>
-        <option value="Ciclismo">Ciclismo</option>
-        <option value="Senderismo">Senderismo / Trail</option>
-        <option value="Otro">Otro</option>
+        <option value="Dinamico">Dinámico</option>
+        <option value="Estatico">Estático</option>
     </select>
-    <input type="number" name="fnumvol" placeholder="Voluntarios" min="1" required>
+    <input type="number" name="fnumvol" placeholder="Voluntarios necesitados" min="1" required>
     <fieldset>
         <legend>Dirección del evento</legend>
 
