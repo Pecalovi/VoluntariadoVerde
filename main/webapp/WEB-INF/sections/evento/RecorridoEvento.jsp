@@ -1,5 +1,5 @@
 <%
-    // Obtener idEvento de la sesión
+    // Obtener idEvento de la sesiï¿½n
     Integer idEvento = (Integer) session.getAttribute("idEvento");
     
     // Si no existe, redirige al home
@@ -15,12 +15,8 @@
                 <span>1</span>
                 <p>Datos</p>
             </div>
-            <div class="paso completado">
-                <span>2</span>
-                <p>Descripción</p>
-            </div>
             <div class="paso activo">
-                <span>3</span>
+                <span>2</span>
                 <p>Recorrido</p>
             </div>
         </div>
@@ -31,12 +27,12 @@
         </div>
 
         <form action="<%=request.getContextPath()%>/ServCrearEvento" method="POST">
-        <input type="hidden" name="fase" value="3">
+        <input type="hidden" name="fase" value="2">
         <input type="hidden" name="idEvento" value="<%=session.getAttribute("idEvento")%>">
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="kmLlegada">Nº km de Llegada</label>
+                    <label for="kmLlegada">Nï¿½ km de Llegada</label>
                     <input type="number" id="kmLlegada" name="kmLlegada" placeholder="Ej: 42" min="0" step="0.1" required>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-
+<%@ page pageEncoding="UTF-8" %>
 <div class="indicador-pasos">
 	<div class="paso activo">
 		<span>1</span>
@@ -6,43 +6,50 @@
 	</div>
 	<div class="paso">
 		<span>2</span>
-		<p>Descripci髇</p>
-	</div>
-	<div class="paso">
-		<span>3</span>
 		<p>Recorrido</p>
 	</div>
 </div>
 
 <div class="enuncidado">
 	<h1>Datos del evento</h1>
-	<p>Completa la informaci髇 b醩ica para crear tu evento.</p>
+	<p>Completa la informaci贸n b谩sica y la descripci贸n para crear tu evento.</p>
 </div>
 
 <form method="post" action="${pageContext.request.contextPath}/ServCrearEvento">
     <input type="hidden" name="fase" value="1">
-    <input type="text" name="fname" placeholder="Nombre" required>
-    <input id="fdate" type="date" name="fdate" placeholder="Fecha"  required>
-    <select name="ftype" required>
-        <option value="" disabled selected>Selecciona tipo</option>
-        <option value="Dinamico">Din醡ico</option>
-        <option value="Estatico">Est醫ico</option>
-    </select>
-    <input type="number" name="fnumvol" placeholder="Voluntarios necesitados" min="1" required>
-    <fieldset>
-        <legend>Direcci髇 del evento</legend>
 
-        <input type="text" name="fpueblo" placeholder="Pueblo / Ciudad" required>
-        <input type="text" name="fprovincia" placeholder="Provincia" required>
-        <input type="number" name="fcp" placeholder="C骴igo Postal" pattern="[0-9]{5}" title="Introduce un CP v醠ido de 5 d韌itos" required>
-    </fieldset>
-    <input type="hidden" name="fid" value="${sessionScope.usuario.id}">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+
+    <select name="tipo" required>
+        <option value="" disabled selected>Selecciona tipo</option>
+        <option value="Dinamico">Din谩mico</option>
+        <option value="Estatico">Est谩tico</option>
+    </select>
+
+    <input type="text" name="edicion" placeholder="Edici贸n (ej: 2025, 3陋 edici贸n)">
+
+    <label for="fecha_inicio">Fecha de inicio</label>
+    <input id="fecha_inicio" type="date" name="fecha_inicio" required>
+
+    <label for="fecha_fin">Fecha de fin (Obligatorio)</label>
+    <input id="fecha_fin" type="date" name="fecha_fin">
+
+    <input type="text" name="lugar" placeholder="Lugar (pueblo, provincia)" required>
+
+    <textarea name="descripcion" placeholder="Descripci贸n del evento" rows="5" required></textarea>
+
+    <input type="hidden" name="id" value="${sessionScope.usuario.id}">
     <input type="submit" class="botones" value="Siguiente">
 </form>
-
 
 <script>
   const hoy = new Date();
   hoy.setHours(0,0,0,0);
-  document.getElementById("fdate").min = hoy.toISOString().slice(0,10);
+  const minFecha = hoy.toISOString().slice(0,10);
+  document.getElementById("fecha_inicio").min = minFecha;
+  document.getElementById("fecha_fin").min = minFecha;
+
+  document.getElementById("fecha_inicio").addEventListener("change", function() {
+    document.getElementById("fecha_fin").min = this.value;
+  });
 </script>
