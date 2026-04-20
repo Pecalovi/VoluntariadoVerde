@@ -7,7 +7,10 @@
 	<div class="paso">
 		<span>2</span>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 		<p>Tareas</p>
 	</div>
 	<div class="paso">
