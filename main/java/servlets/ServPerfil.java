@@ -43,7 +43,7 @@ public class ServPerfil extends HttpServlet {
         try {
             switch (accion) {
                 case "eliminar-cuenta":
-                    bd.borrarDatosUsuario(user.getId());
+                    bd.borrarVoluntario(user.getId());
                     session.invalidate();
                     response.sendRedirect(request.getContextPath() + "/home?parametro=2");
                     break;
