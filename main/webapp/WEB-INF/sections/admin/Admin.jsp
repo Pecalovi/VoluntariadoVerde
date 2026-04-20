@@ -6,8 +6,7 @@
 		<a href="${pageContext.request.contextPath}/admin?opcion=voluntarios"
 			class="${opcion == 'voluntarios' ? 'activo' : ''}"> <img
 			src="src/editar.png"> ${lang == 'es' ? 'Gestionar voluntarios' : 'Manage volunteers'}
-		</a> <a
-			href="${pageContext.request.contextPath}/admin?opcion=empresas"
+		</a> <a href="${pageContext.request.contextPath}/admin?opcion=empresas"
 			class="${opcion == 'empresas' ? 'activo' : ''}"> <img
 			src="src/editar_evento.png"> ${lang == 'es' ? 'Gestionar organizadores' : 'Manage organizers'}
 		</a> <a href="${pageContext.request.contextPath}/admin?opcion=eventos"
@@ -18,26 +17,26 @@
 
 	<section>
 		<c:choose>
-			<c:when test="${empty tablas}">
-				<p>
-					No hay
-					<c:out value="${opcion}" />
-					.
-				</p>
-			</c:when>
-
 			<c:when test="${opcion == 'voluntarios'}">
-				<c:forEach var="item" items="${tablas}">
-					<div class="admin-tarjeta">
-						<h2>${item.id}.${item.apellidos}, ${item.nombre}</h2>
-						<div>
-							<button type="button" class="btn btn-link">Ver datos</button>
-							<button type="button" class="btn btn-danger">Eliminar
-								cuenta</button>
-						</div>
-					</div>
-				</c:forEach>
-			</c:when>
+    <c:forEach var="item" items="${tablas}">
+        <div class="admin-tarjeta">
+            <h2>${item.id}. ${item.apellidos}, ${item.nombre}</h2>
+            <div>
+                <form action="${pageContext.request.contextPath}/admin" method="post">
+                    <input type="hidden" name="accion" value="verDatos" />
+                    <input type="hidden" name="idUsuario" value="${item.id}" />
+                    <button type="submit" class="btn btn-link">Ver datos</button>
+                </form>
+
+                <form action="${pageContext.request.contextPath}/admin" method="post">
+                    <input type="hidden" name="accion" value="eliminarCuenta" />
+                    <input type="hidden" name="idUsuario" value="${item.id}" />
+                    <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+                </form>
+            </div>
+        </div>
+    </c:forEach>
+</c:when>
 
 			<c:when test="${opcion == 'empresas'}">
 				<c:forEach var="item" items="${tablas}">
