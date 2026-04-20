@@ -5,7 +5,7 @@
 	</div>
 	<div class="paso activo">
 		<span>2</span>
-		<p>Descripción</p>
+		<p>Tareas</p>
 	</div>
 	<div class="paso">
 		<span>3</span>
@@ -14,8 +14,8 @@
 </div>
 
 <div class="enuncidado">
-	<h1>Descripción del evento</h1>
-	<p>Explica en qué consiste el evento y qué deben saber los
+	<h1>Tareas del evento</h1>
+	<p>Explica en qué consisten las tareas y qué deben saber los
 		voluntarios.</p>
 </div>
 
