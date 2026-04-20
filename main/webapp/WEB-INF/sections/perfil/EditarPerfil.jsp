@@ -1,7 +1,11 @@
 <%@ page language="java"
 	import="model.Usuario, model.Voluntario, model.Organizador"
 	pageEncoding="UTF-8"%>
-
+<%
+String lang = (String) session.getAttribute("lang");
+if (lang == null)
+    lang = "es";
+%>
 <%
 Usuario user = (Usuario) session.getAttribute("usuario");
 boolean esOrganizador = (user != null && user instanceof Organizador);
@@ -13,16 +17,16 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 
 	<!-- IZQUIERDA -->
 	<div class="form-col">
-		<label for="nombre">Nombre</label> <input type="text" id="nombre"
+		<label for="nombre"><%=lang.equals("en") ? "Name" : "Nombre"%></label> <input type="text" id="nombre"
 			name="fname" value="<%=user != null ? user.getNombre() : ""%>"
-			required readonly> <label for="apellidos">Apellidos</label> <input
+			required readonly> <label for="apellidos"><%=lang.equals("en") ? "Surnames" : "Apellidos"%></label> <input
 			type="text" id="apellidos" name="fsurname"
 			value="<%=user != null ? user.getApellidos() : ""%>" required
 			readonly> <label for="email">Email</label> <input
 			type="email" id="email" name="femail"
 			value="<%=user != null ? user.getEmail() : ""%>" required readonly>
 
-		<label for="numTelf">Numero de teléfono</label> <input type="tel"
+		<label for="numTelf"><%=lang.equals("en") ? "Phone number" : "Número de teléfono"%></label> <input type="tel"
 			id="numTelf" name="fphone"
 			value="<%=user != null ? user.getNumTelf() : ""%>" readonly>
 	</div>
@@ -33,7 +37,7 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 		if (esOrganizador) {
 		%>
 
-		<label for="entidad">Entidad</label> <input type="text" id="entidad"
+		<label for="entidad"><%=lang.equals("en") ? "Company" : "Entidad"%></label> <input type="text" id="entidad"
 			name="fenterprise" value="<%=((Organizador) user).getEntidad()%>"
 			readonly>
 
@@ -41,23 +45,25 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 		} else if (user instanceof Voluntario) {
 		%>
 
-		<label for="fechaNac">Fecha de Nacimiento</label> <input type="date"
+		<label for="fechaNac"><%=lang.equals("en") ? "Birth date" : "Fecha de nacimiento"%></label> <input type="date"
 			id="fechaNac" name="fedad"
 			value="<%=((Voluntario) user).getFechaNac() != null ? ((Voluntario) user).getFechaNac() : ""%>"
-			readonly> <label for="vehiculo">Vehículo</label> <input
+			readonly>
+			<div id="flexvehiculo">
+			<label for="vehiculo"><%=lang.equals("en") ? "Vehicle" : "Vehículo"%></label> <input
 			type="checkbox" id="vehiculo" name="fvehiculo" value="true"
 			<%=((Voluntario) user).getVehiculo() ? "checked" : ""%> disabled>
-
-		<label for="discapacidad">Discapacidad</label> <select
+			</div>
+		<label for="discapacidad"><%=lang.equals("en") ? "Disability" : "Discapacidad"%></label> <select
 			id="discapacidad" name="fdisc" disabled>
 			<option value="0"
-				<%=((Voluntario) user).getDiscapacidad() == 0 ? "selected" : ""%>>Ninguna</option>
+				<%=((Voluntario) user).getDiscapacidad() == 0 ? "selected" : ""%>><%=lang.equals("en") ? "None" : "Ninguna"%></option>
 			<option value="1"
-				<%=((Voluntario) user).getDiscapacidad() == 1 ? "selected" : ""%>>Leve</option>
+				<%=((Voluntario) user).getDiscapacidad() == 1 ? "selected" : ""%>><%=lang.equals("en") ? "Slight" : "Leve"%></option>
 			<option value="2"
-				<%=((Voluntario) user).getDiscapacidad() == 2 ? "selected" : ""%>>Moderada</option>
+				<%=((Voluntario) user).getDiscapacidad() == 2 ? "selected" : ""%>><%=lang.equals("en") ? "Moderate" : "Moderada"%></option>
 			<option value="3"
-				<%=((Voluntario) user).getDiscapacidad() == 3 ? "selected" : ""%>>Severa</option>
+				<%=((Voluntario) user).getDiscapacidad() == 3 ? "selected" : ""%>><%=lang.equals("en") ? "Severe" : "Severa"%></option>
 		</select>
 
 		<%
@@ -68,7 +74,7 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 	<!-- BOTÓN -->
 	<div class="form-full">
 		<button type="button" id="btnEditar" class="botones"
-			onclick="toggleEdicion()">Editar</button>
+			onclick="toggleEdicion()"><%=lang.equals("en") ? "Edit" : "Editar"%></button>
 	</div>
 
 </form>

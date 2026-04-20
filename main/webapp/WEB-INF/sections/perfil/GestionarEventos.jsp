@@ -20,19 +20,19 @@
 		<p>
 			<c:choose>
 				<c:when test="${lang == 'es'}">
-                    No has asistido a ningun evento.
+                    No has creado ningun evento.
                 </c:when>
 				<c:otherwise>
-                    You have not attended any events.
+                    You have not created any events.
                 </c:otherwise>
 			</c:choose>
 		</p>
-		<a href="${pageContext.request.contextPath}/home"> <c:choose>
+		<a href="${pageContext.request.contextPath}/crearevento"> <c:choose>
 				<c:when test="${lang == 'es'}">
-                    Apúntate a algun evento
+                    Crea tu primer evento
                 </c:when>
 				<c:otherwise>
-                    Sign up for an event
+                    Create your first event
                 </c:otherwise>
 			</c:choose>
 		</a>

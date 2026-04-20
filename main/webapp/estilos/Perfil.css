@@ -1,3 +1,14 @@
+#flexvehiculo{
+	display: flex;
+	flex-direction: row;
+	gap: 12px;
+}
+
+#flexvehiculo input{
+	margin-bottom: 1px; 
+}
+
+
 .tarjeta-perfil {
 	display: flex;
 	margin-inline: 200px;
