@@ -27,12 +27,12 @@ menu.querySelectorAll('a').forEach(function(link) {
 	});
 });
 
-//Edad minima 16 años
+//Edad minima 18 años
 const edad = document.getElementById("edad");
 
 if (edad) {
 	const hoy = new Date();
-	hoy.setFullYear(hoy.getFullYear() - 16);
+	hoy.setFullYear(hoy.getFullYear() - 18);
 	hoy.setHours(0, 0, 0, 0);
 
 	edad.max = hoy.toISOString().split("T")[0];

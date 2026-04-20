@@ -436,7 +436,7 @@ public class AccesoBD {
 	}
 
 	public void borrarDatosUsuario(int idUsuario) throws SQLException {
-		String sql = "UPDATE usuarios SET nombre = '', apellidos = '', email = CONCAT('DeletedUser', id_usuario), pass = '', fechaNac = NULL,\r\n"
+		String sql = "UPDATE usuarios SET nombre = 'Usuario Eliminado', apellidos = '', email = '', pass = '', fechaNac = NULL,\r\n"
 				+ "telefono = 0, empresa = NULL, vehiculo = '', discapacidad = ''\r\n" + "WHERE id_usuario = ?;";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ps.setInt(1, idUsuario);

@@ -14,7 +14,9 @@ if (lang == null)
 		</a>
 	</div>
 	<div class="menu">
-
+		<%
+		if (user == null || !"voluntariadoverdev@gmail.com".equals(user.getEmail())) {
+		%>
 		<a href="<%=request.getContextPath()%>/eventos"
 			class="<%="eventos".equals(request.getAttribute("activePage")) ? "activo" : ""%>">
 			<%=lang.equals("es") ? "Próximos eventos" : "Upcoming events"%>
@@ -27,6 +29,7 @@ if (lang == null)
 		</a>
 
 		<%
+		}
 		if (user != null) {
 		%>
 		<div class="dropdown">
@@ -38,9 +41,21 @@ if (lang == null)
 			</button>
 			<ul class="dropdown-menu dropdown-menu-end"
 				aria-labelledby="dropdownUserButton">
+				<%
+				if (user != null && "voluntariadoverdev@gmail.com".equals(user.getEmail())) {
+				%>
+				<li><a class="dropdown-item"
+					href="<%=request.getContextPath()%>/admin"> <%=lang.equals("es") ? "Panel de administración" : "Admin dashboard"%>
+				</a></li>
+				<%
+				} else {
+				%>
 				<li><a class="dropdown-item"
 					href="<%=request.getContextPath()%>/perfil"> <%=lang.equals("es") ? "Mi perfil" : "My profile"%>
 				</a></li>
+				<%
+				}
+				%>
 				<li><a class="dropdown-item"
 					href="<%=request.getContextPath()%>/logout"> <%=lang.equals("es") ? "Cerrar sesión" : "Log out"%>
 				</a></li>
