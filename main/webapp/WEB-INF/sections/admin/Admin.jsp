@@ -22,13 +22,13 @@
         <div class="admin-tarjeta">
             <h2>${item.id}. ${item.apellidos}, ${item.nombre}</h2>
             <div>
-                <form action="${pageContext.request.contextPath}/admin" method="post">
+                <form action="${pageContext.request.contextPath}/ServAdmin" method="post">
                     <input type="hidden" name="accion" value="verDatos" />
                     <input type="hidden" name="idUsuario" value="${item.id}" />
                     <button type="submit" class="btn btn-link">Ver datos</button>
                 </form>
 
-                <form action="${pageContext.request.contextPath}/admin" method="post">
+                <form action="${pageContext.request.contextPath}/ServAdmin" method="post">
                     <input type="hidden" name="accion" value="eliminarCuenta" />
                     <input type="hidden" name="idUsuario" value="${item.id}" />
                     <button type="submit" class="btn btn-danger">Eliminar cuenta</button>

@@ -12,7 +12,7 @@ import model.AccesoBD;
 import model.Usuario;
 import model.Voluntario;
 
-@WebServlet("/admin")
+@WebServlet("/ServAdmin")
 public class ServAdmin extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
