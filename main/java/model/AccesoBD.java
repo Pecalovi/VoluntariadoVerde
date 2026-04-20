@@ -1,6 +1,5 @@
 package model;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 public class AccesoBD {
 	public static final String DRIVER_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -268,7 +266,8 @@ public class AccesoBD {
 
 			if (filtrar) {
 
-				if ("nombre".equals(atributo) || "lugar".equals(atributo) || "edicion".equals(atributo) || "estado".equals(atributo)) {
+				if ("nombre".equals(atributo) || "lugar".equals(atributo) || "edicion".equals(atributo)
+						|| "estado".equals(atributo)) {
 					ps.setString(1, "%" + valor.toString() + "%");
 				} else if (valor instanceof Integer) {
 					ps.setInt(1, (Integer) valor);
@@ -448,11 +447,20 @@ public class AccesoBD {
 		return idsEventos;
 	}
 
-	public void borrarDatosUsuario(int idUsuario) throws SQLException {
-		String sql = "UPDATE voluntarios SET nombre = 'Usuario Eliminado', apellidos = '', email = '', pass = '', fechaNac = NULL,\r\n"
-				+ "telefono = 0, empresa = NULL, vehiculo = '', discapacidad = ''\r\n" + "WHERE id_usuario = ?;";
+	public void borrarVoluntario(int idUsuario) throws SQLException {
+		String sql = "UPDATE voluntarios SET nombre=?, apellidos=?, email=?, pass=?, fechaNac=NULL, telefono=?, vehiculo=?, discapacidad=? WHERE id_voluntario=?";
+
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, idUsuario);
+
+		ps.setString(1, "Usuario eliminado");
+		ps.setString(2, "");
+		ps.setString(3, "");
+		ps.setString(4, "");
+		ps.setString(5, "");
+		ps.setBoolean(6, false);
+		ps.setInt(7, 0);
+		ps.setInt(8, idUsuario);
+
 		ps.executeUpdate();
 	}
 
@@ -686,22 +694,24 @@ public class AccesoBD {
 	// Método para listar voluntarios, organizadores y eventos según variable
 	public ArrayList<Object> PanelAdmin(String tabla) {
 		ArrayList<Object> lista = new ArrayList<>();
-		String sql;
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		sql = "SELECT * FROM " + tabla;
-		try {
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
+
 			switch (tabla) {
+
+			// =========================
+			// VOLUNTARIOS
+			// =========================
 			case "voluntarios":
+				String sql = "SELECT * FROM voluntarios WHERE nombre != 'Usuario eliminado'";
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+
 				while (rs.next()) {
+
 					int id = rs.getInt("id_voluntario");
 					String nombre = rs.getString("nombre");
 					String apellidos = rs.getString("apellidos");
@@ -711,21 +721,25 @@ public class AccesoBD {
 					boolean vehiculo = rs.getBoolean("vehiculo");
 					int discapacidad = rs.getInt("discapacidad");
 
-					LocalDate fechaNac = null;
-					if (fechaNacDB != null) {
-						fechaNac = fechaNacDB.toLocalDate();
-					}
+					LocalDate fechaNac = (fechaNacDB != null) ? fechaNacDB.toLocalDate() : null;
 
 					Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, null, discapacidad, vehiculo,
 							fechaNac);
 
 					lista.add(v);
-
 				}
 				break;
 
+			// =========================
+			// EMPRESAS
+			// =========================
 			case "empresas":
+				String sql1 = "SELECT * FROM empresas";
+				ps = con.prepareStatement(sql1);
+				rs = ps.executeQuery();
+
 				while (rs.next()) {
+
 					Map<String, Object> fila = new HashMap<>();
 
 					fila.put("empresa", rs.getString("empresa"));
@@ -735,7 +749,14 @@ public class AccesoBD {
 				}
 				break;
 
+			// =========================
+			// EVENTOS
+			// =========================
 			case "eventos":
+				String sql2 = "SELECT * FROM eventos";
+				ps = con.prepareStatement(sql2);
+				rs = ps.executeQuery();
+
 				while (rs.next()) {
 
 					int idEventoDB = rs.getInt("id_evento");
@@ -746,21 +767,19 @@ public class AccesoBD {
 					String edicionDB = rs.getString("edicion");
 					String estadoDB = rs.getString("estado");
 					int idOrganizadorDB = rs.getInt("id_organizador");
-					
-					Date fecha_inicioDB = rs.getDate("fecha_inicio");
-					Date fecha_finDB = rs.getDate("fecha_fin");
-					LocalDate fechaInicio = (fecha_inicioDB != null) ? fecha_inicioDB.toLocalDate() : null;
-					LocalDate fechaFin = (fecha_finDB != null) ? fecha_finDB.toLocalDate() : null;
-					
+
+					Date fechaInicioDB = rs.getDate("fecha_inicio");
+					Date fechaFinDB = rs.getDate("fecha_fin");
+
+					LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
+					LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
+
 					lista.add(new Evento(idEventoDB, nombreEventoDB, tipoDB, descripcionDB, fechaInicio, fechaFin,
 							lugarDB, edicionDB, estadoDB, idOrganizadorDB));
-					
 				}
 				break;
-
-			default:
-				break;
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

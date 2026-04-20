@@ -6,6 +6,10 @@
 	</div>
 	<div class="paso">
 		<span>2</span>
+		<p>Tareas</p>
+	</div>
+	<div class="paso">
+		<span>3</span>
 		<p>Recorrido</p>
 	</div>
 </div>

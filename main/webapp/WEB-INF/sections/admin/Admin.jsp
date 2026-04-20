@@ -20,7 +20,7 @@
 			<c:when test="${opcion == 'voluntarios'}">
     <c:forEach var="item" items="${tablas}">
         <div class="admin-tarjeta">
-            <h2>${item.id}. ${item.apellidos}, ${item.nombre}</h2>
+            <h2>${item.apellidos}, ${item.nombre}</h2>
             <div>
                 <form action="${pageContext.request.contextPath}/ServAdmin" method="post">
                     <input type="hidden" name="accion" value="verDatos" />

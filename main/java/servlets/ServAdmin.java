@@ -14,46 +14,34 @@ import model.Voluntario;
 
 @WebServlet("/ServAdmin")
 public class ServAdmin extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
         String accion = request.getParameter("accion");
-        HttpSession session = request.getSession();
-        Usuario user = (Usuario) session.getAttribute("usuario");
+        int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
 
-        if ("eliminarCuenta".equals(accion) && user != null) {
-            try {
-                int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-                AccesoBD bd = new AccesoBD();
-                bd.borrarDatosUsuario(idUsuario);
-                session.setAttribute("success", "Cuenta eliminada correctamente.");
-            } catch (Exception e) {
-                e.printStackTrace();
-                session.setAttribute("error", "Error al eliminar la cuenta.");
+        AccesoBD bd;
+        try {
+            bd = new AccesoBD();
+
+            switch (accion) {
+
+                case "verDatos":
+                    // cargar datos del usuario
+                    request.setAttribute("usuarioDetalle", idUsuario);
+                    request.getRequestDispatcher("/admin/detalleUsuario.jsp")
+                           .forward(request, response);
+                    break;
+
+                case "eliminarCuenta":
+                    bd.borrarVoluntario(idUsuario);
+                    response.sendRedirect("admin?opcion=voluntarios");
+                    break;
             }
 
-        } else if ("verDatos".equals(accion) && user != null) {
-            try {
-                int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-                ArrayList<Object> tablas = (ArrayList<Object>) request.getSession().getAttribute("tablas");
-                
-                for (Object obj : tablas) {
-                    Voluntario v = (Voluntario) obj;
-                    if (v.getId() == idUsuario) {
-                        request.setAttribute("usuarioDetalle", v);
-                        break;
-                    }
-                }
-                
-                request.getRequestDispatcher("/admin.jsp").forward(request, response);
-                return;
-            } catch (Exception e) {
-                e.printStackTrace();
-                session.setAttribute("error", "Error al obtener los datos.");
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        response.sendRedirect(request.getContextPath() + "/admin?opcion=voluntarios");
     }
 }
