@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import control.Mailer;
 
@@ -53,7 +54,7 @@ public class ServRegister extends HttpServlet {
 		if (discStr != null && !discStr.isEmpty()) {
 			discapacidad = Integer.parseInt(discStr);
 		}
-		
+
 		String apellidos = apellido + " " + apellido2;
 
 		String passCifrada = Usuario.sha256(pass);
@@ -78,10 +79,19 @@ public class ServRegister extends HttpServlet {
 						+ "Saludos,\nEl equipo de Voluntariado Verde.";
 
 				Mailer.send(email, asunto, cuerpo);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("message", "Registro completado correctamente. ¡Bienvenido!");
+				session.setAttribute("messageType", "success");
+
 				response.sendRedirect(contextPath + "/login");
 				return;
 			} else {
-				request.setAttribute("error", "Error al crear la cuenta.");
+				HttpSession session = request.getSession();
+
+				session.setAttribute("message", "Error al crear la cuenta.");
+				session.setAttribute("messageType", "danger");
+
 				// Volver al formulario correcto
 				if ("voluntario".equals(tipo)) {
 					request.getRequestDispatcher("/registrovoluntario").forward(request, response);
@@ -92,12 +102,14 @@ public class ServRegister extends HttpServlet {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			request.setAttribute("error", "Error interno, inténtalo más tarde.");
+			HttpSession session = request.getSession();
+			session.setAttribute("message", "Error interno, inténtalo más tarde.");
+			session.setAttribute("messageType", "danger");
 
 			if ("voluntario".equals(tipo)) {
-				request.getRequestDispatcher("/registrovoluntario").forward(request, response);
+				response.sendRedirect(contextPath + "/registrovoluntario");
 			} else if ("organizador".equals(tipo)) {
-				request.getRequestDispatcher("/registroorg").forward(request, response);
+				response.sendRedirect(contextPath + "/registroorg");
 			}
 		}
 

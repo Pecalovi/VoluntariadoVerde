@@ -55,22 +55,27 @@ public class ServLogin extends HttpServlet {
 			session.setAttribute("usuario", user);
 
 			// Redirigir al home
-			
+
 			boolean esOrganizador = (user != null && user instanceof Organizador);
-			
+
 			if (esOrganizador) {
-				if(user.getEmail().equals("voluntariadoverdev@gmail.com")) {
+				if (user.getEmail().equals("voluntariadoverdev@gmail.com")) {
 					response.sendRedirect(contextPath + "/admin");
-				}else {
-					response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");				}
-			
-			}else {
+				} else {
+					response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");
+				}
+
+			} else {
 				response.sendRedirect(contextPath + "/home");
 			}
 		} else {
 			// Si no se encuentra el usuario
-			request.setAttribute("error", "El email o la contraseña no son correctos.");
-			request.getRequestDispatcher("/login").forward(request, response);
+			HttpSession session = request.getSession();
+
+			session.setAttribute("message", "El email o la contraseña no son correctos.");
+			session.setAttribute("messageType", "danger");
+
+			response.sendRedirect(contextPath + "/login");
 		}
 	}
 }

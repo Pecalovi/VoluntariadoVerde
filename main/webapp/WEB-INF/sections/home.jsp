@@ -38,13 +38,15 @@ boolean es = "es".equals(lang);
 						<div class="row">
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("usuarios", 1) %>">0</span>
+									<span class="impacto-numero"
+										data-target="<%=AccesoBD.contadorHome("usuarios", 1)%>">0</span>
 									<p><%=es ? "Voluntarios" : "Volunteers"%></p>
 								</div>
 							</div>
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("eventos", null) %>">0</span>
+									<span class="impacto-numero"
+										data-target="<%=AccesoBD.contadorHome("eventos", null)%>">0</span>
 									<p><%=es ? "Eventos realizados" : "Events held"%></p>
 								</div>
 							</div>
@@ -53,13 +55,15 @@ boolean es = "es".equals(lang);
 
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="<%=AccesoBD.contadorHome("usuarios", 2) %>">0</span>
+									<span class="impacto-numero"
+										data-target="<%=AccesoBD.contadorHome("usuarios", 2)%>">0</span>
 									<p><%=es ? "Entidades organizadoras" : "Organizers"%></p>
 								</div>
 							</div>
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
-									<span class="impacto-numero" data-target="<%=AccesoBD.contadorInscripciones()%>">0</span>
+									<span class="impacto-numero"
+										data-target="<%=AccesoBD.contadorInscripciones()%>">0</span>
 									<p><%=es ? "Inscripciones" : "Inscription"%></p>
 								</div>
 							</div>
@@ -87,7 +91,7 @@ boolean es = "es".equals(lang);
 
 		<a
 			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
-			class="evento-index1 animate__animated animate__bounceInLeft"
+			class="evento-index1 animate__animated animate__flipInY"
 			style="animation-delay: <%=delay%>s;">
 
 			<div class="evento-index">
@@ -124,43 +128,49 @@ boolean es = "es".equals(lang);
 </section>
 
 <section id="faq">
-    <h1><%=es ? "Preguntas frecuentes" : "Frequently asked questions"%></h1>
+	<h1><%=es ? "Preguntas frecuentes" : "Frequently asked questions"%></h1>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Qué es esta plataforma?" : "What is this platform?"%></h4>
-        <p><%=es ? "Una plataforma de voluntariado donde organizaciones publican eventos y voluntarios pueden inscribirse para participar." 
-                 : "A volunteering platform where event organizers publish events and volunteers can sign up to participate in them."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Qué es esta plataforma?" : "What is this platform?"%></h4>
+		<p><%=es
+		? "Una plataforma de voluntariado donde organizaciones publican eventos y voluntarios pueden inscribirse para participar."
+		: "A volunteering platform where event organizers publish events and volunteers can sign up to participate in them."%></p>
+	</div>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Es gratuito?" : "Is it free?"%></h4>
-        <p><%=es ? "Sí, tanto el registro como la inscripción a eventos son completamente gratuitos." 
-                 : "Yes, both signing up and inscribing for events are completely free."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Es gratuito?" : "Is it free?"%></h4>
+		<p><%=es
+		? "Sí, tanto el registro como la inscripción a eventos son completamente gratuitos."
+		: "Yes, both signing up and inscribing for events are completely free."%></p>
+	</div>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Necesito una cuenta para ver los eventos?" : "Do I need an account to view events?"%></h4>
-        <p><%=es ? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás una cuenta." 
-                 : "You can take a look at events without signing up, but in order to request your participation you need to have an account."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Necesito una cuenta para ver los eventos?" : "Do I need an account to view events?"%></h4>
+		<p><%=es
+		? "Puedes consultar los eventos sin registrarte, pero para inscribirte necesitarás una cuenta."
+		: "You can take a look at events without signing up, but in order to request your participation you need to have an account."%></p>
+	</div>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Cómo me inscribo en un evento?" : "How do I sign up for an event?"%></h4>
-        <p><%=es ? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la acepte." 
-                 : "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer accepts it."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Cómo me inscribo en un evento?" : "How do I sign up for an event?"%></h4>
+		<p><%=es
+		? "Entra en el evento que te interese y pulsa el botón de inscribirse. Tu solicitud quedará pendiente hasta que el organizador la acepte."
+		: "Go to the event you are interested in and click the sign up button. Your request will remain pending until the organizer accepts it."%></p>
+	</div>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Puedo cancelar mi inscripción a un evento?" : "Can I cancel my inscription to an event?"%></h4>
-        <p><%=es ? "Sí, puedes cancelar tu inscripción desde tu perfil en cualquier momento antes del evento." 
-                 : "Yes, you can cancel your inscription from your profile at any time before the event."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Puedo cancelar mi inscripción a un evento?" : "Can I cancel my inscription to an event?"%></h4>
+		<p><%=es
+		? "Sí, puedes cancelar tu inscripción desde tu perfil en cualquier momento antes del evento."
+		: "Yes, you can cancel your inscription from your profile at any time before the event."%></p>
+	</div>
 
-    <div class="faq-item">
-        <h4><%=es ? "¿Cómo puedo crear un evento?" : "How can I create an event?"%></h4>
-        <p><%=es ? "Regístrate como organizador y desde tu perfil encontrarás la opción de crear un nuevo evento." 
-                 : "Sign in as an organizer and in your profile you will find the option to create an event."%></p>
-    </div>
+	<div class="faq-item">
+		<h4><%=es ? "¿Cómo puedo crear un evento?" : "How can I create an event?"%></h4>
+		<p><%=es
+		? "Regístrate como organizador y desde tu perfil encontrarás la opción de crear un nuevo evento."
+		: "Sign in as an organizer and in your profile you will find the option to create an event."%></p>
+	</div>
 
 </section>
 <script>

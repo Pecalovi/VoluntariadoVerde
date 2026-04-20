@@ -51,7 +51,24 @@ if (lang != null) {
 	<jsp:include page="/WEB-INF/sections/Header.jsp" />
 
 	<main class="main">
+
+		<%
+		String message = (String) session.getAttribute("message");
+		String type = (String) session.getAttribute("messageType");
+
+		if (message != null) {
+		%>
+		<div class="popup alert alert-<%=type%> mt-3">
+			<%=message%>
+		</div>
+		<%
+		session.removeAttribute("message");
+		session.removeAttribute("messageType");
+		}
+		%>
+
 		<jsp:include page="/WEB-INF/sections/${view}" />
+
 	</main>
 
 	<jsp:include page="/WEB-INF/sections/Footer.jsp" />
