@@ -2,7 +2,7 @@
 <div class="indicador-pasos">
 	<div class="paso activo">
 		<span>1</span>
-		<p>Datos y descripción</p>
+		<p>Evento</p>
 	</div>
 	<div class="paso">
 		<span>2</span>
@@ -38,7 +38,12 @@
     <label for="fecha_fin">Fecha de fin (Obligatorio)</label>
     <input id="fecha_fin" type="date" name="fecha_fin">
 
-    <input type="text" name="lugar" placeholder="Lugar (pueblo, provincia)" required>
+    <fieldset>
+        <label for="fecha_inicio">Direccion del evento</label>
+        <input type="text" name="pueblo" placeholder="Pueblo / Ciudad" required>
+        <input type="text" name="provincia" placeholder="Provincia" required>
+        <input type="number" name="cp" placeholder="C&oacute;digo Postal" min="1000" max="99999" required>
+    </fieldset>
 
     <textarea name="descripcion" placeholder="Descripción del evento" rows="5" required></textarea>
 

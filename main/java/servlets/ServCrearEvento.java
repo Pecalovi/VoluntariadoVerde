@@ -26,15 +26,18 @@ public class ServCrearEvento extends HttpServlet {
 		String contextPath = request.getContextPath();
 		int fase = Integer.parseInt(request.getParameter("fase"));
 		
-		// =========================
+
 		// FASE 1: Crear el evento
-		// =========================
+		
 		if (fase == 1) {
 			String nombre      = request.getParameter("nombre");
 			String tipo        = request.getParameter("tipo");
 			String edicion     = request.getParameter("edicion");
 			String estado      = "Publicado";
-			String lugar       = request.getParameter("lugar");
+			String pueblo      = request.getParameter("pueblo");
+			String provincia   = request.getParameter("provincia");
+			String cp          = request.getParameter("cp");
+			String lugar       =  " (" + pueblo +", " + provincia + ", " + cp + ")";
 			String descripcion = request.getParameter("descripcion");
 			int idOrganizador  = Integer.parseInt(request.getParameter("id"));
 
@@ -62,9 +65,9 @@ public class ServCrearEvento extends HttpServlet {
 				response.sendRedirect(contextPath + "/crearevento?error=1");
 			}
 
-		// =========================
+
 		// FASE 2: Guardar recorrido
-		// =========================
+
 		} else if (fase == 2) {
 			Integer idEvento = (Integer) session.getAttribute("idEvento");
 
