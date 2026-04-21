@@ -67,6 +67,11 @@ public class ServAdmin extends HttpServlet {
                         
                         control.Mailer.send(vol.getEmail(), asunto, cuerpo);
                     }
+                    HttpSession session = request.getSession();
+
+        			session.setAttribute("message", "Voluntario eliminado correctamente.");
+        			session.setAttribute("messageType", "success");
+                    
                     response.sendRedirect("admin?opcion=voluntarios");
                     break;
             }

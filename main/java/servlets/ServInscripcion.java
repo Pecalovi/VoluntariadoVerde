@@ -62,6 +62,10 @@ public class ServInscripcion extends HttpServlet {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
+
+			session.setAttribute("message", "Error al inscribirse al evento.");
+			session.setAttribute("messageType", "danger");
+
 			response.sendRedirect(request.getContextPath() + "/home");
 		}
 	}

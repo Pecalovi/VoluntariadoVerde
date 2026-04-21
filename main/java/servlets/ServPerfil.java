@@ -45,7 +45,11 @@ public class ServPerfil extends HttpServlet {
 			case "eliminar-cuenta":
 				bd.borrarVoluntario(user.getId());
 				session.invalidate();
-				response.sendRedirect(request.getContextPath() + "/home?parametro=2");
+
+				session.setAttribute("message", "Cuenta eliminada correctamente.");
+				session.setAttribute("messageType", "success");
+
+				response.sendRedirect(request.getContextPath() + "/home");
 				break;
 
 			case "gestionar-voluntarios":
@@ -63,7 +67,7 @@ public class ServPerfil extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect(request.getContextPath() + "/perfil?error=1");
+			response.sendRedirect(request.getContextPath() + "/perfil");
 		}
 	}
 
@@ -132,9 +136,14 @@ public class ServPerfil extends HttpServlet {
 
 				if (bd.editarDatosUsuario(user)) {
 					session.setAttribute("usuario", user);
-					session.setAttribute("success", "Perfil actualizado correctamente.");
+					session.setAttribute("message", "Perfil actualizado correctamente.");
+					session.setAttribute("messageType", "success");
 				} else {
-					session.setAttribute("error", "No se pudo actualizar en la base de datos.");
+
+					session.setAttribute("message", "No se han podido editar los datos.");
+					session.setAttribute("messageType", "danger");
+
+					response.sendRedirect(request.getContextPath() + "/login");
 				}
 
 				response.sendRedirect(request.getContextPath() + "/perfil");
@@ -144,7 +153,7 @@ public class ServPerfil extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect(request.getContextPath() + "/perfil?error=1");
+			response.sendRedirect(request.getContextPath() + "/perfil");
 		}
 	}
 }

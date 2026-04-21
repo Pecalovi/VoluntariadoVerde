@@ -410,10 +410,8 @@ footer {
 
 .popup {
     position: fixed;
-    top: 110px;
-    left: 200px;
-    transform: translate(-50%, -50%);
-    
+    top: 60px;
+    left: 50px;
     z-index: 9999;
     min-width: 300px;
     text-align: center;
