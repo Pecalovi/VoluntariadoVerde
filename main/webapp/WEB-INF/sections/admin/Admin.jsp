@@ -18,26 +18,34 @@
 	<section>
 		<c:choose>
 			<c:when test="${opcion == 'voluntarios'}">
-    <c:forEach var="item" items="${tablas}">
-        <div class="admin-tarjeta">
-            <h2>${item.apellidos}, ${item.nombre}</h2>
-            <div>
-                <form action="${pageContext.request.contextPath}/ServAdmin" method="post">
-                    <input type="hidden" name="accion" value="verDatos" />
-                    <input type="hidden" name="idUsuario" value="${item.id}" />
-                    <button type="submit" class="btn btn-link">Ver datos</button>
-                </form>
+				<c:forEach var="item" items="${tablas}">
+					<div class="admin-tarjeta">
+						<h2>${item.apellidos},${item.nombre}</h2>
+						<div>
+							<form action="${pageContext.request.contextPath}/ServAdmin"
+								method="post" style="display: inline;">
+								<input type="hidden" name="accion" value="verDatos" /> <input
+									type="hidden" name="idUsuario" value="${item.id}" />
+								<button type="submit" class="btn btn-link">Ver datos</button>
+							</form>
 
-                <form action="${pageContext.request.contextPath}/ServAdmin" method="post">
-                    <input type="hidden" name="accion" value="eliminarCuenta" />
-                    <input type="hidden" name="idUsuario" value="${item.id}" />
-                    <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
-                </form>
-            </div>
-        </div>
-    </c:forEach>
-</c:when>
+							<form action="${pageContext.request.contextPath}/ServAdmin"
+								method="post" style="margin-top: 10px;">
+								<input type="hidden" name="accion" value="eliminarCuenta" /> <input
+									type="hidden" name="idUsuario" value="${item.id}" />
 
+								<textarea name="motivo" required
+									placeholder="Motivo de la baja..."
+									style="width: 100%; display: block; margin-bottom: 5px;"></textarea>
+
+								<button type="submit" class="btn btn-danger"
+									onclick="return confirm('¿Seguro que deseas eliminar esta cuenta?')">
+									Eliminar cuenta</button>
+							</form>
+						</div>
+					</div>
+				</c:forEach>
+			</c:when>
 			<c:when test="${opcion == 'empresas'}">
 				<c:forEach var="item" items="${tablas}">
 					<div class="admin-tarjeta">
@@ -67,5 +75,58 @@
 			</c:otherwise>
 
 		</c:choose>
+		
+		
+		
+		<c:if test="${not empty usuarioDetalle or not empty sessionScope.usuarioDetalle}">
+    <c:set var="det" value="${not empty usuarioDetalle ? usuarioDetalle : sessionScope.usuarioDetalle}" />
+
+    <div id="miModal" class="modal-overlay" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="modal-contenido" style="background: white; padding: 0; border-radius: 8px; width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-family: Arial, sans-serif;">
+            
+            <div style="background: #27ae60; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
+                <h3 style="margin: 0;">INFORME DE VOLUNTARIO</h3>
+            </div>
+
+            <div style="padding: 20px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px; font-weight: bold; color: #666;">ID:</td>
+                        <td style="padding: 10px;">${det.id}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px; font-weight: bold; color: #666;">Nombre:</td>
+                        <td style="padding: 10px;">${det.nombre} ${det.apellidos}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px; font-weight: bold; color: #666;">Email:</td>
+                        <td style="padding: 10px; color: #2980b9;">${det.email}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 10px; font-weight: bold; color: #666;">Teléfono:</td>
+                        <td style="padding: 10px;">${det.numTelf}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; font-weight: bold; color: #666;">Vehículo:</td>
+                        <td style="padding: 10px;">${det.vehiculo ? 'Disponible' : 'No dispone'}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="padding: 15px; text-align: center; background: #f9f9f9; border-radius: 0 0 8px 8px;">
+                <button type="button" onclick="cerrarEInforme()" style="background: #2c3e50; color: white; border: none; padding: 10px 25px; border-radius: 4px; cursor: pointer;">
+                    Cerrar Informe
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cerrarEInforme() {
+            // Redirigimos a un pequeño controlador para limpiar la sesión y que el modal no vuelva a salir
+            window.location.href = "${pageContext.request.contextPath}/ServAdmin?accion=limpiarDetalle";
+        }
+    </script>
+</c:if>
 	</section>
 </div>

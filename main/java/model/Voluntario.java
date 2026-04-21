@@ -15,7 +15,7 @@ public class Voluntario extends Usuario {
 		this.vehiculo = vehiculo;
 		this.fechaNac = fechaNac;
 	}
-
+	
 	public int getDiscapacidad() {
 		return discapacidad;
 	}
