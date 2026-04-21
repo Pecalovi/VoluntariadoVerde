@@ -77,7 +77,7 @@ boolean es = "es".equals(lang);
 
 <section id="container-eventos">
 	<h1>
-		<%=es ? "Eventos destacados" : "Upcoming events"%>
+		<%=es ? "Próximos eventos" : "Upcoming events"%>
 	</h1>
 
 	<div class="eventos">
@@ -93,7 +93,6 @@ boolean es = "es".equals(lang);
 			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
 			class="evento-index1 animate__animated animate__flipInY"
 			style="animation-delay: <%=delay%>s;">
-
 			<div class="evento-index">
 				<img src="src/eventos/<%=evento.getTipo()%>.jpg"
 					alt="<%=evento.getTipo()%>">
