@@ -111,7 +111,7 @@ boolean es = "es".equals(lang);
 		}
 		} else {
 		%>
-		<p>
+		<p class="eventos-n">
 			<%=es ? "No hay ningún evento próximamente." : "No upcoming events."%>
 		</p>
 		<%

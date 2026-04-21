@@ -1,22 +1,23 @@
-.mapa{
+.mapa {
 	margin-left: 25%;
 }
+
 .frase {
-    color: black;
-    font-weight: 300;
-    font-size: 3rem;
-    text-align: left;
-    padding-left: 1rem;
-    margin-top: 20%;
+	color: black;
+	font-weight: 300;
+	font-size: 3rem;
+	text-align: left;
+	padding-left: 1rem;
+	margin-top: 20%;
 }
 
-.col-md-7{
+.col-md-7 {
 	margin: auto;
 }
 
 .frase-verde {
-    color: var(--verde-principal);
-    font-style: italic;
+	color: var(--verde-principal);
+	font-style: italic;
 }
 
 .eslogan {
@@ -36,54 +37,52 @@
 }
 
 #contador-impacto {
-    width: 1000px;
-    padding: 50px 40px;
-    text-align: center;
-    margin-top: 65px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    border-radius: 8px;
-    margin-left: 30%;
+	width: 1000px;
+	padding: 50px 40px;
+	text-align: center;
+	margin-top: 65px;
+	margin-bottom: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.18);
+	transition: transform 0.35s ease, box-shadow 0.35s ease;
+	border-radius: 8px;
+	margin-left: 30%;
 }
 
 #contador-impacto:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 60px rgba(	53.3, 90.6, 53.3, 0.3);
+	transform: scale(1.05);
+	box-shadow: 0 0 60px rgba(53.3, 90.6, 53.3, 0.3);
 }
 
-
 .impacto-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 30px;
+	max-width: 1000px;
+	margin: 0 auto;
 }
 
 .impacto-item {
-    color: #fff;
+	color: #fff;
 }
 
 .impacto-numero {
-    display: block;
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 8px;
-    color: black;
-    display: flex;
+	display: block;
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 1;
+	margin-bottom: 8px;
+	color: black;
+	display: flex;
 }
 
 .impacto-item p {
-    font-size: 1rem;
-    opacity: 0.85;
-    margin: 0;
-    color: black;
-	
+	font-size: 1rem;
+	opacity: 0.85;
+	margin: 0;
+	color: black;
 }
 
-#impacto-texto{
+#impacto-texto {
 	padding-top: 30px;
 }
 
@@ -178,7 +177,6 @@
 	margin: 0;
 	height: 60px;
 	text-align: left;
-
 }
 
 .informacion-evento p {
@@ -188,70 +186,78 @@
 }
 
 #faq {
-    max-width: 1000px;
-    margin: 60px auto;
-    padding: 0 20px;
+	max-width: 1000px;
+	margin: 60px auto;
+	padding: 0 20px;
 }
 
 .faq-item {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	overflow: hidden;
 }
 
 .faq-item h4 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 10px;
-    margin: 0;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #111;
-    transition: color 0.3s;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 18px 10px;
+	margin: 0;
+	cursor: pointer;
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: #111;
+	transition: color 0.3s;
 }
 
 .faq-item h4::after {
-    content: "+";
-    font-size: 1.4rem;
-    color: var(--verde-principal);
-    transition: transform 0.3s;
+	content: "+";
+	font-size: 1.4rem;
+	color: var(--verde-principal);
+	transition: transform 0.3s;
 }
 
 .faq-item.abierto h4 {
-    color: var(--verde-principal);
+	color: var(--verde-principal);
 }
 
 .faq-item.abierto h4::after {
-    transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 
 .faq-item p {
-    max-height: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0 10px;
-    color: rgba(0, 0, 0, 0.7);
-    line-height: 1.6;
-    transition: max-height 0.4s ease, padding 0.3s ease;
+	max-height: 0;
+	overflow: hidden;
+	margin: 0;
+	padding: 0 10px;
+	color: rgba(0, 0, 0, 0.7);
+	line-height: 1.6;
+	transition: max-height 0.4s ease, padding 0.3s ease;
 }
 
 .faq-item.abierto p {
-    max-height: 200px;
-    padding: 0 10px 18px 10px;
+	max-height: 200px;
+	padding: 0 10px 18px 10px;
 }
 
-@media (max-width: 768px) {
-    #faq {
-        padding: 0 15px;
-        margin: 40px auto;
-    }
-    #faq h2 {
-        font-size: 1.5rem;
-    }
-    .faq-item h4 {
-        font-size: 0.95rem;
-    }
+.eventos-n {
+	border: dashed 2px var(--gris-claro);
+	border-radius: 8px;
+	text-align: center;
+	padding: 100px;
+	margin-top: 10px;
+}
+
+@media ( max-width : 768px) {
+	#faq {
+		padding: 0 15px;
+		margin: 40px auto;
+	}
+	#faq h2 {
+		font-size: 1.5rem;
+	}
+	.faq-item h4 {
+		font-size: 0.95rem;
+	}
 }
 
 @media ( max-width : 768px) {
@@ -309,23 +315,24 @@
 	.tipo {
 		display: none;
 	}
-	 #contador-impacto {
-	 display: none;
-        padding: 40px 20px;
-    }
-    .impacto-numero {
-        font-size: 2.2rem;
-    }
-    .impacto-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-    .col-md-7{
-    display: none;}
-    .frase {
-    display: none;
-    }
-    .mapa{
-    display: none;}
-}
+	#contador-impacto {
+		display: none;
+		padding: 40px 20px;
+	}
+	.impacto-numero {
+		font-size: 2.2rem;
+	}
+	.impacto-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 24px;
+	}
+	.col-md-7 {
+		display: none;
+	}
+	.frase {
+		display: none;
+	}
+	.mapa {
+		display: none;
+	}
 }
