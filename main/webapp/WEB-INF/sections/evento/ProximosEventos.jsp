@@ -41,13 +41,13 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 	<!-- PANEL DE FILTROS -->
 	<div id="panel-filtros" class="oculto">
 		<select name="tipo" form="formBuscar">
-			<option value="" disabled selected>Selecciona tipo de evento</option>
-			<option value="Estatico">Estático</option>
-			<option value="Dinamico">Dinámico</option>
+			<option value="" disabled selected><%=lang.equals("es") ? "Selecciona tipo de evento" : "Select event type"%></option>
+			<option value="Estatico"><%=lang.equals("es") ? "Estático" : "Static"%></option>
+			<option value="Dinamico"><%=lang.equals("es") ? "Dinámico" : "Dynamic"%></option>
 		</select> <input type="text" name="ciudad" placeholder="Ciudad"
 			form="formBuscar">
 
-		<button type="submit" form="formBuscar" class="botones">Filtrar</button>
+		<button type="submit" form="formBuscar" class="botones"><%=lang.equals("es") ? "Filtrar" : "Filter"%></button>
 	</div>
 
 	<div class="eventos">
