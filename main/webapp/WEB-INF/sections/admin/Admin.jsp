@@ -102,10 +102,6 @@
                         <td style="padding: 10px; font-weight: bold; color: #666;">Teléfono:</td>
                         <td style="padding: 10px;">${det.numTelf}</td>
                     </tr>
-                    <tr>
-                        <td style="padding: 10px; font-weight: bold; color: #666;">Vehículo:</td>
-                        <td style="padding: 10px;">${det.vehiculo ? 'Disponible' : 'No dispone'}</td>
-                    </tr>
                 </table>
             </div>
 
