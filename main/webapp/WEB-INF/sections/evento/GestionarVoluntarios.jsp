@@ -20,25 +20,27 @@
 
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Pendiente'}">
-					<span>${v.nombre} ${v.apellidos}</span>
-					
-					<form style="display: inline;"><button type="button">Ver perfil</button></form>
-					
+					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+
+					<form style="display: inline;">
+						<button type="button">Ver perfil</button>
+					</form>
+
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
-						<input type="hidden" name="idUsuario" value="${v.id}"> <input
-							type="hidden" name="accionVoluntario" value="aceptar"> <input
-							type="hidden" name="idEvento" value="${param.id}">
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="aceptar">
+						<input type="hidden" name="idEvento" value="${param.id}">
 						<button type="submit">Aceptar</button>
 					</form>
 
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
-						<input type="hidden" name="idUsuario" value="${v.id}"> <input
-							type="hidden" name="accionVoluntario" value="rechazar"> <input
-							type="hidden" name="idEvento" value="${param.id}">
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="rechazar">
+						<input type="hidden" name="idEvento" value="${param.id}">
 						<button type="submit">Lista de espera</button>
 					</form>
 					<br />
@@ -61,8 +63,10 @@
 
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Aceptado'}">
-					<span>${v.nombre} ${v.apellidos}</span>
-					<form style="display: inline;"><button type="button">Ver perfil</button></form>
+					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+					<form style="display: inline;">
+						<button type="button">Ver perfil</button>
+					</form>
 					<br />
 				</c:if>
 			</c:forEach>
@@ -84,14 +88,16 @@
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Rechazado'}">
 					<span>${v.nombre} ${v.apellidos}</span>
-					<form style="display: inline;"><button type="button">Ver perfil</button></form>
-					
+					<form style="display: inline;">
+						<button type="button">Ver perfil</button>
+					</form>
+
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post" style="display: inline;">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
-						<input type="hidden" name="idUsuario" value="${v.id}"> <input
-							type="hidden" name="accionVoluntario" value="aceptar"> <input
-							type="hidden" name="idEvento" value="${param.id}">
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="aceptar">
+						<input type="hidden" name="idEvento" value="${param.id}">
 						<button type="submit">Aceptar</button>
 					</form>
 					<br />
@@ -114,7 +120,7 @@
 
 			<c:forEach var="v" items="${voluntarios}">
 				<c:if test="${v.estado == 'Cancelado'}">
-					<span>${v.nombre} ${v.apellidos}</span>
+					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
 					<br />
 				</c:if>
 			</c:forEach>

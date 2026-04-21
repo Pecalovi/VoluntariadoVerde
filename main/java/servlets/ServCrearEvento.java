@@ -25,27 +25,27 @@ public class ServCrearEvento extends HttpServlet {
 		HttpSession session = request.getSession();
 		String contextPath = request.getContextPath();
 		int fase = Integer.parseInt(request.getParameter("fase"));
-		
 
 		// FASE 1: Crear el evento
-		
+
 		if (fase == 1) {
-			String nombre      = request.getParameter("nombre");
-			String tipo        = request.getParameter("tipo");
-			String edicion     = request.getParameter("edicion");
-			String estado      = "Publicado";
-			String pueblo      = request.getParameter("pueblo");
-			String provincia   = request.getParameter("provincia");
-			String cp          = request.getParameter("cp");
-			String lugar       =  " (" + pueblo +", " + provincia + ", " + cp + ")";
+			String nombre = request.getParameter("nombre");
+			String tipo = request.getParameter("tipo");
+			String edicion = request.getParameter("edicion");
+			String estado = "Publicado";
+			String pueblo = request.getParameter("pueblo");
+			String provincia = request.getParameter("provincia");
+			String cp = request.getParameter("cp");
+			String lugar = cp + ", " + pueblo + " (" + provincia + ")";
 			String descripcion = request.getParameter("descripcion");
-			int idOrganizador  = Integer.parseInt(request.getParameter("id"));
+			int idOrganizador = Integer.parseInt(request.getParameter("id"));
 
 			LocalDate fechaInicio = LocalDate.parse(request.getParameter("fecha_inicio"));
 			String fechaFinStr = request.getParameter("fecha_fin");
 			LocalDate fechaFin = (fechaFinStr != null && !fechaFinStr.isEmpty()) ? LocalDate.parse(fechaFinStr) : null;
 
-			Evento evento = new Evento(0, nombre, tipo, descripcion, fechaInicio, fechaFin, lugar, edicion, estado, idOrganizador);
+			Evento evento = new Evento(0, nombre, tipo, descripcion, fechaInicio, fechaFin, lugar, edicion, estado,
+					idOrganizador);
 
 			try {
 				AccesoBD bd = new AccesoBD();
@@ -65,8 +65,7 @@ public class ServCrearEvento extends HttpServlet {
 				response.sendRedirect(contextPath + "/crearevento?error=1");
 			}
 
-
-		// FASE 2: Guardar recorrido
+			// FASE 2: Guardar recorrido
 
 		} else if (fase == 2) {
 			Integer idEvento = (Integer) session.getAttribute("idEvento");

@@ -17,22 +17,22 @@ import model.Voluntario;
 
 @WebServlet("/ServPerfil")
 public class ServPerfil extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    // doGet: Úsalo solo para acciones que NO cambian datos masivos o para borrar
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	// doGet: Úsalo solo para acciones que NO cambian datos masivos o para borrar
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        Usuario user = (Usuario) session.getAttribute("usuario");
-        String accion = request.getParameter("accion");
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute("usuario");
+		String accion = request.getParameter("accion");
 
-        if (user == null || accion == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-            return;
-        }
+		if (user == null || accion == null) {
+			response.sendRedirect(request.getContextPath() + "/index.jsp");
+			return;
+		}
 
-        AccesoBD bd = null;
+		AccesoBD bd = null;
 		try {
 			bd = new AccesoBD();
 		} catch (ClassNotFoundException | SQLException e) {
@@ -40,86 +40,111 @@ public class ServPerfil extends HttpServlet {
 			e.printStackTrace();
 		}
 
-        try {
-            switch (accion) {
-                case "eliminar-cuenta":
-                    bd.borrarVoluntario(user.getId());
-                    session.invalidate();
-                    response.sendRedirect(request.getContextPath() + "/home?parametro=2");
-                    break;
+		try {
+			switch (accion) {
+			case "eliminar-cuenta":
+				bd.borrarVoluntario(user.getId());
+				session.invalidate();
+				response.sendRedirect(request.getContextPath() + "/home?parametro=2");
+				break;
 
-                case "gestionar-voluntarios":
-                    int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-                    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-                    String accionVol = request.getParameter("accionVoluntario");
-                    String estado = "aceptar".equals(accionVol) ? "Aceptado" : "Rechazado";
+			case "gestionar-voluntarios":
+				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				String accionVol = request.getParameter("accionVoluntario");
+				String estado = "aceptar".equals(accionVol) ? "Aceptado" : "Rechazado";
 
-                    bd.cambiarEstadoInscripcion(idUsuario, idEvento, estado);
-                    response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento);
-                    break;
-                
-                default:
-                    response.sendRedirect(request.getContextPath() + "/perfil");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/perfil?error=1");
-        }
-    }
+				bd.cambiarEstadoInscripcion(idUsuario, idEvento, estado);
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento);
+				break;
 
-    // doPost: AQUÍ es donde debe ir toda la lógica de EDITAR PERFIL
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        
-        String accion = request.getParameter("accion");
-        HttpSession session = request.getSession();
-        Usuario user = (Usuario) session.getAttribute("usuario");
+			default:
+				response.sendRedirect(request.getContextPath() + "/perfil");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + "/perfil?error=1");
+		}
+	}
 
-        if ("editar-cuenta".equals(accion) && user != null) {
-            try {
-                // 1. Datos comunes con capitalización (muy buena idea que tenías en el doGet)
-                user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));
-                user.setApellidos(Usuario.capitalizarTexto(request.getParameter("fsurname")));
-                user.setEmail(request.getParameter("femail"));
-                user.setNumTelf(request.getParameter("fphone"));
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-                // 2. Lógica según tipo de usuario
-                if (user instanceof Voluntario) {
-                    Voluntario vol = (Voluntario) user;
-                    
-                    // Checkbox y Select
-                    vol.setVehiculo(request.getParameter("fvehiculo") != null);
-                    
-                    String discStr = request.getParameter("fdisc");
-                    if (discStr != null) vol.setDiscapacidad(Integer.parseInt(discStr));
+		String accion = request.getParameter("accion");
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute("usuario");
 
-                    // Fecha de nacimiento (esto te faltaba en el doPost)
-                    String fecha = request.getParameter("fedad");
-                    if (fecha != null && !fecha.isEmpty()) {
-                        vol.setFechaNac(LocalDate.parse(fecha));
-                    }
+		try {
 
-                } else if (user instanceof Organizador) {
-                    Organizador org = (Organizador) user;
-                    org.setEntidad(Usuario.capitalizarTexto(request.getParameter("fenterprise")));
-                }
+			AccesoBD bd = new AccesoBD();
 
-                // 3. Guardar en BD
-                AccesoBD bd = new AccesoBD();
-                if (bd.editarDatosUsuario(user)) {
-                    session.setAttribute("usuario", user);
-                    session.setAttribute("success", "Perfil actualizado correctamente.");
-                } else {
-                    session.setAttribute("error", "No se pudo actualizar en la base de datos.");
-                }
+			if ("gestionar-voluntarios".equals(accion)) {
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                session.setAttribute("error", "Error al procesar los datos.");
-            }
-        }
-        
-        // Redirigir siempre al perfil al terminar el POST
-        response.sendRedirect(request.getContextPath() + "/perfil");
-    }
+				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				String accionVol = request.getParameter("accionVoluntario");
+
+				String estado;
+
+				if ("aceptar".equals(accionVol)) {
+					estado = "Aceptado";
+				} else if ("rechazar".equals(accionVol)) {
+					estado = "Rechazado";
+				} else {
+					estado = "Pendiente";
+				}
+
+				bd.cambiarEstadoInscripcion(idUsuario, idEvento, estado);
+
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento
+						+ "&accion=gestionar-voluntarios");
+				return;
+			}
+
+			if ("editar-cuenta".equals(accion) && user != null) {
+
+				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));
+				user.setApellidos(Usuario.capitalizarTexto(request.getParameter("fsurname")));
+				user.setEmail(request.getParameter("femail"));
+				user.setNumTelf(request.getParameter("fphone"));
+
+				if (user instanceof Voluntario) {
+
+					Voluntario vol = (Voluntario) user;
+
+					vol.setVehiculo(request.getParameter("fvehiculo") != null);
+
+					String discStr = request.getParameter("fdisc");
+					if (discStr != null && !discStr.isEmpty()) {
+						vol.setDiscapacidad(Integer.parseInt(discStr));
+					}
+
+					String fecha = request.getParameter("fedad");
+					if (fecha != null && !fecha.isEmpty()) {
+						vol.setFechaNac(java.time.LocalDate.parse(fecha));
+					}
+
+				} else if (user instanceof Organizador) {
+
+					Organizador org = (Organizador) user;
+					org.setEntidad(Usuario.capitalizarTexto(request.getParameter("fenterprise")));
+				}
+
+				if (bd.editarDatosUsuario(user)) {
+					session.setAttribute("usuario", user);
+					session.setAttribute("success", "Perfil actualizado correctamente.");
+				} else {
+					session.setAttribute("error", "No se pudo actualizar en la base de datos.");
+				}
+
+				response.sendRedirect(request.getContextPath() + "/perfil");
+				return;
+			}
+			response.sendRedirect(request.getContextPath() + "/perfil");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + "/perfil?error=1");
+		}
+	}
 }

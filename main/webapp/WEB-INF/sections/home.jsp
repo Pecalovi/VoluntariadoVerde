@@ -39,14 +39,14 @@ boolean es = "es".equals(lang);
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
 									<span class="impacto-numero"
-										data-target="<%=AccesoBD.contadorHome("usuarios", 1)%>">0</span>
+										data-target="<%=AccesoBD.contadorHome("voluntarios")%>">0</span>
 									<p><%=es ? "Voluntarios" : "Volunteers"%></p>
 								</div>
 							</div>
 							<div class="col-6 col-sm-3">
 								<div class="impacto-item">
 									<span class="impacto-numero"
-										data-target="<%=AccesoBD.contadorHome("eventos", null)%>">0</span>
+										data-target="<%=AccesoBD.contadorHome("eventos")%>">0</span>
 									<p><%=es ? "Eventos realizados" : "Events held"%></p>
 								</div>
 							</div>
@@ -56,7 +56,7 @@ boolean es = "es".equals(lang);
 							<div id="impacto-texto" class="col-6 col-sm-3">
 								<div class="impacto-item">
 									<span class="impacto-numero"
-										data-target="<%=AccesoBD.contadorHome("usuarios", 2)%>">0</span>
+										data-target="<%=AccesoBD.contadorHome("empresas")%>">0</span>
 									<p><%=es ? "Entidades organizadoras" : "Organizers"%></p>
 								</div>
 							</div>
@@ -99,7 +99,7 @@ boolean es = "es".equals(lang);
 
 				<div class="informacion-evento">
 					<p class="tipo"><%=evento.getTipo()%></p>
-					<h2><%=evento.getNombre()%></h2>
+					<h2><%=evento.getNombre()%> <%=evento.getEdicion()%></h2>
 					<p><%=evento.getFecha_inicio()%></p>
 				</div>
 			</div>

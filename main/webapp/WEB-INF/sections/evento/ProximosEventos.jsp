@@ -66,7 +66,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 					alt="<%=evento.getTipo()%>">
 				<div class="informacion-evento">
 					<p><%=evento.getTipo()%></p>
-					<h2><%=evento.getNombre()%></h2>
+					<h2><%=evento.getNombre()%> <%=evento.getEdicion()%></h2>
 
 					<div class="extra_info">
 

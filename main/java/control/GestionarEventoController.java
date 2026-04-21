@@ -38,9 +38,6 @@ public class GestionarEventoController extends HttpServlet {
 		}
 
 		String accion = request.getParameter("accion");
-		if (accion == null || accion.isEmpty()) {
-			accion = "perfil";
-		}
 
 		String seccion = null;
 		switch (accion) {
@@ -53,8 +50,7 @@ public class GestionarEventoController extends HttpServlet {
 			accion = "voluntarios";
 			break;
 		default:
-			seccion = "GestionarVoluntarios.jsp";
-			accion = "editar";
+			accion = "ninguna";
 			break;
 		}
 

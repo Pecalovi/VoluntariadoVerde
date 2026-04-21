@@ -17,49 +17,53 @@ import model.Voluntario;
 @WebServlet("/ServInscripcion")
 public class ServInscripcion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public ServInscripcion() {
-        super();
-    }
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);	
+
+	public ServInscripcion() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		HttpSession session = request.getSession(false);
+		if (session == null || !(session.getAttribute("usuario") instanceof Voluntario)) {
+
+			session.setAttribute("message", "Inicia sesión como voluntario para inscribirte a eventos.");
+			session.setAttribute("messageType", "info");
+
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
 		}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    
-	    HttpSession session = request.getSession(false);
-	    if (session == null || !(session.getAttribute("usuario") instanceof Voluntario)) {
-	        request.setAttribute("info", "Inicia sesion como voluntario para inscribirte.");
-	        request.getRequestDispatcher("/login").forward(request, response);
-	        return;
-	    }
-	        
-	    Usuario user = (Usuario) session.getAttribute("usuario");
-	    int idUsuario = user.getId();
-	    int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-	    String accion = request.getParameter("accion");
 
-	    try {
-	        AccesoBD bd = new AccesoBD();
-	        
-	        if ("cancelar".equals(accion)) {
-	           
-	            bd.cancelarInscripcion(idUsuario, idEvento);
-	        } else {
-	            
-	            bd.inscribir(idUsuario, idEvento);
-	        }
-	        
-	        bd.disconnect();
-	        
+		Usuario user = (Usuario) session.getAttribute("usuario");
+		int idVoluntario = user.getId();
+		int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+		String accion = request.getParameter("accion");
 
-	        response.sendRedirect(request.getContextPath() + "/evento?id=" + idEvento);
-	        
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        response.sendRedirect(request.getContextPath() + "/home");
-	    }
+		try {
+			AccesoBD bd = new AccesoBD();
+
+			if ("cancelar".equals(accion)) {
+
+				bd.cancelarInscripcion(idVoluntario, idEvento);
+			} else {
+
+				bd.inscribir(idVoluntario, idEvento);
+			}
+
+			bd.disconnect();
+
+			response.sendRedirect(request.getContextPath() + "/evento?id=" + idEvento);
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + "/home");
+		}
 	}
 
 }

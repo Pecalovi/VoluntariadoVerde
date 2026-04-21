@@ -38,7 +38,7 @@
         <option value="Estatico">Estático</option>
     </select>
 
-    <input type="text" name="edicion" placeholder="Edición (ej: 2025, 3ª edición)">
+    <input type="text" min="2000" max="2099" name="edicion" placeholder="Edición (ej: 2026)">
 
     <label for="fecha_inicio">Fecha de inicio</label>
     <input id="fecha_inicio" type="date" name="fecha_inicio" required>

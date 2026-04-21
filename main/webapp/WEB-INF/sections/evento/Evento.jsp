@@ -3,7 +3,7 @@
 	<div id="banner"
 		style="background: linear-gradient(rgba(0, 0, 0, 0.548), rgba(43, 43, 43, 0.3)), 
              url('${pageContext.request.contextPath}/src/eventos/${evento.tipo}.jpg') center center / cover no-repeat;">
-		<h1>${evento.nombre}</h1>
+		<h1>${evento.nombre} ${evento.edicion}</h1>
 	</div>
 
 	<div id="tarjeta-info">
@@ -12,23 +12,21 @@
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_fecha.png"
 					alt="icono fecha">
-				<p>${evento.fechaFormateada}</p>
+				<p>${evento.fecha_inicio} / ${evento.fecha_fin}</p>
 			</div>
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_ubi.png" alt="icono ubi">
-				<p>${evento.ubicacion}</p>
+				<p>${evento.lugar}</p>
 			</div>
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_inscritos.png"
 					alt="icono fecha">
-				<p>${evento.plazasTotales}</p>
 			</div>
 		</div>
 		<hr>
 		<p id="descripcion">${evento.descripcion}</p>
 
 		<div id="inscripcion">
-			<p>${evento.inscritos}/${evento.plazasTotales}inscritos</p>
 
 			<form action="${pageContext.request.contextPath}/ServInscripcion"
 				method="post">

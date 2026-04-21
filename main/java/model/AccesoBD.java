@@ -313,7 +313,7 @@ public class AccesoBD {
 
 	public static List<Evento> obtenerEventosUsuario(int idUsuario) {
 		String sql = "SELECT e.* " + "FROM eventos e " + "JOIN inscripciones i ON e.id_evento = i.id_evento "
-				+ "WHERE i.id_usuario = ?";
+				+ "WHERE i.id_voluntario = ?";
 
 		List<Evento> eventos = new ArrayList<>();
 
@@ -395,8 +395,8 @@ public class AccesoBD {
 	}
 
 	public boolean inscribir(int idUser, int idEvento) {
-		String sql = "INSERT INTO inscripciones (id_usuario, id_evento, estado) VALUES (?, ?, 'pendiente') "
-				+ "ON DUPLICATE KEY UPDATE estado = 'pendiente'";
+		String sql = "INSERT INTO inscripciones (id_voluntario, id_evento, estado) VALUES (?, ?, 'Pendiente') "
+				+ "ON DUPLICATE KEY UPDATE estado = 'Pendiente'";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -413,12 +413,12 @@ public class AccesoBD {
 		}
 	}
 
-	public boolean usuarioInscrito(int idUsuario, int idEvento) {
-		String sql = "SELECT * FROM inscripciones WHERE id_usuario = ? AND id_evento = ? AND estado != 'cancelado'";
+	public boolean usuarioInscrito(int idVoluntario, int idEvento) {
+		String sql = "SELECT * FROM inscripciones WHERE id_voluntario = ? AND id_evento = ? AND estado != 'Cancelado'";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, idUsuario);
+			ps.setInt(1, idVoluntario);
 			ps.setInt(2, idEvento);
 
 			try (ResultSet rs = ps.executeQuery()) {
@@ -430,12 +430,12 @@ public class AccesoBD {
 		}
 	}
 
-	public ArrayList<Integer> obtenerInscripciones(int id_usuario) throws SQLException {
-		String sql = "select * from inscripciones where id_usuario=?";
+	public ArrayList<Integer> obtenerInscripciones(int idVoluntario) throws SQLException {
+		String sql = "select * from inscripciones where id_voluntario=?";
 		ArrayList<Integer> idsEventos = new ArrayList<>();
 
 		PreparedStatement ps = con.prepareStatement(sql);
-		ps.setInt(1, id_usuario);
+		ps.setInt(1, idVoluntario);
 		ResultSet rs = ps.executeQuery();
 
 		while (rs.next()) {
@@ -597,7 +597,7 @@ public class AccesoBD {
 	}
 
 	public void cambiarEstadoInscripcion(int idUsuario, int idEvento, String estado) {
-		String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
+		String sql = "UPDATE inscripciones SET estado = ? WHERE id_voluntario = ? AND id_evento = ?";
 
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
@@ -614,10 +614,10 @@ public class AccesoBD {
 	}
 
 	public boolean cancelarInscripcion(int idUser, int idEvento) {
-		String sql = "UPDATE inscripciones SET estado = ? WHERE id_usuario = ? AND id_evento = ?";
+		String sql = "UPDATE inscripciones SET estado = ? WHERE id_voluntario = ? AND id_evento = ?";
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setString(1, "cancelado");
+			ps.setString(1, "Cancelado");
 			ps.setInt(2, idUser);
 			ps.setInt(3, idEvento);
 
@@ -625,29 +625,18 @@ public class AccesoBD {
 			ps.close();
 			return true;
 		} catch (Exception e) {
-			System.err.println("Error en cancelarInscripcion: " + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	public static int contadorHome(String tabla, Integer idRol) {
+	public static int contadorHome(String tabla) {
 		int numContador = 0;
-		String sql;
-
-		if (idRol != null) {
-			sql = "SELECT COUNT(*) FROM " + tabla + " WHERE id_rol = ?";
-		} else {
-			sql = "SELECT COUNT(*) FROM " + tabla;
-		}
+		String sql = "SELECT COUNT(*) FROM " + tabla;
 
 		try {
 			AccesoBD bd = new AccesoBD();
 			PreparedStatement ps = bd.con.prepareStatement(sql);
-
-			if (idRol != null) {
-				ps.setInt(1, idRol);
-			}
 
 			ResultSet rs = ps.executeQuery();
 
@@ -668,7 +657,7 @@ public class AccesoBD {
 
 	public static int contadorInscripciones() {
 		int numContador = 0;
-		String sql = "SELECT COUNT(*) FROM inscripciones WHERE estado != 'cancelado'";
+		String sql = "SELECT COUNT(*) FROM inscripciones WHERE estado != 'Cancelado'";
 
 		try {
 			AccesoBD bd = new AccesoBD();
@@ -818,7 +807,7 @@ public class AccesoBD {
 			return false;
 		}
 	}
-	
+
 	public static List<Tarea> obtenerTareas() {
 		List<Tarea> tareas = new ArrayList<>();
 		String sql = "SELECT id_tareas, nombre FROM tareas";
@@ -839,31 +828,24 @@ public class AccesoBD {
 	}
 
 	public Voluntario obtenerVoluntarioPorId(int idUsuario) throws SQLException {
-	    Voluntario v = null;
-	    String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?"; 
-	    
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, idUsuario);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                v = new Voluntario(
-	                    rs.getString("nombre"),
-	                    rs.getString("apellidos"),
-	                    rs.getInt("id_voluntario"),
-	                    rs.getString("telefono"),
-	                    rs.getString("email"),
-	                    null, 
-	                    rs.getInt("discapacidad"),
-	                    rs.getBoolean("vehiculo"),
-	                    rs.getDate("fechaNac") != null ? rs.getDate("fechaNac").toLocalDate() : null
-	                );
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        throw e;
-	    }
-	    return v;
+		Voluntario v = null;
+		String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?";
+
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idUsuario);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					v = new Voluntario(rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("id_voluntario"),
+							rs.getString("telefono"), rs.getString("email"), null, rs.getInt("discapacidad"),
+							rs.getBoolean("vehiculo"),
+							rs.getDate("fechaNac") != null ? rs.getDate("fechaNac").toLocalDate() : null);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return v;
 	}
 
 }

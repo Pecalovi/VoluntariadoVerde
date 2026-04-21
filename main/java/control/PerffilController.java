@@ -26,45 +26,42 @@ public class PerffilController extends HttpServlet {
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute("usuario");
 
-		// idioma
 		String lang = (String) session.getAttribute("lang");
 		if (lang == null) {
 			lang = "es";
 			session.setAttribute("lang", lang);
 		}
 
-		// =========================
-		// OPCION PRINCIPAL (PERFIL)
-		// =========================
 		String opcion = request.getParameter("opcion");
 		if (opcion == null || opcion.isEmpty()) {
 			opcion = "perfil";
 		}
 
-		String perfilView;
+		String perfilView = null;
 
 		switch (opcion) {
 
 		case "mis-eventos":
 			perfilView = "MisEventos.jsp";
 			opcion = "eventos";
-
 			request.setAttribute("eventos", AccesoBD.obtenerEventosUsuario(user.getId()));
 			break;
 
 		case "gestionar-eventos":
 			perfilView = "GestionarEventos.jsp";
 			opcion = "gestionar";
-
 			request.setAttribute("eventos", AccesoBD.obtenerEventos("id_organizador", user.getId()));
 			break;
 
 		case "gestionar-evento":
 			perfilView = "GestionarEvento.jsp";
 			opcion = "gestionar";
+
 			String idEvento = request.getParameter("id");
+
 			List<Evento> eventosId = AccesoBD.obtenerEventos("id_evento", idEvento);
 			Evento evento1 = eventosId.isEmpty() ? null : eventosId.get(0);
+
 			request.setAttribute("evento", evento1);
 			break;
 
@@ -79,16 +76,10 @@ public class PerffilController extends HttpServlet {
 			break;
 		}
 
-		// =========================
-		// ACCION (SUBVISTA EVENTO)
-		// =========================
 		String accion = request.getParameter("accion");
+		String eventoView = null;
 
-		if (accion == null || accion.isEmpty()) {
-			accion = "ver";
-		}
-
-		String eventoView = "GestionarVoluntarios.jsp";
+		if (accion != null && !accion.isEmpty()) {
 
 			switch (accion) {
 
@@ -100,19 +91,21 @@ public class PerffilController extends HttpServlet {
 			case "gestionar-voluntarios":
 				eventoView = "GestionarVoluntarios.jsp";
 				accion = "voluntarios";
-				int idEvento = Integer.parseInt(request.getParameter("id"));
-				List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(idEvento);
-				request.setAttribute("voluntarios", voluntarios);
+
+				String idEventoAccion = request.getParameter("id");
+				if (idEventoAccion != null) {
+					List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEventoAccion));
+					request.setAttribute("voluntarios", voluntarios);
+				}
 				break;
+
 			default:
-				eventoView = "GestionarVoluntarios.jsp";
-				accion = "ver";
+				eventoView = null;
+				accion = "ninguna";
 				break;
 			}
+		}
 
-		// =========================
-		// VIEW GLOBAL
-		// =========================
 		request.setAttribute("view", "perfil/Perfil.jsp");
 		request.setAttribute("perfilView", perfilView);
 		request.setAttribute("eventoView", eventoView);
