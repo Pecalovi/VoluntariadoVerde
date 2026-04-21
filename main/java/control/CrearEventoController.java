@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+import model.AccesoBD;
 import model.Organizador;
+import model.Tarea;
 import model.Usuario;
 
 
@@ -25,20 +28,26 @@ public class CrearEventoController extends HttpServlet {
 
 	    Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-	    // Verifica que sea un Organizador (id_rol = 2)
 	    if (!(usuario instanceof Organizador)) {
 	    	response.sendRedirect(request.getContextPath() + "/login");
 	        return;
 	    }
 
 		String lang = (String) session.getAttribute("lang");
-		
+
 		if (lang == null) {
 		    lang = "es";
 		    session.setAttribute("lang", lang);
 		}
-		
-		//2. Cargar la vista
+
+		if ("2".equals(request.getParameter("paso")) && session.getAttribute("idEvento") != null) {
+			List<Tarea> tareas = AccesoBD.obtenerTareas();
+			request.setAttribute("tareas", tareas);
+			request.setAttribute("paso", 2);
+		} else {
+			session.removeAttribute("idEvento");
+		}
+
 		if (lang.equals("es")) {
 			request.setAttribute("view", "evento/CrearEvento.jsp");
 		} else {
@@ -52,5 +61,5 @@ public class CrearEventoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
-	
+
 }

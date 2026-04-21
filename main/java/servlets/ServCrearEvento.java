@@ -55,7 +55,7 @@ public class ServCrearEvento extends HttpServlet {
 					int idEvento = AccesoBD.obtenerUltimoEvento();
 					session.setAttribute("idEvento", idEvento);
 					bd.disconnect();
-					response.sendRedirect(contextPath + "/recorridoevento");
+					response.sendRedirect(contextPath + "/crearevento?paso=2");
 				} else {
 					bd.disconnect();
 					response.sendRedirect(contextPath + "/crearevento?error=1");

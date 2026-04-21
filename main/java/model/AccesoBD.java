@@ -819,6 +819,25 @@ public class AccesoBD {
 		}
 	}
 	
+	public static List<Tarea> obtenerTareas() {
+		List<Tarea> tareas = new ArrayList<>();
+		String sql = "SELECT id_tareas, nombre FROM tareas";
+		try {
+			AccesoBD bd = new AccesoBD();
+			PreparedStatement ps = bd.con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				tareas.add(new Tarea(rs.getInt("id_tareas"), rs.getString("nombre")));
+			}
+			rs.close();
+			ps.close();
+			bd.disconnect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tareas;
+	}
+
 	public Voluntario obtenerVoluntarioPorId(int idUsuario) throws SQLException {
 	    Voluntario v = null;
 	    String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?"; 
