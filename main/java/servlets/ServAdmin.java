@@ -20,7 +20,6 @@ public class ServAdmin extends HttpServlet {
             throws ServletException, IOException {
     	
 		String accion = request.getParameter("accion");
-        // Capturamos el parámetro como texto primero
         String idParam = request.getParameter("idUsuario");
 
         AccesoBD bd;
@@ -30,7 +29,6 @@ public class ServAdmin extends HttpServlet {
             switch (accion) {
 
                 case "verDatos":
-                    // Solo parseamos aquí porque verDatos SI necesita el ID
                     if (idParam != null) {
                         int idUsuario = Integer.parseInt(idParam);
                         Voluntario volDetalle = bd.obtenerVoluntarioPorId(idUsuario);
@@ -45,7 +43,6 @@ public class ServAdmin extends HttpServlet {
                     break;
 
                 case "limpiarDetalle":
-                    // Esta acción ahora no falla porque no intenta parsear ningún ID
                     request.getSession().removeAttribute("usuarioDetalle");
                     response.sendRedirect("admin?opcion=voluntarios");
                     break;
@@ -57,7 +54,6 @@ public class ServAdmin extends HttpServlet {
                         break;
                     }
                     
-                    // Parseamos aquí el ID para la eliminación
                     int idEliminar = Integer.parseInt(idParam);
                     Voluntario vol = bd.obtenerVoluntarioPorId(idEliminar);
                     if (vol != null) {
@@ -82,7 +78,6 @@ public class ServAdmin extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 	        throws ServletException, IOException {
-	    // Redirigimos todas las peticiones GET al doPost para que no de error
 	    doPost(request, response);
 	}
 }

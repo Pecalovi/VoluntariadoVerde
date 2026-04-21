@@ -123,7 +123,6 @@
 
     <script>
         function cerrarEInforme() {
-            // Redirigimos a un pequeño controlador para limpiar la sesión y que el modal no vuelva a salir
             window.location.href = "${pageContext.request.contextPath}/ServAdmin?accion=limpiarDetalle";
         }
     </script>
