@@ -259,6 +259,22 @@ section form input[readonly]:focus {
 }
 
 
+.textarea-admin {
+    width: 100% !important;
+    padding: 10px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px !important;
+    font-family: 'Segoe UI', Tahoma, sans-serif !important;
+    resize: none !important;
+    outline: none !important;
+}
+
+.textarea-admin:focus {
+    border-color: #27ae60 !important; /* El verde de tu aplicación */
+    box-shadow: 0 0 5px rgba(39, 174, 96, 0.3) !important;
+}
+
+
 @media ( max-width : 768px) {
 	.tarjeta-perfil {
 		margin-inline: 0px;

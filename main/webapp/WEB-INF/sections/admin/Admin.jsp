@@ -36,7 +36,7 @@
 
 								<textarea name="motivo" required
 									placeholder="Motivo de la baja..."
-									style="width: 100%; display: block; margin-bottom: 5px;"></textarea>
+									class="textarea-admin"></textarea>
 
 								<button type="submit" class="btn btn-danger"
 									onclick="return confirm('¿Seguro que deseas eliminar esta cuenta?')">
@@ -90,10 +90,6 @@
 
             <div style="padding: 20px;">
                 <table style="width: 100%; border-collapse: collapse;">
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 10px; font-weight: bold; color: #666;">ID:</td>
-                        <td style="padding: 10px;">${det.id}</td>
-                    </tr>
                     <tr style="border-bottom: 1px solid #eee;">
                         <td style="padding: 10px; font-weight: bold; color: #666;">Nombre:</td>
                         <td style="padding: 10px;">${det.nombre} ${det.apellidos}</td>
