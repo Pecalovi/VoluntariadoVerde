@@ -49,6 +49,10 @@ public class GestionarEventoController extends HttpServlet {
 			seccion = "GestionarVoluntarios.jsp";
 			accion = "voluntarios";
 			break;
+		case "eliminar-evento":
+			seccion = "EliminarEvento.jsp";
+			accion = "eliminar";
+			break;
 		default:
 			accion = "ninguna";
 			break;

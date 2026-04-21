@@ -11,7 +11,7 @@ if (lang == null)
 String accion = (String) request.getAttribute("accion");
 %>
 
-<h1>${evento.nombre}</h1>
+<h1 id="evento_nombre_editar">${evento.nombre}</h1>
 <div class="menu-evento">
 	<a
 		href="${pageContext.request.contextPath}/perfil?opcion=gestionar-evento&id=${evento.idEvento}&accion=gestionar-voluntarios"
@@ -24,6 +24,9 @@ String accion = (String) request.getAttribute("accion");
 	<a
 		href="${pageContext.request.contextPath}/evento?id=${evento.idEvento}"
 		class="<%="eventos".equals(accion) ? "activo" : ""%>"><%=lang.equals("es") ? "Visualizar evento" : "View event"%></a>
+	<a
+		href="${pageContext.request.contextPath}/perfil?opcion=gestionar-evento&id=${evento.idEvento}&accion=eliminar-evento"
+		class="<%="eliminar-evento".equals(accion) ? "activo" : ""%>"><%=lang.equals("es") ? "Eliminar evento" : "View event"%></a>
 </div>
 
 <section>

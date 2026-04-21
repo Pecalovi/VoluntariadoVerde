@@ -1,3 +1,10 @@
+.mensaje-seleccion{
+	text-align: center;
+	padding-top: 120px;
+}
+
+
+
 #flexvehiculo{
 	display: flex;
 	flex-direction: row;
@@ -228,15 +235,29 @@ section form input[readonly]:focus {
 .menu-evento {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
-	width: 100%;
-	padding-block: 20px;
-	background-color: var(--azul);
-	border-radius: 8px;
+	gap: 10px;
+	border-bottom: 2px solid #e0e0e0;
+	margin-bottom: 30px;
 }
 
 .menu-evento a {
-	color: white;
+	padding: 10px 20px;
+	color: var(--gris-oscuro);
+	font-weight: 500;
+	border-bottom: 3px solid transparent;
+	margin-bottom: -2px;
+	transition: color 0.2s, border-color 0.2s;
+}
+
+.menu-evento a:hover {
+	color: var(--verde-principal);
+	border-bottom-color: #c0dbc0;
+}
+
+.menu-evento a.activo {
+	color: var(--verde-principal);
+	font-weight: 700;
+	border-bottom-color: var(--verde-principal);
 }
 
 .admin-tarjeta {
