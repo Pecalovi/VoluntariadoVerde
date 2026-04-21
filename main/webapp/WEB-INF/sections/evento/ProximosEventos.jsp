@@ -44,7 +44,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 			<option value="" disabled selected><%=lang.equals("es") ? "Selecciona tipo de evento" : "Select event type"%></option>
 			<option value="Estatico"><%=lang.equals("es") ? "Estático" : "Static"%></option>
 			<option value="Dinamico"><%=lang.equals("es") ? "Dinámico" : "Dynamic"%></option>
-		</select> <input type="text" name="ciudad" placeholder="Ciudad"
+		</select> <input type="text" name="ciudad" placeholder="<%=lang.equals("es") ? "Ciudad" : "City"%>"
 			form="formBuscar">
 
 		<button type="submit" form="formBuscar" class="botones"><%=lang.equals("es") ? "Filtrar" : "Filter"%></button>
