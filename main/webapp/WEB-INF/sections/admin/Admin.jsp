@@ -84,8 +84,8 @@
     <div id="miModal" class="modal-overlay" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
         <div class="modal-contenido" style="background: white; padding: 0; border-radius: 8px; width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-family: Arial, sans-serif;">
             
-            <div style="background: #27ae60; color: white; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
-                <h3 style="margin: 0;">INFORME DE VOLUNTARIO</h3>
+            <div style="background: #005900; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
+                <h3 style="margin: 0; color: white;">INFORME DE VOLUNTARIO</h3>
             </div>
 
             <div style="padding: 20px;">
