@@ -258,6 +258,7 @@ em {
 	.imagen-principal img {
 		width: 300px;
 	}
+	
 	.estadisticas {
 		gap: 2rem;
 	}
@@ -309,5 +310,13 @@ em {
 	}
 	.texto-principal p {
 		font-size: 1.1rem;
+		width: 266px;
+		margin-left: -22px;
+	}
+	
+	ul{
+	list-style-type: none;
+	margin-left: -0.5em;
+	margin-right: 16px;
 	}
 }
