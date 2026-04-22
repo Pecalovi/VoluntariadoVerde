@@ -105,6 +105,31 @@ public class ServPerfil extends HttpServlet {
 				return;
 			}
 
+			if ("eliminar-cuenta".equals(accion) && user != null) {
+
+				String passConfirm = request.getParameter("passConfirm");
+				String passHash = Usuario.sha256(passConfirm != null ? passConfirm : "");
+
+				if (!passHash.equals(user.getPass())) {
+					session.setAttribute("errorEliminar", "Contraseña incorrecta. No se ha eliminado la cuenta.");
+					response.sendRedirect(request.getContextPath() + "/perfil?opcion=eliminar-cuenta");
+					return;
+				}
+
+				if (user instanceof Voluntario) {
+					bd.borrarVoluntario(user.getId());
+				} else if (user instanceof Organizador) {
+					bd.borrarOrganizador(user.getId());
+				}
+
+				session.invalidate();
+				HttpSession newSession = request.getSession(true);
+				newSession.setAttribute("message", "Cuenta eliminada correctamente.");
+				newSession.setAttribute("messageType", "success");
+				response.sendRedirect(request.getContextPath() + "/home");
+				return;
+			}
+
 			if ("editar-cuenta".equals(accion) && user != null) {
 
 				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));

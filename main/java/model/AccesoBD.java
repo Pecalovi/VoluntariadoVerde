@@ -456,6 +456,24 @@ public class AccesoBD {
 		ps.setInt(8, idUsuario);
 
 		ps.executeUpdate();
+		ps.close();
+	}
+
+	public void borrarOrganizador(int idUsuario) throws SQLException {
+		String sql = "UPDATE organizadores SET nombre=?, apellidos=?, email=?, pass=?, telefono=?, empresa=? WHERE id_organizador=?";
+
+		PreparedStatement ps = con.prepareStatement(sql);
+
+		ps.setString(1, "Usuario eliminado");
+		ps.setString(2, "");
+		ps.setString(3, "");
+		ps.setString(4, "");
+		ps.setString(5, "");
+		ps.setString(6, "");
+		ps.setInt(7, idUsuario);
+
+		ps.executeUpdate();
+		ps.close();
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
