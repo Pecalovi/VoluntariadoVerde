@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import control.Mailer;
 import model.AccesoBD;
 import model.Organizador;
 import model.Usuario;
@@ -92,6 +93,19 @@ public class ServPerfil extends HttpServlet {
 
 				if ("aceptar".equals(accionVol)) {
 					estado = "Aceptado";
+					String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
+					String email = request.getParameter("femail");
+
+				    String asuntoConfirmacion = "¡Tu inscripción como voluntario ha sido aceptada!";
+				    String cuerpoConfirmacion = "Hola " + nombre + ",\n\n" +
+				                                "Nos complace informarte de que tu solicitud para participar " +
+				                                "como voluntario ha sido ACEPTADA.\n\n" +
+				                                "Ya formas parte del equipo. Pronto recibirás más detalles " +
+				                                "sobre el evento.\n\n" +
+				                                "¡Muchas gracias por tu compromiso!\n" +
+				                                "Saludos, el equipo de Voluntariado Verde.";
+
+				    Mailer.send(email, asuntoConfirmacion, cuerpoConfirmacion);
 				} else if ("rechazar".equals(accionVol)) {
 					estado = "Rechazado";
 				} else {
