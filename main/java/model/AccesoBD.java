@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -263,14 +262,14 @@ public class AccesoBD {
 				case "lugar":
 				case "edicion":
 				case "estado":
-					sql += " WHERE " + atributo + " LIKE ?";
+					sql += " AND " + atributo + " LIKE ?";
 					filtrar = true;
 					break;
 
 				case "id_organizador":
 				case "id_evento":
 				case "tipo":
-					sql += " WHERE " + atributo + " = ?";
+					sql += " AND " + atributo + " = ?";
 					filtrar = true;
 					break;
 				}
@@ -284,12 +283,19 @@ public class AccesoBD {
 
 				if ("nombre".equals(atributo) || "lugar".equals(atributo) || "edicion".equals(atributo)
 						|| "estado".equals(atributo)) {
+
 					ps.setString(1, "%" + valor.toString() + "%");
+
 				} else if (valor instanceof Integer) {
+
 					ps.setInt(1, (Integer) valor);
+
 				} else if (valor instanceof String) {
+
 					ps.setString(1, (String) valor);
+
 				} else {
+
 					ps.setObject(1, valor);
 				}
 			}
@@ -763,6 +769,54 @@ public class AccesoBD {
 
 			return ps.executeUpdate() > 0;
 		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean crearTarea(String nombre) {
+		String sql = "INSERT INTO tareas (nombre) VALUES (?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, nombre);
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public int insertarPuntoControl(String nombre, String descripcion, int idEvento) {
+		String sql = "INSERT INTO puntos_control (nombre, descripcion, id_evento) VALUES (?, ?, ?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, nombre);
+			ps.setString(2, descripcion);
+			ps.setInt(3, idEvento);
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			int id = rs.next() ? rs.getInt(1) : -1;
+			rs.close();
+			ps.close();
+			return id;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public boolean asignarTareaAPuntoControl(int idPc, int idTarea) {
+		String sql = "INSERT INTO asignacion_tareas (id_pc, id_tarea) VALUES (?, ?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, idPc);
+			ps.setInt(2, idTarea);
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
