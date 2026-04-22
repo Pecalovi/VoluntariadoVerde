@@ -21,6 +21,14 @@
 						method="post">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
 						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="verPerfil">
+						<input type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit" class="btn btn-outline-secondary">Ver perfil</button>
+					</form>
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
 						<input type="hidden" name="accionVoluntario" value="aceptar">
 						<input type="hidden" name="idEvento" value="${param.id}">
 						<button type="submit" class="btn btn-success">Aceptar</button>
@@ -53,6 +61,24 @@
 		<c:if test="${v.estado == 'Aceptado'}">
 			<div class="admin-tarjeta">
 				<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+				<div style="display: flex; gap: 10px;">
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="verPerfil">
+						<input type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit" class="btn btn-outline-secondary">Ver perfil</button>
+					</form>
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="aceptar">
+						<input type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit" class="btn btn-warning">Asignar</button>
+					</form>
+				</div>
 			</div>
 		</c:if>
 	</c:forEach>
