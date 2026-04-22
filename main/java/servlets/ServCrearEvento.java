@@ -82,12 +82,14 @@ public class ServCrearEvento extends HttpServlet {
 				double kmLlegada = Double.parseDouble(request.getParameter("kmLlegada"));
 				bd.insertarRecorrido(new Puntos(idEvento, 1, kmLlegada));
 
-				// Puntos intermedios
-				String[] kmsIntermedios = request.getParameterValues("kmIntermedio");
-				if (kmsIntermedios != null) {
-					for (String km : kmsIntermedios) {
-						if (km != null && !km.isEmpty()) {
-							bd.insertarRecorrido(new Puntos(idEvento, 2, Double.parseDouble(km)));
+				// Puntos del recorrido (intermedios y de control)
+				String[] kmsPunto = request.getParameterValues("kmPunto");
+				String[] tiposPunto = request.getParameterValues("tipoPunto");
+				if (kmsPunto != null && tiposPunto != null) {
+					for (int i = 0; i < kmsPunto.length; i++) {
+						if (kmsPunto[i] != null && !kmsPunto[i].isEmpty()) {
+							int tipo = Integer.parseInt(tiposPunto[i]);
+							bd.insertarRecorrido(new Puntos(idEvento, tipo, Double.parseDouble(kmsPunto[i])));
 						}
 					}
 				}
