@@ -11,6 +11,8 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 String opcion = (String) request.getAttribute("opcion");
 %>
 
+<h1>Mi perfil</h1>
+
 <div class="tarjeta-perfil">
 	<div class="menu-perfil">
 		<a href="<%=request.getContextPath()%>/perfil?opcion=perfil" class="<%= "perfil".equals(opcion) ? "activo" : "" %>"><img src="src/editar.png"> <%=lang.equals("es") ? "Editar perfil" : "Edit profile"%></a>

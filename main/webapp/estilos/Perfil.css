@@ -3,8 +3,6 @@
 	padding-top: 120px;
 }
 
-
-
 #flexvehiculo{
 	display: flex;
 	flex-direction: row;
@@ -300,7 +298,9 @@ section form input[readonly]:focus {
 	.tarjeta-perfil {
 		margin-inline: 0px;
 		flex-direction: column;
-		border-radius: 0px;
+		min-height: auto;
+		border-radius:0px;
+		margin-block: 40px;
 	}
 	section {
 		width: 100%;
@@ -323,7 +323,7 @@ section form input[readonly]:focus {
 		flex-direction: column;
 		font-size: 15px;
 		text-align: center;
-		width: 104px;
+		width: 110px;
 	}
 	.menu-perfil a.activo {
 		border-bottom: 3px solid var(--azul);
@@ -336,6 +336,9 @@ section form input[readonly]:focus {
 	.menu-perfil a.eliminar:hover {
 		border-bottom: 3px solid rgba(246, 97, 81, 0.7);
 		border-right: none;
+	}
+	.crearevento{
+	position: static;
 	}
 	#btnEditar {
 		margin-top: -4px;
