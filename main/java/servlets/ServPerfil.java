@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import control.Mailer;
 import model.AccesoBD;
+import model.Evento;
 import model.Organizador;
 import model.Usuario;
 import model.Voluntario;
@@ -93,19 +96,18 @@ public class ServPerfil extends HttpServlet {
 
 				if ("aceptar".equals(accionVol)) {
 					estado = "Aceptado";
-					String nombre = Usuario.capitalizarTexto(request.getParameter("fname"));
-					String email = request.getParameter("femail");
+					Voluntario voluntario = bd.obtenerVoluntarioPorId(idUsuario);
+					ArrayList<Evento> eventos = AccesoBD.obtenerEventos("id_evento", idEvento);
+					String nombreEvento = (!eventos.isEmpty()) ? eventos.get(0).getNombre() : "el evento";
 
-				    String asuntoConfirmacion = "¡Tu inscripción como voluntario ha sido aceptada!";
-				    String cuerpoConfirmacion = "Hola " + nombre + ",\n\n" +
-				                                "Nos complace informarte de que tu solicitud para participar " +
-				                                "como voluntario ha sido ACEPTADA.\n\n" +
-				                                "Ya formas parte del equipo. Pronto recibirás más detalles " +
-				                                "sobre el evento.\n\n" +
-				                                "¡Muchas gracias por tu compromiso!\n" +
-				                                "Saludos, el equipo de Voluntariado Verde.";
+					String asuntoConfirmacion = "¡Tu inscripción como voluntario ha sido aceptada!";
+					String cuerpoConfirmacion = "Hola " + voluntario.getNombre() + ",\n\n"
+							+ "Nos complace informarte de que tu solicitud para participar "
+							+ "como voluntario en el evento \"" + nombreEvento + "\" ha sido ACEPTADA.\n\n"
+							+ "Ya formas parte del equipo. Pronto recibirás más detalles " + "sobre el evento.\n\n"
+							+ "¡Muchas gracias por tu compromiso!\n" + "Saludos, el equipo de Voluntariado Verde.";
 
-				    Mailer.send(email, asuntoConfirmacion, cuerpoConfirmacion);
+					Mailer.send(voluntario.getEmail(), asuntoConfirmacion, cuerpoConfirmacion);
 				} else if ("rechazar".equals(accionVol)) {
 					estado = "Rechazado";
 				} else {
