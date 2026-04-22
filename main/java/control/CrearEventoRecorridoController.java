@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+import model.AccesoBD;
 import model.Organizador;
+import model.Tarea;
 import model.Usuario;
 
 @WebServlet("/recorridoevento")
@@ -44,6 +47,9 @@ public class CrearEventoRecorridoController extends HttpServlet {
 			request.setAttribute("view", "EN/RecorridoEvento.jsp");
 		}
 	    request.setAttribute("estilo", "estilos/CrearEvento.css");
+
+	    List<Tarea> tareas = AccesoBD.obtenerTareas();
+	    request.setAttribute("tareas", tareas);
 
 	    request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}

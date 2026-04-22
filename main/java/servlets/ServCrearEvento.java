@@ -65,9 +65,29 @@ public class ServCrearEvento extends HttpServlet {
 				response.sendRedirect(contextPath + "/crearevento?error=1");
 			}
 
-			// FASE 2: Guardar recorrido
+		// FASE 2: Crear tareas nuevas y avanzar al paso 3
 
 		} else if (fase == 2) {
+			try {
+				String[] nuevasTareas = request.getParameterValues("nuevasTareas");
+				if (nuevasTareas != null) {
+					AccesoBD bd = new AccesoBD();
+					for (String nombreTarea : nuevasTareas) {
+						if (nombreTarea != null && !nombreTarea.trim().isEmpty()) {
+							bd.crearTarea(nombreTarea.trim());
+						}
+					}
+					bd.disconnect();
+				}
+				response.sendRedirect(contextPath + "/recorridoevento");
+			} catch (ClassNotFoundException | SQLException ex) {
+				ex.printStackTrace();
+				response.sendRedirect(contextPath + "/recorridoevento");
+			}
+
+		// FASE 3: Guardar recorrido y puntos de control
+
+		} else if (fase == 3) {
 			Integer idEvento = (Integer) session.getAttribute("idEvento");
 
 			if (idEvento == null) {
@@ -82,14 +102,33 @@ public class ServCrearEvento extends HttpServlet {
 				double kmLlegada = Double.parseDouble(request.getParameter("kmLlegada"));
 				bd.insertarRecorrido(new Puntos(idEvento, 1, kmLlegada));
 
-				// Puntos del recorrido (intermedios y de control)
-				String[] kmsPunto = request.getParameterValues("kmPunto");
-				String[] tiposPunto = request.getParameterValues("tipoPunto");
-				if (kmsPunto != null && tiposPunto != null) {
-					for (int i = 0; i < kmsPunto.length; i++) {
-						if (kmsPunto[i] != null && !kmsPunto[i].isEmpty()) {
-							int tipo = Integer.parseInt(tiposPunto[i]);
-							bd.insertarRecorrido(new Puntos(idEvento, tipo, Double.parseDouble(kmsPunto[i])));
+				// Puntos del recorrido
+				String[] tipos    = request.getParameterValues("puntoTipo");
+				String[] kms      = request.getParameterValues("puntoKm");
+				String[] nombres  = request.getParameterValues("puntoNombre");
+				String[] descs    = request.getParameterValues("puntoDesc");
+				String[] tareas   = request.getParameterValues("puntoTareas");
+
+				if (tipos != null) {
+					for (int i = 0; i < tipos.length; i++) {
+						int tipo = Integer.parseInt(tipos[i]);
+
+						if (tipo == 2) {
+							if (kms != null && kms[i] != null && !kms[i].isEmpty()) {
+								bd.insertarRecorrido(new Puntos(idEvento, 2, Double.parseDouble(kms[i])));
+							}
+						} else if (tipo == 3) {
+							String nombre  = (nombres != null && nombres[i] != null) ? nombres[i].trim() : "";
+							String desc    = (descs   != null && descs[i]   != null) ? descs[i].trim()   : "";
+							int idPc = bd.insertarPuntoControl(nombre, desc, idEvento);
+							if (idPc > 0 && tareas != null && tareas[i] != null && !tareas[i].isEmpty()) {
+								for (String idTareaStr : tareas[i].split(",")) {
+									String s = idTareaStr.trim();
+									if (!s.isEmpty()) {
+										bd.asignarTareaAPuntoControl(idPc, Integer.parseInt(s));
+									}
+								}
+							}
 						}
 					}
 				}

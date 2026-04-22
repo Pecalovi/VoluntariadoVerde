@@ -768,6 +768,54 @@ public class AccesoBD {
 		}
 	}
 
+	public boolean crearTarea(String nombre) {
+		String sql = "INSERT INTO tareas (nombre) VALUES (?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, nombre);
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public int insertarPuntoControl(String nombre, String descripcion, int idEvento) {
+		String sql = "INSERT INTO puntos_control (nombre, descripcion, id_evento) VALUES (?, ?, ?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, nombre);
+			ps.setString(2, descripcion);
+			ps.setInt(3, idEvento);
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			int id = rs.next() ? rs.getInt(1) : -1;
+			rs.close();
+			ps.close();
+			return id;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public boolean asignarTareaAPuntoControl(int idPc, int idTarea) {
+		String sql = "INSERT INTO asignacion_tareas (id_pc, id_tarea) VALUES (?, ?)";
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setInt(1, idPc);
+			ps.setInt(2, idTarea);
+			ps.executeUpdate();
+			ps.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public static List<Tarea> obtenerTareas() {
 		List<Tarea> tareas = new ArrayList<>();
 		String sql = "SELECT id_tareas, nombre FROM tareas";
