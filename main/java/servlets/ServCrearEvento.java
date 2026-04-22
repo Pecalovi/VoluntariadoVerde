@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import model.AccesoBD;
 import model.Evento;
 import model.Puntos;
+import model.Usuario;
 
 @WebServlet("/ServCrearEvento")
 public class ServCrearEvento extends HttpServlet {
@@ -29,7 +30,7 @@ public class ServCrearEvento extends HttpServlet {
 		// FASE 1: Crear el evento
 
 		if (fase == 1) {
-			String nombre = request.getParameter("nombre");
+			String nombre = Usuario.capitalizarTexto(request.getParameter("nombre"));
 			String tipo = request.getParameter("tipo");
 			String edicion = request.getParameter("edicion");
 			String estado = "Publicado";

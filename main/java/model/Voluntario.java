@@ -10,8 +10,8 @@ public class Voluntario extends Usuario {
 	private double media;
 
 	// Crear voluntario en bbdd
-	public Voluntario(String nombre, String apellidos, String numTelf, String email, String pass,
-			int discapacidad, boolean vehiculo, LocalDate fechaNac) {
+	public Voluntario(String nombre, String apellidos, String numTelf, String email, String pass, int discapacidad,
+			boolean vehiculo, LocalDate fechaNac) {
 		super(nombre, apellidos, numTelf, email, pass);
 		this.discapacidad = discapacidad;
 		this.fechaNac = fechaNac;
@@ -58,5 +58,15 @@ public class Voluntario extends Usuario {
 
 	public void setMedia(double media) {
 		this.media = media;
+	}
+
+	public String getDiscapacidadTexto() {
+		return switch (discapacidad) {
+		case 0 -> "Ninguna";
+		case 1 -> "Leve";
+		case 2 -> "Moderada";
+		case 3 -> "Severa";
+		default -> "No especificada";
+		};
 	}
 }

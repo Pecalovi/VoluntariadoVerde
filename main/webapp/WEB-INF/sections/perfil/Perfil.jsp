@@ -11,7 +11,7 @@ boolean esOrganizador = (user != null && user instanceof Organizador);
 String opcion = (String) request.getAttribute("opcion");
 %>
 
-<h1>Mi perfil</h1>
+<h1 class="miPerfil">Mi perfil</h1>
 
 <div class="tarjeta-perfil">
 	<div class="menu-perfil">

@@ -6,6 +6,7 @@
 
 <c:choose>
 	<c:when test="${not empty eventos}">
+		<h1>Selecciona un evento para gestionarlo</h1>
 		<c:forEach var="evento" items="${eventos}">
 			<div class="evento-tarjeta">
 				<a

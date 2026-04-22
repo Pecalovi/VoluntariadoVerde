@@ -63,6 +63,41 @@ public class PerffilController extends HttpServlet {
 			Evento evento1 = eventosId.isEmpty() ? null : eventosId.get(0);
 
 			request.setAttribute("evento", evento1);
+			String idEventoAccion = request.getParameter("id");
+
+			if (idEventoAccion != null) {
+
+				List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEventoAccion));
+
+				List<Inscripcion> pendientes = new java.util.ArrayList<>();
+				List<Inscripcion> aceptados = new java.util.ArrayList<>();
+				List<Inscripcion> espera = new java.util.ArrayList<>();
+				List<Inscripcion> inactivos = new java.util.ArrayList<>();
+
+				for (Inscripcion i : voluntarios) {
+
+					String estado = i.getEstado();
+
+					if ("Pendiente".equals(estado)) {
+						pendientes.add(i);
+
+					} else if ("Aceptado".equals(estado)) {
+						aceptados.add(i);
+
+					} else if ("Lista de espera".equals(estado)) {
+						espera.add(i);
+
+					} else if ("Rechazado".equals(estado) || "Cancelado".equals(estado)) {
+						inactivos.add(i);
+					}
+				}
+
+				request.setAttribute("pendientes", pendientes);
+				request.setAttribute("aceptados", aceptados);
+				request.setAttribute("espera", espera);
+				request.setAttribute("inactivos", inactivos);
+			}
+
 			break;
 
 		case "eliminar-cuenta":
@@ -76,41 +111,9 @@ public class PerffilController extends HttpServlet {
 			break;
 		}
 
-		String accion = request.getParameter("accion");
-		String eventoView = null;
-
-		if (accion != null && !accion.isEmpty()) {
-
-			switch (accion) {
-
-			case "editar-evento":
-				eventoView = "EditarEvento.jsp";
-				accion = "editar";
-				break;
-
-			case "gestionar-voluntarios":
-				eventoView = "GestionarVoluntarios.jsp";
-				accion = "voluntarios";
-
-				String idEventoAccion = request.getParameter("id");
-				if (idEventoAccion != null) {
-					List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEventoAccion));
-					request.setAttribute("voluntarios", voluntarios);
-				}
-				break;
-
-			default:
-				eventoView = null;
-				accion = "ninguna";
-				break;
-			}
-		}
-
 		request.setAttribute("view", "perfil/Perfil.jsp");
 		request.setAttribute("perfilView", perfilView);
-		request.setAttribute("eventoView", eventoView);
 		request.setAttribute("opcion", opcion);
-		request.setAttribute("accion", accion);
 		request.setAttribute("estilo", "estilos/Perfil.css");
 
 		request.getRequestDispatcher("/index.jsp").forward(request, response);

@@ -22,56 +22,9 @@ import model.Voluntario;
 public class ServPerfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	// doGet: Úsalo solo para acciones que NO cambian datos masivos o para borrar
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
-		Usuario user = (Usuario) session.getAttribute("usuario");
-		String accion = request.getParameter("accion");
-
-		if (user == null || accion == null) {
-			response.sendRedirect(request.getContextPath() + "/index.jsp");
-			return;
-		}
-
-		AccesoBD bd = null;
-		try {
-			bd = new AccesoBD();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			switch (accion) {
-			case "eliminar-cuenta":
-				bd.borrarVoluntario(user.getId());
-				session.invalidate();
-
-				session.setAttribute("message", "Cuenta eliminada correctamente.");
-				session.setAttribute("messageType", "success");
-
-				response.sendRedirect(request.getContextPath() + "/home");
-				break;
-
-			case "gestionar-voluntarios":
-				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
-				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
-				String accionVol = request.getParameter("accionVoluntario");
-				String estado = "aceptar".equals(accionVol) ? "Aceptado" : "Rechazado";
-
-				bd.cambiarEstadoInscripcion(idUsuario, idEvento, estado);
-				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento);
-				break;
-
-			default:
-				response.sendRedirect(request.getContextPath() + "/perfil");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendRedirect(request.getContextPath() + "/perfil");
-		}
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -117,6 +70,34 @@ public class ServPerfil extends HttpServlet {
 
 				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento
 						+ "&accion=gestionar-voluntarios");
+				return;
+			}
+
+			if ("editar-evento".equals(accion) && user != null) {
+				try {
+					int idEvento = Integer.parseInt(request.getParameter("id"));
+					String nombre = Usuario.capitalizarTexto(request.getParameter("nombre"));
+
+					if (nombre != null && !nombre.trim().isEmpty()) {
+
+						AccesoBD bd2 = new AccesoBD();
+						bd2.actualizarNombreEvento(idEvento, nombre.trim());
+
+						session.setAttribute("message", "Evento actualizado correctamente.");
+						session.setAttribute("messageType", "success");
+					} else {
+						session.setAttribute("message", "El nombre no puede estar vacío.");
+						session.setAttribute("messageType", "danger");
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					session.setAttribute("message", "Error al actualizar el evento.");
+					session.setAttribute("messageType", "danger");
+				}
+
+				response.sendRedirect(
+						request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + request.getParameter("id"));
 				return;
 			}
 

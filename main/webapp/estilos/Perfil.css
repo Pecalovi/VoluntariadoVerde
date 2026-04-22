@@ -1,18 +1,27 @@
-.mensaje-seleccion{
+.miPerfil {
+	display: none;
+}
+
+h1 {
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 30px;
+}
+
+.mensaje-seleccion {
 	text-align: center;
 	padding-top: 120px;
 }
 
-#flexvehiculo{
+#flexvehiculo {
 	display: flex;
 	flex-direction: row;
 	gap: 12px;
 }
 
-#flexvehiculo input{
-	margin-bottom: 1px; 
+#flexvehiculo input {
+	margin-bottom: 1px;
 }
-
 
 .tarjeta-perfil {
 	display: flex;
@@ -66,7 +75,7 @@
 	font-weight: bold;
 }
 
-.menu-perfil img {
+img {
 	height: 30px;
 	width: auto;
 }
@@ -78,6 +87,11 @@ section {
 	max-height: 700px;
 	box-sizing: border-box;
 	position: relative;
+}
+
+.section-evento {
+	padding: 20px;
+	width: 100%;
 }
 
 /* EDITAR PERFIL */
@@ -272,34 +286,103 @@ section form input[readonly]:focus {
 	padding: 20px;
 }
 
-.admin-tarjeta h2{
+.admin-tarjeta h2 {
 	margin: 0;
 	padding: 0;
 }
 
-
 .textarea-admin {
-    width: 100% !important;
-    padding: 10px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 5px !important;
-    font-family: 'Segoe UI', Tahoma, sans-serif !important;
-    resize: none !important;
-    outline: none !important;
+	width: 100% !important;
+	padding: 10px !important;
+	border: 1px solid #ccc !important;
+	border-radius: 5px !important;
+	font-family: 'Segoe UI', Tahoma, sans-serif !important;
+	resize: none !important;
+	outline: none !important;
 }
 
 .textarea-admin:focus {
-    border-color: #27ae60 !important; /* El verde de tu aplicación */
-    box-shadow: 0 0 5px rgba(39, 174, 96, 0.3) !important;
+	border-color: #27ae60 !important; /* El verde de tu aplicación */
+	box-shadow: 0 0 5px rgba(39, 174, 96, 0.3) !important;
 }
 
+.voluntarios {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.info {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+}
+
+.info-voluntario {
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	padding-top: 20px;
+}
+
+.info-voluntario p {
+	padding: 0px;
+	margin: 0px;
+}
+
+.nombre-evento {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+	margin-bottom: 30px;
+	padding-inline: 20px;
+}
+
+.nombre-evento div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 15px;
+}
+
+.nombre-evento h1 {
+	margin: 0px;
+}
+
+#evento_nombre_editar {
+	border: none;
+	background: transparent;
+	outline: none;
+	box-shadow: none;
+	font-size: 2rem;
+	font-weight: bold;
+	font-family: inherit;
+	color: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: 0px;
+}
+
+#formEvento {
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: center;
+	align-content: stretch;
+	gap: 8px;
+}
 
 @media ( max-width : 768px) {
 	.tarjeta-perfil {
 		margin-inline: 0px;
 		flex-direction: column;
 		min-height: auto;
-		border-radius:0px;
+		border-radius: 0px;
 		margin-block: 40px;
 	}
 	section {
@@ -337,8 +420,8 @@ section form input[readonly]:focus {
 		border-bottom: 3px solid rgba(246, 97, 81, 0.7);
 		border-right: none;
 	}
-	.crearevento{
-	position: static;
+	.crearevento {
+		position: static;
 	}
 	#btnEditar {
 		margin-top: -4px;

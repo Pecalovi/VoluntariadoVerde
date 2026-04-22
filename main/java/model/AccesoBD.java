@@ -554,7 +554,7 @@ public class AccesoBD {
 
 		String sql = "SELECT i.*, v.*, " + "(SELECT ROUND(AVG(i2.valoracion), 2) " + " FROM inscripciones i2 "
 				+ " WHERE i2.id_voluntario = v.id_voluntario) AS media " + "FROM inscripciones i "
-				+ "JOIN voluntarios v ON i.id_voluntario = v.id_voluntario " + "WHERE i.id_evento = ?";
+				+ "JOIN voluntario_media v ON i.id_voluntario = v.id_voluntario " + "WHERE i.id_evento = ?";
 
 		List<Inscripcion> inscripciones = new ArrayList<>();
 
@@ -879,6 +879,24 @@ public class AccesoBD {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			return false;
+		}
+	}
+
+	public void actualizarNombreEvento(int idEvento, String nombre) {
+
+		String sql = "UPDATE eventos SET nombre = ? WHERE id_evento = ?";
+
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+
+			ps.setString(1, nombre);
+			ps.setInt(2, idEvento);
+
+			ps.executeUpdate();
+			ps.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
