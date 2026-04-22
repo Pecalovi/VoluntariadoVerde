@@ -120,4 +120,10 @@ public class Evento {
 	    }
 	    return this.estado;
 	}
+	
+	public String getFechaFormateada() {
+	    if (fecha_inicio == null) return "";
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    return fecha_inicio.format(formatter);
+	}
 }
