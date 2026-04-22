@@ -52,18 +52,19 @@ input {
 	outline: none;
 	width: 85%;
 }
+
 #vehiculo {
-		display: flex;
-		flex-direction: row;	
+	display: flex;
+	flex-direction: row;
 }
 
-#vehiculo input{
+#vehiculo input {
 	margin-left: -14px;
 }
 
-span{
+span {
 	width: 206px;
-	margin-left: -42px;	
+	margin-left: -42px;
 	margin-top: 6px;
 }
 
@@ -109,7 +110,6 @@ p {
 footer {
 	background: #ebeeef;
 }
-
 
 [type="radio"] {
 	width: 50px;
@@ -190,5 +190,8 @@ textarea {
 	}
 	footer {
 		background-color: white;
+	}
+	form {
+		padding-bottom: 20px;
 	}
 }

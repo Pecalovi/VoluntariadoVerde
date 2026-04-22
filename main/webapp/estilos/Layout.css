@@ -250,7 +250,6 @@ a.activo {
 .hamburger-btn {
 	display: none;
 	flex-direction: column;
-	gap: 5px;
 	background: none;
 	border: none;
 	cursor: pointer;
