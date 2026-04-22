@@ -91,7 +91,7 @@ boolean es = "es".equals(lang);
 
 		<a
 			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
-			class="evento-index1 animate__animated animate__flipInY"
+			class="evento-index1 animate__animated animate__bounceIn"
 			style="animation-delay: <%=delay%>s;">
 			<div class="evento-index">
 				<img src="src/eventos/<%=evento.getTipo()%>.jpg"
