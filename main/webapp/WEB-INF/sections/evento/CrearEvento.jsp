@@ -16,7 +16,7 @@
     </div>
     <div class="paso">
         <span>3</span>
-        <p>Recorrido</p>
+        <p>Puntos de control</p>
     </div>
 </div>
 

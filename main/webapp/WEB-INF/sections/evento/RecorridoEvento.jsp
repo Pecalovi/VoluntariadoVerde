@@ -12,31 +12,25 @@
 <div class="indicador-pasos">
     <div class="paso completado"><span>1</span><p>Datos</p></div>
     <div class="paso completado"><span>2</span><p>Tareas</p></div>
-    <div class="paso activo"><span>3</span><p>Recorrido</p></div>
+    <div class="paso activo"><span>3</span><p>Puntos de control</p></div>
 </div>
 
 <div class="enuncidado">
-    <h1>Recorrido del evento</h1>
-    <p>Indica el kil&oacute;metro de llegada y a&ntilde;ade los puntos del recorrido.</p>
+    <h1>Puntos de control</h1>
+    <p>Selecciona los puntos de control que necesitar&aacute;s cubrir durante el evento. Añadele un nombre, una descripci&oacute;n y asigna las tareas necesarias.</p>
 </div>
 
 <form id="formRecorrido" action="<%=request.getContextPath()%>/ServCrearEvento" method="POST">
     <input type="hidden" name="fase" value="3">
     <input type="hidden" name="idEvento" value="<%=idEvento%>">
 
-    <div class="form-group">
-        <label for="kmLlegada">Kil&oacute;metro de llegada (meta)</label>
-        <input type="number" id="kmLlegada" name="kmLlegada" placeholder="Ej: 42" min="0" step="0.1" required>
-    </div>
-
     <div class="puntos-container">
-        <div class="puntos-header">
-            <h3>Puntos del recorrido</h3>
-            <button type="button" class="btn-agregar" id="btnAgregar">+ A&ntilde;adir punto</button>
+        <div class="puntos-header" style="justify-content:center;">
+            <button type="button" class="btn-agregar" id="btnAgregar">+ A&ntilde;adir punto de control</button>
         </div>
         <div id="puntosLista">
             <div class="empty-message" id="emptyMessage">
-                No hay puntos a&ntilde;adidos. Pulsa "+ A&ntilde;adir punto" para incluir intermedios o controles.
+                No hay puntos a&ntilde;adidos. Pulsa el bot&oacute;n para a&ntilde;adir un punto de control.
             </div>
         </div>
     </div>
@@ -46,7 +40,7 @@
 
 <style>
 .campos-control { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-.campos-control label, .campos-intermedio label { font-size: 0.85rem; color: #555; font-weight: 600; }
+.campos-control label { font-size: 0.85rem; color: #555; font-weight: 600; }
 .campos-control input[type="text"],
 .campos-control textarea {
     width: 100%;
@@ -111,44 +105,18 @@ document.getElementById('btnAgregar').addEventListener('click', function () {
     const div = document.createElement('div');
     div.className = 'punto-item';
     div.innerHTML =
+        '<input type="hidden" name="puntoTipo" value="3">' +
+        '<input type="hidden" name="puntoKm" value="">' +
         '<button type="button" class="btn-eliminar" onclick="eliminarPunto(this)">&#215;</button>' +
-        '<div class="form-row"><div class="form-group tipo">' +
-        '<label>Tipo de punto</label>' +
-        '<select name="puntoTipo" class="tipo-select" onchange="cambiarTipo(this)">' +
-        '<option value="2">Punto intermedio</option>' +
-        '<option value="3">Punto de control</option>' +
-        '</select></div></div>' +
-        '<div class="campos-intermedio"><div class="form-group">' +
-        '<label>Kilómetro</label>' +
-        '<input type="number" name="puntoKm" placeholder="Ej: 10" min="0" step="0.1">' +
-        '</div></div>' +
-        '<div class="campos-control" style="display:none">' +
         '<div class="form-group"><label>Nombre del punto de control</label>' +
         '<input type="text" name="puntoNombre" placeholder="Ej: Control de hidratación"></div>' +
         '<div class="form-group"><label>Descripción</label>' +
         '<textarea name="puntoDesc" placeholder="Describe este punto de control..."></textarea></div>' +
         '<div class="form-group"><label>Tareas asignadas a este punto</label>' +
         '<div class="tareas-control-lista">' + generarCheckboxesTareas() + '</div></div>' +
-        '</div>' +
         '<input type="hidden" name="puntoTareas" value="">';
     lista.appendChild(div);
 });
-
-function cambiarTipo(select) {
-    const item = select.closest('.punto-item');
-    const esControl = select.value === '3';
-    item.querySelector('.campos-intermedio').style.display = esControl ? 'none' : '';
-    item.querySelector('.campos-control').style.display = esControl ? '' : 'none';
-    if (esControl) {
-        const kmInput = item.querySelector('[name="puntoKm"]');
-        if (kmInput) kmInput.value = '';
-    } else {
-        const nombreInput = item.querySelector('[name="puntoNombre"]');
-        const descInput = item.querySelector('[name="puntoDesc"]');
-        if (nombreInput) nombreInput.value = '';
-        if (descInput) descInput.value = '';
-    }
-}
 
 function eliminarPunto(btn) {
     btn.parentElement.remove();
@@ -162,12 +130,9 @@ function eliminarPunto(btn) {
 // Antes de enviar, recoger las tareas marcadas de cada punto de control
 document.getElementById('formRecorrido').addEventListener('submit', function () {
     document.querySelectorAll('.punto-item').forEach(function (item) {
-        const tipo = item.querySelector('[name="puntoTipo"]').value;
-        const tareasHidden = item.querySelector('[name="puntoTareas"]');
-        if (tipo === '3') {
-            const checked = item.querySelectorAll('.tarea-check:checked');
-            tareasHidden.value = Array.from(checked).map(cb => cb.value).join(',');
-        }
+        const checked = item.querySelectorAll('.tarea-check:checked');
+        item.querySelector('[name="puntoTareas"]').value =
+            Array.from(checked).map(function(cb) { return cb.value; }).join(',');
     });
 });
 </script>

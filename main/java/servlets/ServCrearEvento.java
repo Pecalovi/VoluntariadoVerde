@@ -98,11 +98,7 @@ public class ServCrearEvento extends HttpServlet {
 			try {
 				AccesoBD bd = new AccesoBD();
 
-				// Punto de llegada
-				double kmLlegada = Double.parseDouble(request.getParameter("kmLlegada"));
-				bd.insertarRecorrido(new Puntos(idEvento, 1, kmLlegada));
-
-				// Puntos del recorrido
+				// Puntos de control
 				String[] tipos    = request.getParameterValues("puntoTipo");
 				String[] kms      = request.getParameterValues("puntoKm");
 				String[] nombres  = request.getParameterValues("puntoNombre");
