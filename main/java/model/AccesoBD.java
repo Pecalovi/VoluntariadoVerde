@@ -249,7 +249,7 @@ public class AccesoBD {
 
 	public static ArrayList<Evento> obtenerEventos(String atributo, Object valor) {
 
-		String sql = "SELECT * FROM eventos";
+		String sql = "SELECT * FROM eventos WHERE estado NOT LIKE 'Finalizado'";
 		ArrayList<Evento> eventos = new ArrayList<>();
 		boolean filtrar = false;
 
@@ -790,6 +790,25 @@ public class AccesoBD {
 		}
 
 		return null;
+	}
+
+	public boolean actualizarEstadoEvento(Evento e) {
+		String sql = "UPDATE eventos SET estado = ? WHERE id_evento = ?";
+
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, e.getEstado());
+			ps.setInt(2, e.getIdEvento());
+
+			int filasAfectadas = ps.executeUpdate();
+			ps.close();
+
+			return filasAfectadas > 0;
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 
 }

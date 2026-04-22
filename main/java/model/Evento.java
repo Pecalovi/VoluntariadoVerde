@@ -33,7 +33,6 @@ public class Evento {
 		this.id_organizador = id_organizador;
 	}
 
-
 	// Getters y Setters
 	public int getIdEvento() {
 		return idEvento;
@@ -114,5 +113,11 @@ public class Evento {
 	public void setId_organizador(int id_organizador) {
 		this.id_organizador = id_organizador;
 	}
-	
+	public String finalizarEvento() {
+	    LocalDate hoy = LocalDate.now();
+	    if (this.fecha_fin.isEqual(hoy) || this.fecha_fin.isBefore(hoy)) {
+	        this.estado = "Finalizado";
+	    }
+	    return this.estado;
+	}
 }
