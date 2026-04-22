@@ -3,7 +3,6 @@ String lang = (String) session.getAttribute("lang");
 if (lang == null)
     lang = "es";
 %>
-<<<<<<< Updated upstream
 
 <div id="info">
     <h1 id="contactanosh1">
@@ -48,7 +47,7 @@ if (lang == null)
             </a>
         </div>
     </div>
-=======
+
 <div id="info">
 	<h1><%=lang.equals("en") ? "Contact us" : "Contáctanos"%></h1>
 
@@ -72,7 +71,7 @@ if (lang == null)
 		<p>+34 123 45 67 89</p>
 		<a href="mailto:correoelectronico@gmail.com">correoelectronico@gmail.com</a>
 	</div>
->>>>>>> Stashed changes
+
 </div>
 
 <form id="contactForm" action="contacto" method="post">

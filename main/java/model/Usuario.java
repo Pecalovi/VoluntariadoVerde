@@ -2,6 +2,7 @@ package model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 
 public abstract class Usuario {
 	// Atributos
@@ -11,9 +12,23 @@ public abstract class Usuario {
 	protected String numTelf;
 	protected String email;
 	protected String pass;
+	protected LocalDate fecha_registro;
 
 	// Constructor
-	public Usuario(String nombre, String apellidos, int id, String numTelf, String email, String pass) {
+	
+	// Crear usuario en bbdd
+	public Usuario(String nombre, String apellidos, String numTelf, String email, String pass) {
+		super();
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.numTelf = numTelf;
+		this.email = email;
+		this.pass = pass;
+	}
+	
+	// Pillar usuario de bbdd
+	public Usuario(String nombre, String apellidos, int id, String numTelf, String email, String pass,
+			LocalDate fecha_registro) {
 		super();
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -21,11 +36,20 @@ public abstract class Usuario {
 		this.numTelf = numTelf;
 		this.email = email;
 		this.pass = pass;
+		this.fecha_registro = fecha_registro;
 	}
 
 	// Getters y Setters
 	public String getNombre() {
 		return nombre;
+	}
+
+	public LocalDate getFecha_registro() {
+		return fecha_registro;
+	}
+
+	public void setFecha_registro(LocalDate fecha_registro) {
+		this.fecha_registro = fecha_registro;
 	}
 
 	public void setNombre(String nombre) {

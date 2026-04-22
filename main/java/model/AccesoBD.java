@@ -56,6 +56,41 @@ public class AccesoBD {
 
 	}
 
+	private static Voluntario crearVoluntario(ResultSet rs) throws SQLException {
+
+		LocalDate fechaNac = rs.getDate("fechaNac") != null ? rs.getDate("fechaNac").toLocalDate() : null;
+
+		LocalDate fechaRegistro = rs.getDate("fecha_registro") != null ? rs.getDate("fecha_registro").toLocalDate()
+				: null;
+
+		double media = rs.getDouble("media");
+
+		return new Voluntario(rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("id_voluntario"),
+				rs.getString("telefono"), rs.getString("email"), rs.getString("pass"), fechaRegistro,
+				rs.getInt("discapacidad"), rs.getBoolean("vehiculo"), fechaNac, media);
+	}
+
+	private static Organizador crearOrganizador(ResultSet rs) throws SQLException {
+
+		LocalDate fechaRegistro = rs.getDate("fecha_registro") != null ? rs.getDate("fecha_registro").toLocalDate()
+				: null;
+
+		return new Organizador(rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("id_organizador"),
+				rs.getString("telefono"), rs.getString("email"), rs.getString("pass"), fechaRegistro,
+				rs.getString("empresa"));
+	}
+
+	private static Evento crearEvento(ResultSet rs) throws SQLException {
+
+		LocalDate fechaInicio = rs.getDate("fecha_inicio") != null ? rs.getDate("fecha_inicio").toLocalDate() : null;
+
+		LocalDate fechaFin = rs.getDate("fecha_fin") != null ? rs.getDate("fecha_fin").toLocalDate() : null;
+
+		return new Evento(rs.getInt("id_evento"), rs.getString("nombre"), rs.getString("tipo"),
+				rs.getString("descripcion"), fechaInicio, fechaFin, rs.getString("lugar"), rs.getString("edicion"),
+				rs.getString("estado"), rs.getInt("id_organizador"));
+	}
+
 	public static Usuario iniciarSesion(String email, String pass) {
 
 		Usuario sesionUsuario = null;
@@ -63,64 +98,45 @@ public class AccesoBD {
 		try {
 			AccesoBD bd = new AccesoBD();
 
+			String emailLimpio = email.toLowerCase().trim();
+
 			// =========================
-			// 1. BUSCAR EN VOLUNTARIOS
+			// 1. VOLUNTARIO
 			// =========================
-			String sqlVol = "SELECT * FROM voluntarios WHERE LOWER(TRIM(email)) = ? AND pass = ?";
+			String sqlVol = "SELECT * FROM voluntario_media WHERE LOWER(TRIM(email)) = ? AND pass = ?";
 			PreparedStatement psVol = bd.con.prepareStatement(sqlVol);
 
-			psVol.setString(1, email.toLowerCase().trim());
+			psVol.setString(1, emailLimpio);
 			psVol.setString(2, pass);
 
 			ResultSet rsVol = psVol.executeQuery();
 
 			if (rsVol.next()) {
-
-				int id = rsVol.getInt("id_voluntario");
-				String nombre = rsVol.getString("nombre");
-				String apellidos = rsVol.getString("apellidos");
-				String telefono = rsVol.getString("telefono");
-				Date fechaNacDB = rsVol.getDate("fechaNac");
-				boolean vehiculo = rsVol.getBoolean("vehiculo");
-				int discapacidad = rsVol.getInt("discapacidad");
-
-				LocalDate fechaNac = null;
-				if (fechaNacDB != null) {
-					fechaNac = fechaNacDB.toLocalDate();
-				}
-
-				sesionUsuario = new Voluntario(nombre, apellidos, id, telefono, email, pass, discapacidad, vehiculo,
-						fechaNac);
-
-				rsVol.close();
-				psVol.close();
-				bd.disconnect();
-				return sesionUsuario;
+				sesionUsuario = crearVoluntario(rsVol);
 			}
 
 			rsVol.close();
 			psVol.close();
 
+			// Si ya encontró voluntario, no sigue
+			if (sesionUsuario != null) {
+				bd.disconnect();
+				return sesionUsuario;
+			}
+
 			// =========================
-			// 2. BUSCAR EN ORGANIZADORES
+			// 2. ORGANIZADOR
 			// =========================
 			String sqlOrg = "SELECT * FROM organizadores WHERE LOWER(TRIM(email)) = ? AND pass = ?";
 			PreparedStatement psOrg = bd.con.prepareStatement(sqlOrg);
 
-			psOrg.setString(1, email.toLowerCase().trim());
+			psOrg.setString(1, emailLimpio);
 			psOrg.setString(2, pass);
 
 			ResultSet rsOrg = psOrg.executeQuery();
 
 			if (rsOrg.next()) {
-
-				int id = rsOrg.getInt("id_organizador");
-				String nombre = rsOrg.getString("nombre");
-				String apellidos = rsOrg.getString("apellidos");
-				String telefono = rsOrg.getString("telefono");
-				String empresa = rsOrg.getString("empresa");
-
-				sesionUsuario = new Organizador(nombre, apellidos, id, telefono, email, pass, empresa);
+				sesionUsuario = crearOrganizador(rsOrg);
 			}
 
 			rsOrg.close();
@@ -281,23 +297,7 @@ public class AccesoBD {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-
-				int idEventoDB = rs.getInt("id_evento");
-				String nombreEventoDB = rs.getString("nombre");
-				String tipoDB = rs.getString("tipo");
-				String descripcionDB = rs.getString("descripcion");
-				String lugarDB = rs.getString("lugar");
-				String edicionDB = rs.getString("edicion");
-				String estadoDB = rs.getString("estado");
-				int idOrganizadorDB = rs.getInt("id_organizador");
-
-				Date fechaInicioDB = rs.getDate("fecha_inicio");
-				Date fechaFinDB = rs.getDate("fecha_fin");
-				LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
-				LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
-
-				eventos.add(new Evento(idEventoDB, nombreEventoDB, tipoDB, descripcionDB, fechaInicio, fechaFin,
-						lugarDB, edicionDB, estadoDB, idOrganizadorDB));
+				eventos.add(crearEvento(rs));
 			}
 
 			rs.close();
@@ -312,7 +312,8 @@ public class AccesoBD {
 	}
 
 	public static List<Evento> obtenerEventosUsuario(int idUsuario) {
-		String sql = "SELECT e.* " + "FROM eventos e " + "JOIN inscripciones i ON e.id_evento = i.id_evento "
+
+		String sql = "SELECT e.* FROM eventos e " + "JOIN inscripciones i ON e.id_evento = i.id_evento "
 				+ "WHERE i.id_voluntario = ?";
 
 		List<Evento> eventos = new ArrayList<>();
@@ -321,18 +322,11 @@ public class AccesoBD {
 			AccesoBD bd = new AccesoBD();
 			PreparedStatement ps = bd.con.prepareStatement(sql);
 			ps.setInt(1, idUsuario);
+
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Date fechaInicioDB = rs.getDate("fecha_inicio");
-				Date fechaFinDB = rs.getDate("fecha_fin");
-				LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
-				LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
-
-				Evento evento = new Evento(rs.getInt("id_evento"), rs.getString("nombre"), rs.getString("tipo"),
-						rs.getString("descripcion"), fechaInicio, fechaFin, rs.getString("lugar"),
-						rs.getString("edicion"), rs.getString("estado"), rs.getInt("id_organizador"));
-				eventos.add(evento);
+				eventos.add(AccesoBD.crearEvento(rs));
 			}
 
 			rs.close();
@@ -350,7 +344,6 @@ public class AccesoBD {
 
 		String sql = "SELECT id_evento FROM eventos ORDER BY id_evento DESC LIMIT 1";
 
-		int idEventoDB = 0;
 		try {
 			AccesoBD bd = new AccesoBD();
 			PreparedStatement ps = bd.con.prepareStatement(sql);
@@ -358,8 +351,9 @@ public class AccesoBD {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				idEventoDB = rs.getInt("id_evento");
+				return rs.getInt(1);
 			}
+
 			rs.close();
 			ps.close();
 			bd.disconnect();
@@ -368,7 +362,7 @@ public class AccesoBD {
 			e.printStackTrace();
 		}
 
-		return idEventoDB;
+		return 0;
 	}
 
 	public boolean insertarRecorrido(Puntos punto) {
@@ -535,7 +529,8 @@ public class AccesoBD {
 
 	public static List<Inscripcion> obtenerVoluntarios(int idEvento) {
 
-		String sql = "SELECT i.*, v.* " + "FROM inscripciones i "
+		String sql = "SELECT i.*, v.*, " + "(SELECT ROUND(AVG(i2.valoracion), 2) " + " FROM inscripciones i2 "
+				+ " WHERE i2.id_voluntario = v.id_voluntario) AS media " + "FROM inscripciones i "
 				+ "JOIN voluntarios v ON i.id_voluntario = v.id_voluntario " + "WHERE i.id_evento = ?";
 
 		List<Inscripcion> inscripciones = new ArrayList<>();
@@ -553,24 +548,7 @@ public class AccesoBD {
 				// =========================
 				// DATOS VOLUNTARIO
 				// =========================
-				int idVol = rs.getInt("id_voluntario");
-				String nombre = rs.getString("nombre");
-				String apellidos = rs.getString("apellidos");
-				String email = rs.getString("email");
-				String telefono = rs.getString("telefono");
-				String pass = rs.getString("pass");
-
-				int discapacidad = rs.getInt("discapacidad");
-				boolean vehiculo = rs.getBoolean("vehiculo");
-
-				Date fechaNacDB = rs.getDate("fechaNac");
-				LocalDate fechaNac = null;
-				if (fechaNacDB != null) {
-					fechaNac = fechaNacDB.toLocalDate();
-				}
-
-				Voluntario v = new Voluntario(nombre, apellidos, idVol, telefono, email, pass, discapacidad, vehiculo,
-						fechaNac);
+				Voluntario v = crearVoluntario(rs);
 
 				// =========================
 				// DATOS INSCRIPCIÓN
@@ -682,12 +660,14 @@ public class AccesoBD {
 
 	// Método para listar voluntarios, organizadores y eventos según variable
 	public ArrayList<Object> PanelAdmin(String tabla) {
+
 		ArrayList<Object> lista = new ArrayList<>();
 
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		String sql = "";
 
 		try {
+			PreparedStatement ps = null;
+			ResultSet rs = null;
 
 			switch (tabla) {
 
@@ -695,26 +675,13 @@ public class AccesoBD {
 			// VOLUNTARIOS
 			// =========================
 			case "voluntarios":
-				String sql = "SELECT * FROM voluntarios WHERE nombre != 'Usuario eliminado'";
+
+				sql = "SELECT * FROM voluntario_media WHERE nombre != 'Usuario eliminado'";
 				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 
 				while (rs.next()) {
-
-					int id = rs.getInt("id_voluntario");
-					String nombre = rs.getString("nombre");
-					String apellidos = rs.getString("apellidos");
-					String telefono = rs.getString("telefono");
-					String email = rs.getString("email");
-					Date fechaNacDB = rs.getDate("fechaNac");
-					boolean vehiculo = rs.getBoolean("vehiculo");
-					int discapacidad = rs.getInt("discapacidad");
-
-					LocalDate fechaNac = (fechaNacDB != null) ? fechaNacDB.toLocalDate() : null;
-
-					Voluntario v = new Voluntario(nombre, apellidos, id, telefono, email, null, discapacidad, vehiculo,
-							fechaNac);
-
+					Voluntario v = crearVoluntario(rs);
 					lista.add(v);
 				}
 				break;
@@ -723,17 +690,15 @@ public class AccesoBD {
 			// EMPRESAS
 			// =========================
 			case "empresas":
-				String sql1 = "SELECT * FROM empresas";
-				ps = con.prepareStatement(sql1);
+
+				sql = "SELECT * FROM empresas";
+				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 
 				while (rs.next()) {
-
 					Map<String, Object> fila = new HashMap<>();
-
 					fila.put("empresa", rs.getString("empresa"));
-					fila.put("total", rs.getInt("total_organizadores"));
-
+					fila.put("total", rs.getInt("organizadores"));
 					lista.add(fila);
 				}
 				break;
@@ -742,48 +707,25 @@ public class AccesoBD {
 			// EVENTOS
 			// =========================
 			case "eventos":
-				String sql2 = "SELECT * FROM eventos";
-				ps = con.prepareStatement(sql2);
+
+				sql = "SELECT * FROM eventos";
+				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 
 				while (rs.next()) {
-
-					int idEventoDB = rs.getInt("id_evento");
-					String nombreEventoDB = rs.getString("nombre");
-					String tipoDB = rs.getString("tipo");
-					String descripcionDB = rs.getString("descripcion");
-					String lugarDB = rs.getString("lugar");
-					String edicionDB = rs.getString("edicion");
-					String estadoDB = rs.getString("estado");
-					int idOrganizadorDB = rs.getInt("id_organizador");
-
-					Date fechaInicioDB = rs.getDate("fecha_inicio");
-					Date fechaFinDB = rs.getDate("fecha_fin");
-
-					LocalDate fechaInicio = (fechaInicioDB != null) ? fechaInicioDB.toLocalDate() : null;
-					LocalDate fechaFin = (fechaFinDB != null) ? fechaFinDB.toLocalDate() : null;
-
-					lista.add(new Evento(idEventoDB, nombreEventoDB, tipoDB, descripcionDB, fechaInicio, fechaFin,
-							lugarDB, edicionDB, estadoDB, idOrganizadorDB));
+					Evento e = crearEvento(rs);
+					lista.add(e);
 				}
 				break;
 			}
 
+			if (rs != null)
+				rs.close();
+			if (ps != null)
+				ps.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 		return lista;
@@ -828,24 +770,26 @@ public class AccesoBD {
 	}
 
 	public Voluntario obtenerVoluntarioPorId(int idUsuario) throws SQLException {
-		Voluntario v = null;
-		String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?";
+
+		String sql = "SELECT * FROM voluntario_media WHERE id_voluntario = ?";
 
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
+
 			ps.setInt(1, idUsuario);
+
 			try (ResultSet rs = ps.executeQuery()) {
+
 				if (rs.next()) {
-					v = new Voluntario(rs.getString("nombre"), rs.getString("apellidos"), rs.getInt("id_voluntario"),
-							rs.getString("telefono"), rs.getString("email"), null, rs.getInt("discapacidad"),
-							rs.getBoolean("vehiculo"),
-							rs.getDate("fechaNac") != null ? rs.getDate("fechaNac").toLocalDate() : null);
+					return crearVoluntario(rs);
 				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;
 		}
-		return v;
+
+		return null;
 	}
 
 }
