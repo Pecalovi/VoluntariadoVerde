@@ -74,7 +74,7 @@ public class ServCrearEvento extends HttpServlet {
 					AccesoBD bd = new AccesoBD();
 					for (String nombreTarea : nuevasTareas) {
 						if (nombreTarea != null && !nombreTarea.trim().isEmpty()) {
-							bd.crearTarea(nombreTarea.trim());
+							bd.crearTarea(capitalizarPrimera(nombreTarea.trim()));
 						}
 					}
 					bd.disconnect();
@@ -114,7 +114,7 @@ public class ServCrearEvento extends HttpServlet {
 								bd.insertarRecorrido(new Puntos(idEvento, 2, Double.parseDouble(kms[i])));
 							}
 						} else if (tipo == 3) {
-							String nombre  = (nombres != null && nombres[i] != null) ? nombres[i].trim() : "";
+							String nombre  = capitalizarPrimera((nombres != null && nombres[i] != null) ? nombres[i].trim() : "");
 							String desc    = (descs   != null && descs[i]   != null) ? descs[i].trim()   : "";
 							int idPc = bd.insertarPuntoControl(nombre, desc, idEvento);
 							if (idPc > 0 && tareas != null && tareas[i] != null && !tareas[i].isEmpty()) {
@@ -143,5 +143,10 @@ public class ServCrearEvento extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
+	}
+
+	private static String capitalizarPrimera(String s) {
+		if (s == null || s.isEmpty()) return s;
+		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
 	}
 }
