@@ -407,7 +407,6 @@ public class AccesoBD {
 			ps.close();
 			return true;
 		} catch (Exception m) {
-			System.err.println("Error en inscribir: " + m.getMessage());
 			m.printStackTrace();
 			return false;
 		}

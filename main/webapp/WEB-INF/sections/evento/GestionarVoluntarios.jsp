@@ -17,19 +17,21 @@
 			<div class="admin-tarjeta">
 				<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
 				<div style="display: flex; gap: 10px;">
-					<form action="${pageContext.request.contextPath}/ServPerfil" method="post">
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
 						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
 						<input type="hidden" name="accionVoluntario" value="aceptar">
 						<input type="hidden" name="idEvento" value="${param.id}">
-						<button type="submit" class="botones" style="padding: 8px 20px; margin: 0; font-size: 14px;">Aceptar</button>
+						<button type="submit" class="btn btn-success">Aceptar</button>
 					</form>
-					<form action="${pageContext.request.contextPath}/ServPerfil" method="post">
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
 						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
 						<input type="hidden" name="accionVoluntario" value="rechazar">
 						<input type="hidden" name="idEvento" value="${param.id}">
-						<button type="submit" class="botones" style="padding: 8px 20px; margin: 0; font-size: 14px; background-color: #999;">Lista de espera</button>
+						<button type="submit" class="btn btn-danger">Rechazar</button>
 					</form>
 				</div>
 			</div>
@@ -57,44 +59,56 @@
 </div>
 
 <div>
-	<c:set var="rechazados" value="0" />
+	<c:set var="espera" value="0" />
 	<c:forEach var="v" items="${voluntarios}">
-		<c:if test="${v.estado == 'Rechazado'}">
-			<c:set var="rechazados" value="${rechazados + 1}" />
+		<c:if test="${v.estado == 'Lista de espera'}">
+			<c:set var="espera" value="${espera + 1}" />
 		</c:if>
 	</c:forEach>
 
-	<h3>Lista de espera (${rechazados})</h3>
+	<h3>Lista de espera (${espera})</h3>
 
 	<c:forEach var="v" items="${voluntarios}">
-		<c:if test="${v.estado == 'Rechazado'}">
+		<c:if test="${v.estado == 'Lista de espera'}">
 			<div class="admin-tarjeta">
 				<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
-				<form action="${pageContext.request.contextPath}/ServPerfil" method="post">
-					<input type="hidden" name="accion" value="gestionar-voluntarios" />
-					<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
-					<input type="hidden" name="accionVoluntario" value="aceptar">
-					<input type="hidden" name="idEvento" value="${param.id}">
-					<button type="submit" class="botones" style="padding: 8px 20px; margin: 0; font-size: 14px;">Aceptar</button>
-				</form>
+				<div style="display: flex; gap: 10px;">
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="aceptar">
+						<input type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit" class="btn btn-success">Aceptar</button>
+					</form>
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+						<input type="hidden" name="accion" value="gestionar-voluntarios" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}">
+						<input type="hidden" name="accionVoluntario" value="rechazar">
+						<input type="hidden" name="idEvento" value="${param.id}">
+						<button type="submit" class="btn btn-danger">Rechazar</button>
+					</form>
+				</div>
 			</div>
 		</c:if>
 	</c:forEach>
 </div>
 
 <div>
-	<c:set var="cancelados" value="0" />
+	<c:set var="totalInactivos" value="0" />
+
 	<c:forEach var="v" items="${voluntarios}">
-		<c:if test="${v.estado == 'Cancelado'}">
-			<c:set var="cancelados" value="${cancelados + 1}" />
+		<c:if test="${v.estado == 'Rechazado' || v.estado == 'Cancelado'}">
+			<c:set var="totalInactivos" value="${totalInactivos + 1}" />
 		</c:if>
 	</c:forEach>
 
-	<h3>Cancelados (${cancelados})</h3>
+	<h3>Cancelados (${totalInactivos})</h3>
 
 	<c:forEach var="v" items="${voluntarios}">
-		<c:if test="${v.estado == 'Cancelado'}">
-			<div class="admin-tarjeta">
+		<c:if test="${v.estado == 'Rechazado' || v.estado == 'Cancelado'}">
+			<div>
 				<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
 			</div>
 		</c:if>

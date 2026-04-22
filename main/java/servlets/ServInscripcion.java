@@ -44,7 +44,6 @@ public class ServInscripcion extends HttpServlet {
 		int idVoluntario = user.getId();
 		int idEvento = Integer.parseInt(request.getParameter("idEvento"));
 		String accion = request.getParameter("accion");
-
 		try {
 			AccesoBD bd = new AccesoBD();
 
@@ -52,12 +51,10 @@ public class ServInscripcion extends HttpServlet {
 
 				bd.cancelarInscripcion(idVoluntario, idEvento);
 			} else {
-
 				bd.inscribir(idVoluntario, idEvento);
 			}
 
 			bd.disconnect();
-
 			response.sendRedirect(request.getContextPath() + "/evento?id=" + idEvento);
 
 		} catch (ClassNotFoundException | SQLException e) {
