@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -263,14 +262,14 @@ public class AccesoBD {
 				case "lugar":
 				case "edicion":
 				case "estado":
-					sql += " WHERE " + atributo + " LIKE ?";
+					sql += " AND " + atributo + " LIKE ?";
 					filtrar = true;
 					break;
 
 				case "id_organizador":
 				case "id_evento":
 				case "tipo":
-					sql += " WHERE " + atributo + " = ?";
+					sql += " AND " + atributo + " = ?";
 					filtrar = true;
 					break;
 				}
@@ -284,12 +283,19 @@ public class AccesoBD {
 
 				if ("nombre".equals(atributo) || "lugar".equals(atributo) || "edicion".equals(atributo)
 						|| "estado".equals(atributo)) {
+
 					ps.setString(1, "%" + valor.toString() + "%");
+
 				} else if (valor instanceof Integer) {
+
 					ps.setInt(1, (Integer) valor);
+
 				} else if (valor instanceof String) {
+
 					ps.setString(1, (String) valor);
+
 				} else {
+
 					ps.setObject(1, valor);
 				}
 			}
