@@ -144,14 +144,12 @@ iframe{
     
     #contacto_info{
     margin-top: 0px;
-    margin-left: -35px;
-    margin-right: -36px;
     background-color: #005900;
     width: 289px;
     height: 150px;
     border-radius: 0px 0Px 15px 15px;
-    padding-top: 13px;
-    padding-left: 13px;
+    padding-top: 15px;
+    padding-left: 23px;
     }
     
     .icono_texto{

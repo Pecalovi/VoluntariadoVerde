@@ -59,7 +59,7 @@ boolean hayFiltros = (nombreFiltro != null && !nombreFiltro.isEmpty()) || (tipoF
 
 		<a
 			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
-			class="evento_index1 animate__animated animate__bounceInLeft"
+			class="animate__animated animate__bounceIn evento_index1"
 			style="animation-delay: <%=delay%>s;">
 			<div class="evento_index">
 				<img src="src/eventos/<%=evento.getTipo()%>.jpg"
