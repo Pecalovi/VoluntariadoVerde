@@ -110,10 +110,12 @@
 /* Contenedor de eventos */
 .eventos {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(300px, 380px));
 	gap: 30px;
 	width: 100%;
 	max-width: 1200px;
+	justify-content: start;
+	align-content: start;
 }
 
 /* Tarjeta de evento */
@@ -125,7 +127,6 @@
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 	transition: transform 0.35s ease, box-shadow 0.35s ease;
 	cursor: pointer;
-	width: 30%;
 }
 
 /* Imagen del evento */
