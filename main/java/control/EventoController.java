@@ -69,7 +69,7 @@ public class EventoController extends HttpServlet {
 		    }
 		}
 		request.setAttribute("inscrito", inscrito);
-		
+		request.setAttribute("inscritos", AccesoBD.contarInscritos(id));
 		request.setAttribute("evento", e);
 		
 		String lang = (String) session.getAttribute("lang");

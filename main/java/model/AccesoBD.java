@@ -920,6 +920,24 @@ public class AccesoBD {
 	    }
 	}
 
+	public static int contarInscritos(int idEvento) {
+		String sql = "SELECT COUNT(*) FROM inscripciones WHERE id_evento = ? AND estado = 'Aceptado'";
+		try {
+			AccesoBD bd = new AccesoBD();
+			PreparedStatement ps = bd.con.prepareStatement(sql);
+			ps.setInt(1, idEvento);
+			ResultSet rs = ps.executeQuery();
+			int count = rs.next() ? rs.getInt(1) : 0;
+			rs.close();
+			ps.close();
+			bd.disconnect();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 	public boolean eliminarEvento(int idEvento) throws SQLException {
 		// 1. Asignaciones ligadas a puntos de control o inscripciones de este evento
 		String sql1 = "DELETE FROM asignacion_tareas WHERE id_pc IN "

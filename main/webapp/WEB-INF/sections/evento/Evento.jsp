@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <div id="tarjeta">
 
 	<div id="banner"
@@ -20,7 +21,8 @@
 			</div>
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_inscritos.png"
-					alt="icono fecha">
+					alt="icono inscritos">
+				<p>${inscritos} Voluntarios</p>
 			</div>
 		</div>
 		<hr>
@@ -37,13 +39,13 @@
 				if (inscrito != null && inscrito) {
 				%>
 				<input type="hidden" name="accion" value="cancelar"> <input
-					type="submit" class="botones" value="Cancelar inscripción"
+					type="submit" class="botones" value="Cancelar inscripciÃ³n"
 					style="background-color: #d9534f; color: white; border: 1px solid #d43f3a; margin-top: 0; cursor: pointer;">
 				<%
 				} else {
 				%>
 				<input type="hidden" name="accion" value="inscribir"> <input
-					type="submit" class="botones" value="Inscríbete"
+					type="submit" class="botones" value="InscrÃ­bete"
 					style="margin-top: 0;">
 				<%
 				}
