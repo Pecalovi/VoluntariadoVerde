@@ -80,26 +80,30 @@ boolean es = "es".equals(lang);
 		<%=es ? "Próximos eventos" : "Upcoming events"%>
 	</h1>
 
+	<%
+	if (eventos != null && !eventos.isEmpty()) {
+		double delay = 0.0;
+	%>
+
 	<div class="eventos">
 		<%
-		if (eventos != null && !eventos.isEmpty()) {
-			double delay = 0.0;
-
-			for (int i = 0; i < eventos.size() && i < 3; i++) {
-				Evento evento = eventos.get(i);
+		for (int i = 0; i < eventos.size() && i < 3; i++) {
+			Evento evento = eventos.get(i);
 		%>
 
 		<a
 			href="<%=request.getContextPath()%>/evento?id=<%=evento.getIdEvento()%>"
 			class="evento-index1 animate__animated animate__bounceIn"
 			style="animation-delay: <%=delay%>s;">
+
 			<div class="evento-index">
 				<img src="src/eventos/<%=evento.getTipo()%>.jpg"
 					alt="<%=evento.getTipo()%>">
 
 				<div class="informacion-evento">
 					<p class="tipo"><%=evento.getTipo()%></p>
-					<h2><%=evento.getNombre()%> <%=evento.getEdicion()%></h2>
+					<h2><%=evento.getNombre()%>
+						<%=evento.getEdicion()%></h2>
 					<p><%=evento.getFecha_inicio()%></p>
 				</div>
 			</div>
@@ -109,15 +113,20 @@ boolean es = "es".equals(lang);
 		<%
 		delay += 0.3;
 		}
-		} else {
-		%>
-		<p class="eventos-n">
-			<%=es ? "No hay ningún evento próximamente." : "No upcoming events."%>
-		</p>
-		<%
-		}
 		%>
 	</div>
+
+	<%
+	} else {
+	%>
+
+	<p class="eventos-n">
+		<%=es ? "No hay ningún evento próximamente." : "No upcoming events."%>
+	</p>
+
+	<%
+	}
+	%>
 </section>
 
 <section class="mapa">
