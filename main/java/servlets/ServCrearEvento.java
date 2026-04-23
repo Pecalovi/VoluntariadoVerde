@@ -132,7 +132,9 @@ public class ServCrearEvento extends HttpServlet {
 
 				bd.disconnect();
 				session.removeAttribute("idEvento");
-				response.sendRedirect(contextPath + "/home");
+				session.setAttribute("message", "¡Evento creado con éxito!");
+				session.setAttribute("messageType", "success");
+				response.sendRedirect(contextPath + "/perfil?opcion=gestionar-eventos");
 
 			} catch (ClassNotFoundException | SQLException ex) {
 				ex.printStackTrace();
