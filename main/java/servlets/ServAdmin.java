@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.AccesoBD;
+import model.Organizador;
 import model.Usuario;
 import model.Voluntario;
 
@@ -27,7 +29,8 @@ public class ServAdmin extends HttpServlet {
             bd = new AccesoBD();
 
             switch (accion) {
-
+            default:
+            
                 case "verDatos":
                     if (idParam != null) {
                         int idUsuario = Integer.parseInt(idParam);
@@ -73,6 +76,56 @@ public class ServAdmin extends HttpServlet {
         			session.setAttribute("messageType", "success");
                     
                     response.sendRedirect("admin?opcion=voluntarios");
+                    break;
+                    
+                    
+                case "eliminarOrganizacion":
+                    String motivoOrg = request.getParameter("motivo");
+                    String nombreEmpresa = request.getParameter("idOrganizador");
+                    
+                    System.out.println("=== eliminarOrganizacion ===");
+                    System.out.println("nombreEmpresa: " + nombreEmpresa);
+                    System.out.println("motivo: " + motivoOrg);
+
+                    if (nombreEmpresa == null || motivoOrg == null || motivoOrg.trim().isEmpty()) {
+                        response.sendRedirect("admin?opcion=empresas&error=faltaMotivo");
+                        break;
+                    }
+
+                    List<Organizador> orgs = bd.obtenerOrganizadoresPorEmpresa(nombreEmpresa);
+                    bd.borrarOrganizadoresPorEmpresa(nombreEmpresa);
+
+                    for (Organizador org : orgs) {
+                        String asunto = "Baja de Voluntariado Verde";
+                        String cuerpo = "Hola " + org.getNombre() + ",\n\n"
+                                + "Te informamos de que el administrador ha decidido eliminar la organización \""
+                                + nombreEmpresa + "\" por el siguiente motivo:\n"
+                                + "\"" + motivoOrg + "\"\n\n"
+                                + "En caso de que no estés de acuerdo, respóndenos a este correo.\n\n"
+                                + "Saludos,\nEl equipo de Voluntariado Verde.";
+                        control.Mailer.send(org.getEmail(), asunto, cuerpo);
+                    }
+
+                    HttpSession sessionOrg = request.getSession();
+                    sessionOrg.setAttribute("message", "Organización eliminada correctamente.");
+                    sessionOrg.setAttribute("messageType", "success");
+                    response.sendRedirect("admin?opcion=empresas");
+                    break;
+                case "verDatosEmpresa":
+                    String empresa = request.getParameter("empresa");
+                    if (empresa != null) {
+                        List<Organizador> orgDetalle = bd.obtenerOrganizadoresPorEmpresa(empresa);
+                        HttpSession session1 = request.getSession();
+                        session1.setAttribute("empresaDetalle", orgDetalle);
+                        session1.setAttribute("empresaNombre", empresa);
+                        response.sendRedirect("admin?opcion=empresas");
+                    }
+                    break;
+
+                case "limpiarDetalleEmpresa":
+                    request.getSession().removeAttribute("empresaDetalle");
+                    request.getSession().removeAttribute("empresaNombre");
+                    response.sendRedirect("admin?opcion=empresas");
                     break;
             }
 

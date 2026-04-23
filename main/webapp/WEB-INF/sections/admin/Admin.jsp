@@ -35,8 +35,7 @@
 									type="hidden" name="idUsuario" value="${item.id}" />
 
 								<textarea name="motivo" required
-									placeholder="Motivo de la baja..."
-									class="textarea-admin"></textarea>
+									placeholder="Motivo de la baja..." class="textarea-admin"></textarea>
 
 								<button type="submit" class="btn btn-danger"
 									onclick="return confirm('¿Seguro que deseas eliminar esta cuenta?')">
@@ -51,10 +50,26 @@
 					<div class="admin-tarjeta">
 						<h2>${item.empresa}</h2>
 						<div>
-							<button type="button" class="btn btn-link">
-								Organizadores (${item.total})</button>
-							<button type="button" class="btn btn-danger">Eliminar
-								organización</button>
+							<form action="${pageContext.request.contextPath}/ServAdmin"
+								method="post" style="display: inline;">
+								<input type="hidden" name="accion" value="verDatosEmpresa" /> <input
+									type="hidden" name="empresa" value="${item.empresa}" />
+								<button type="submit" class="btn btn-link">
+									Organizadores (${item.total})</button>
+							</form>
+
+							<form action="${pageContext.request.contextPath}/ServAdmin"
+								method="post" style="margin-top: 10px;">
+								<input type="hidden" name="accion" value="eliminarOrganizacion" />
+								<input type="hidden" name="idOrganizador" value="${item.id}" />
+
+								<textarea name="motivo" required
+									placeholder="Motivo de la baja..." class="textarea-admin"></textarea>
+
+								<button type="submit" class="btn btn-danger"
+									onclick="return confirm('¿Seguro que deseas eliminar esta organización?')">
+									Eliminar organización</button>
+							</form>
 						</div>
 					</div>
 				</c:forEach>
@@ -75,49 +90,100 @@
 			</c:otherwise>
 
 		</c:choose>
-		
-		
-		
-		<c:if test="${not empty usuarioDetalle or not empty sessionScope.usuarioDetalle}">
-    <c:set var="det" value="${not empty usuarioDetalle ? usuarioDetalle : sessionScope.usuarioDetalle}" />
 
-    <div id="miModal" class="modal-overlay" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
-        <div class="modal-contenido" style="background: white; padding: 0; border-radius: 8px; width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); font-family: Arial, sans-serif;">
-            
-            <div style="background: #005900; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
-                <h3 style="margin: 0; color: white;">INFORME DE VOLUNTARIO</h3>
-            </div>
 
-            <div style="padding: 20px;">
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 10px; font-weight: bold; color: #666;">Nombre:</td>
-                        <td style="padding: 10px;">${det.nombre} ${det.apellidos}</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 10px; font-weight: bold; color: #666;">Email:</td>
-                        <td style="padding: 10px; color: #2980b9;">${det.email}</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 10px; font-weight: bold; color: #666;">Teléfono:</td>
-                        <td style="padding: 10px;">${det.numTelf}</td>
-                    </tr>
-                </table>
-            </div>
+		<c:if test="${not empty sessionScope.empresaDetalle}">
+			<div id="modalEmpresa" class="modal-overlay"
+				style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; justify-content: center; align-items: center;">
+				<div class="modal-contenido"
+					style="background: white; padding: 0; border-radius: 8px; width: 500px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); font-family: Arial, sans-serif;">
 
-            <div style="padding: 15px; text-align: center; background: #f9f9f9; border-radius: 0 0 8px 8px;">
-                <button type="button" onclick="cerrarEInforme()" style="background: #2c3e50; color: white; border: none; padding: 10px 25px; border-radius: 4px; cursor: pointer;">
-                    Cerrar Informe
-                </button>
-            </div>
-        </div>
-    </div>
+					<div
+						style="background: #005900; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
+						<h3 style="margin: 0; color: white;">ORGANIZADORES —
+							${sessionScope.empresaNombre}</h3>
+					</div>
 
-    <script>
-        function cerrarEInforme() {
-            window.location.href = "${pageContext.request.contextPath}/ServAdmin?accion=limpiarDetalle";
-        }
-    </script>
-</c:if>
+					<div style="padding: 20px;">
+						<table style="width: 100%; border-collapse: collapse;">
+							<tr style="background: #f2f2f2;">
+								<th style="padding: 10px; text-align: left;">Nombre</th>
+								<th style="padding: 10px; text-align: left;">Email</th>
+								<th style="padding: 10px; text-align: left;">Teléfono</th>
+							</tr>
+							<c:forEach var="org" items="${sessionScope.empresaDetalle}">
+								<tr style="border-bottom: 1px solid #eee;">
+									<td style="padding: 10px;">${org.nombre}${org.apellidos}</td>
+									<td style="padding: 10px; color: #2980b9;">${org.email}</td>
+									<td style="padding: 10px;">${org.numTelf}</td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+
+					<div
+						style="padding: 15px; text-align: center; background: #f9f9f9; border-radius: 0 0 8px 8px;">
+						<button type="button" onclick="cerrarModalEmpresa()"
+							style="background: #2c3e50; color: white; border: none; padding: 10px 25px; border-radius: 4px; cursor: pointer;">
+							Cerrar</button>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				function cerrarModalEmpresa() {
+					window.location.href = "${pageContext.request.contextPath}/ServAdmin?accion=limpiarDetalleEmpresa";
+				}
+			</script>
+		</c:if>
+
+
+		<c:if
+			test="${not empty usuarioDetalle or not empty sessionScope.usuarioDetalle}">
+			<c:set var="det"
+				value="${not empty usuarioDetalle ? usuarioDetalle : sessionScope.usuarioDetalle}" />
+
+			<div id="miModal" class="modal-overlay"
+				style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; justify-content: center; align-items: center;">
+				<div class="modal-contenido"
+					style="background: white; padding: 0; border-radius: 8px; width: 450px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); font-family: Arial, sans-serif;">
+
+					<div
+						style="background: #005900; padding: 15px; border-radius: 8px 8px 0 0; text-align: center;">
+						<h3 style="margin: 0; color: white;">INFORME DE VOLUNTARIO</h3>
+					</div>
+
+					<div style="padding: 20px;">
+						<table style="width: 100%; border-collapse: collapse;">
+							<tr style="border-bottom: 1px solid #eee;">
+								<td style="padding: 10px; font-weight: bold; color: #666;">Nombre:</td>
+								<td style="padding: 10px;">${det.nombre}${det.apellidos}</td>
+							</tr>
+							<tr style="border-bottom: 1px solid #eee;">
+								<td style="padding: 10px; font-weight: bold; color: #666;">Email:</td>
+								<td style="padding: 10px; color: #2980b9;">${det.email}</td>
+							</tr>
+							<tr style="border-bottom: 1px solid #eee;">
+								<td style="padding: 10px; font-weight: bold; color: #666;">Teléfono:</td>
+								<td style="padding: 10px;">${det.numTelf}</td>
+							</tr>
+						</table>
+					</div>
+
+					<div
+						style="padding: 15px; text-align: center; background: #f9f9f9; border-radius: 0 0 8px 8px;">
+						<button type="button" onclick="cerrarEInforme()"
+							style="background: #2c3e50; color: white; border: none; padding: 10px 25px; border-radius: 4px; cursor: pointer;">
+							Cerrar Informe</button>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				function cerrarEInforme() {
+					window.location.href = "${pageContext.request.contextPath}/ServAdmin?accion=limpiarDetalle";
+				}
+			</script>
+		</c:if>
 	</section>
 </div>
