@@ -920,6 +920,25 @@ public class AccesoBD {
 	    }
 	}
 
+	public static String obtenerEstadoInscripcion(int idVoluntario, int idEvento) {
+		String sql = "SELECT estado FROM inscripciones WHERE id_voluntario = ? AND id_evento = ? AND estado NOT IN ('Cancelado', 'Rechazado')";
+		try {
+			AccesoBD bd = new AccesoBD();
+			PreparedStatement ps = bd.con.prepareStatement(sql);
+			ps.setInt(1, idVoluntario);
+			ps.setInt(2, idEvento);
+			ResultSet rs = ps.executeQuery();
+			String estado = rs.next() ? rs.getString("estado") : null;
+			rs.close();
+			ps.close();
+			bd.disconnect();
+			return estado;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static int contarInscritos(int idEvento) {
 		String sql = "SELECT COUNT(*) FROM inscripciones WHERE id_evento = ? AND estado = 'Aceptado'";
 		try {

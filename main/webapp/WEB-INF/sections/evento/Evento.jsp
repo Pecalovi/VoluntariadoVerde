@@ -30,27 +30,30 @@
 
 		<div id="inscripcion">
 
-			<form action="${pageContext.request.contextPath}/ServInscripcion"
-				method="post">
+			<%
+			String estadoInscripcion = (String) request.getAttribute("estadoInscripcion");
+			if (estadoInscripcion != null) {
+				String cssEstado = "btn-estado-" + estadoInscripcion.toLowerCase().replace(" ", "-");
+			%>
+			<form action="${pageContext.request.contextPath}/ServInscripcion" method="post">
 				<input type="hidden" name="idEvento" value="${evento.idEvento}">
-
-				<%
-				Boolean inscrito = (Boolean) request.getAttribute("inscrito");
-				if (inscrito != null && inscrito) {
-				%>
-				<input type="hidden" name="accion" value="cancelar"> <input
-					type="submit" class="botones" value="Cancelar inscripción"
-					style="background-color: #d9534f; color: white; border: 1px solid #d43f3a; margin-top: 0; cursor: pointer;">
-				<%
-				} else {
-				%>
-				<input type="hidden" name="accion" value="inscribir"> <input
-					type="submit" class="botones" value="Inscríbete"
-					style="margin-top: 0;">
-				<%
-				}
-				%>
+				<input type="hidden" name="accion" value="cancelar">
+				<button type="submit" class="botones btn-estado <%=cssEstado%>" onclick="return confirm('¿Estás seguro de que quieres cancelar tu inscripción?')">
+					<span class="texto-estado"><%=estadoInscripcion%></span>
+					<span class="texto-cancelar">Cancelar inscripción</span>
+				</button>
 			</form>
+			<%
+			} else {
+			%>
+			<form action="${pageContext.request.contextPath}/ServInscripcion" method="post">
+				<input type="hidden" name="idEvento" value="${evento.idEvento}">
+				<input type="hidden" name="accion" value="inscribir">
+				<input type="submit" class="botones" value="Inscríbete" style="margin-top: 0;">
+			</form>
+			<%
+			}
+			%>
 		</div>
 	</div>
 

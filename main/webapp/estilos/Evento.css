@@ -146,3 +146,27 @@ footer {
 	width: 80%;
 	align-self: center;
 }
+
+.btn-estado .texto-cancelar {
+	display: none;
+}
+
+.btn-estado:hover .texto-estado {
+	display: none;
+}
+
+.btn-estado:hover .texto-cancelar {
+	display: inline;
+}
+
+.btn-estado:hover {
+	background-color: #d9534f !important;
+}
+
+.btn-estado-pendiente {
+	background-color: #6c757d;
+}
+
+.btn-estado-aceptado {
+	background-color: #007bff;
+}
