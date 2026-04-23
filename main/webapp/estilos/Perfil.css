@@ -123,7 +123,7 @@ h1 {
 	font-weight: bold;
 }
 
-img {
+main img {
 	height: 30px;
 	width: 30px;
 }
@@ -547,8 +547,7 @@ td.email {
 	animation: fadeIn 0.2s ease-in-out;
 }
 
-@
-keyframes fadeIn {from { opacity:0;
+@keyframes fadeIn {from { opacity:0;
 	transform: scale(0.97);
 }
 

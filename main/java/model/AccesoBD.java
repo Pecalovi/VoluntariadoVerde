@@ -926,7 +926,7 @@ public class AccesoBD {
 	}
 
 	public static int contarInscritos(int idEvento) {
-		String sql = "SELECT COUNT(*) FROM inscripciones WHERE id_evento = ? AND estado = 'Aceptado'";
+		String sql = "SELECT COUNT(*) FROM inscripciones WHERE id_evento = ? AND estado IN ('Aceptado', 'Asignado');";
 		try {
 			AccesoBD bd = new AccesoBD();
 			PreparedStatement ps = bd.con.prepareStatement(sql);
@@ -1079,6 +1079,19 @@ public class AccesoBD {
 			}
 		}
 		return null;
+	}
+
+	public void finalizarEventosAutomaticamente() {
+		String sql = "UPDATE eventos SET estado = 'Finalizado' "
+				+ "WHERE fecha_fin <= CURRENT_DATE AND estado != 'Finalizado'";
+
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
