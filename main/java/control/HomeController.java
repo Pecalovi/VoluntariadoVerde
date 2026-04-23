@@ -28,17 +28,6 @@ public class HomeController extends HttpServlet {
 		    session.setAttribute("lang", lang);
 		}
 
-		try {
-	        AccesoBD bd = new AccesoBD();
-
-	        bd.finalizarEventosAutomaticamente();
-
-	        bd.disconnect();
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-		
 		ArrayList<Evento> eventos = AccesoBD.obtenerEventos("","",false);
 
 		// 2. Cargar la vista
