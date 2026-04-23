@@ -65,7 +65,7 @@ public class EventoController extends HttpServlet {
 		    try {
 		        AccesoBD bd = new AccesoBD();
 		        inscrito = bd.usuarioInscrito(idUsuario, id);
-		        estadoInscripcion = bd.obtenerEstadoInscripcion(idUsuario, id);
+		        estadoInscripcion = bd.obtenerEstadoInscripcion2(idUsuario, id);
 		    } catch (ClassNotFoundException | SQLException e1) {
 		        e1.printStackTrace();
 		    }

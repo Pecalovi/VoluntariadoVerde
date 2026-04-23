@@ -1081,7 +1081,7 @@ public class AccesoBD {
 	}
 	
 	
-	public String obtenerEstadoInscripcion(int idVoluntario, int idEvento) throws SQLException {
+	public String obtenerEstadoInscripcion2(int idVoluntario, int idEvento) throws SQLException {
 	    String sql = "SELECT estado FROM inscripciones WHERE id_voluntario = ? AND id_evento = ?";
 	    try (PreparedStatement ps = con.prepareStatement(sql)) {
 	        ps.setInt(1, idVoluntario);
