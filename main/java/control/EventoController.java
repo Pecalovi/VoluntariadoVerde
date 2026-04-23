@@ -57,13 +57,6 @@ public class EventoController extends HttpServlet {
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute("usuario");
 
-<<<<<<< Updated upstream
-		String estadoInscripcion = null;
-
-		if (user != null) {
-			estadoInscripcion = AccesoBD.obtenerEstadoInscripcion(user.getId(), id);
-		}
-=======
 		boolean inscrito = false;
 		String estadoInscripcion = null;
 
@@ -78,7 +71,6 @@ public class EventoController extends HttpServlet {
 		    }
 		}
 		request.setAttribute("inscrito", inscrito);
->>>>>>> Stashed changes
 		request.setAttribute("estadoInscripcion", estadoInscripcion);
 		request.setAttribute("inscritos", AccesoBD.contarInscritos(id));
 		request.setAttribute("evento", e);
