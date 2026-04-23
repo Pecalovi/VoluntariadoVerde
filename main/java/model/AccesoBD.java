@@ -900,4 +900,40 @@ public class AccesoBD {
 		}
 	}
 
+	public boolean eliminarEvento(int idEvento) throws SQLException {
+		// 1. Asignaciones ligadas a puntos de control o inscripciones de este evento
+		String sql1 = "DELETE FROM asignacion_tareas WHERE id_pc IN "
+				+ "(SELECT id_pc FROM puntos_control WHERE id_evento = ?) "
+				+ "OR id_inscripcion IN "
+				+ "(SELECT id_inscripcion FROM inscripciones WHERE id_evento = ?)";
+		PreparedStatement ps1 = con.prepareStatement(sql1);
+		ps1.setInt(1, idEvento);
+		ps1.setInt(2, idEvento);
+		ps1.executeUpdate();
+		ps1.close();
+
+		// 2. Inscripciones
+		String sql2 = "DELETE FROM inscripciones WHERE id_evento = ?";
+		PreparedStatement ps2 = con.prepareStatement(sql2);
+		ps2.setInt(1, idEvento);
+		ps2.executeUpdate();
+		ps2.close();
+
+		// 3. Puntos de control
+		String sql3 = "DELETE FROM puntos_control WHERE id_evento = ?";
+		PreparedStatement ps3 = con.prepareStatement(sql3);
+		ps3.setInt(1, idEvento);
+		ps3.executeUpdate();
+		ps3.close();
+
+		// 4. El evento en sí
+		String sql4 = "DELETE FROM eventos WHERE id_evento = ?";
+		PreparedStatement ps4 = con.prepareStatement(sql4);
+		ps4.setInt(1, idEvento);
+		int rows = ps4.executeUpdate();
+		ps4.close();
+
+		return rows > 0;
+	}
+
 }

@@ -29,7 +29,8 @@ String accion = (String) request.getAttribute("accion");
 	<div>
 		<a
 			href="${pageContext.request.contextPath}/evento?id=${evento.idEvento}"><img
-			src="src/ojo.png"></a> <a><img src="src/basura.png"></a>
+			src="src/ojo.png"></a>
+		<a href="#" data-bs-toggle="modal" data-bs-target="#modalEliminarEvento"><img src="src/basura.png"></a>
 	</div>
 </div>
 
@@ -210,3 +211,27 @@ String accion = (String) request.getAttribute("accion");
 		}
 	}
 </script>
+
+<!-- Modal confirmar eliminación -->
+<div class="modal fade" id="modalEliminarEvento" tabindex="-1">
+	<div class="modal-dialog" style="margin-top: 5rem;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Eliminar evento</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<p>¿Estás seguro de que quieres eliminar el evento <b>${evento.nombre}</b>?
+				Esta acción no se puede deshacer y eliminará todas las inscripciones y puntos de control asociados.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+				<form action="${pageContext.request.contextPath}/ServPerfil" method="post">
+					<input type="hidden" name="accion" value="eliminar-evento">
+					<input type="hidden" name="idEvento" value="${param.id}">
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

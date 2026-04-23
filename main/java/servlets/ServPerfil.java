@@ -101,6 +101,15 @@ public class ServPerfil extends HttpServlet {
 				return;
 			}
 
+			if ("eliminar-evento".equals(accion) && user != null) {
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				bd.eliminarEvento(idEvento);
+				session.setAttribute("message", "Evento eliminado correctamente.");
+				session.setAttribute("messageType", "success");
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-eventos");
+				return;
+			}
+
 			if ("eliminar-cuenta".equals(accion) && user != null) {
 
 				String passConfirm = request.getParameter("passConfirm");
@@ -174,6 +183,9 @@ public class ServPerfil extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			HttpSession session2 = request.getSession();
+			session2.setAttribute("message", "Error inesperado: " + e.getMessage());
+			session2.setAttribute("messageType", "danger");
 			response.sendRedirect(request.getContextPath() + "/perfil");
 		}
 	}
