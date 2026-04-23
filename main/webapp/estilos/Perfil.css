@@ -64,6 +64,54 @@ h1 {
 	border-right: 3px solid var(--azul);
 }
 
+.info-sostenibilidad-wrapper {
+	margin-top: auto;
+	padding: 20px 40px;
+}
+
+.btn-info-sostenibilidad {
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	border: 2px solid var(--verde-principal);
+	background: white;
+	color: var(--verde-principal);
+	font-weight: 700;
+	font-size: 16px;
+	font-style: italic;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.2s, color 0.2s;
+}
+
+.btn-info-sostenibilidad:hover {
+	background: var(--verde-principal);
+	color: white;
+}
+
+.lista-docs {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.lista-docs li a {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--verde-principal);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.lista-docs li a:hover {
+	text-decoration: underline;
+}
+
 .menu-perfil a.eliminar:hover {
 	background-color: rgba(246, 97, 81, 0.2);
 	border-right: 3px solid rgba(246, 97, 81, 0.7);
