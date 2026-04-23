@@ -160,6 +160,7 @@ String accion = (String) request.getAttribute("accion");
 					<div style="display: flex; gap: 10px;">
 						<button type="button" class="btn btn-outline-secondary"
 							onclick="mostrarPerfil(this)">Ver información</button>
+						<button class="btn btn-success" disabled>Asignado</button>
 					</div>
 				</div>
 

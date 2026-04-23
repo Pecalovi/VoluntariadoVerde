@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -49,7 +48,7 @@ public class ServPerfil extends HttpServlet {
 				if ("aceptar".equals(accionVol)) {
 					estado = "Aceptado";
 					Voluntario voluntario = bd.obtenerVoluntarioPorId(idUsuario);
-					ArrayList<Evento> eventos = AccesoBD.obtenerEventos("id_evento", idEvento);
+					ArrayList<Evento> eventos = AccesoBD.obtenerEventos("id_evento", idEvento, false);
 					String nombreEvento = (!eventos.isEmpty()) ? eventos.get(0).getNombre() : "el evento";
 
 					String asuntoConfirmacion = "¡Tu inscripción como voluntario ha sido aceptada!";
@@ -157,6 +156,17 @@ public class ServPerfil extends HttpServlet {
 
 				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento);
 				return;
+			}
+			
+			if ("valorar-voluntario".equals(accion)){
+				int idInscripcion = Integer.parseInt(request.getParameter("idInscripcion"));
+				int valoracion = Integer.parseInt(request.getParameter("valoracion"));
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				bd.valorarVoluntario(idInscripcion, valoracion);
+				
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=valorar-voluntarios&id=" + idEvento);
+				return;
+				
 			}
 
 			if ("editar-cuenta".equals(accion) && user != null) {

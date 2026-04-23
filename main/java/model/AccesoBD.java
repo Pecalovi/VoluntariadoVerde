@@ -246,14 +246,19 @@ public class AccesoBD {
 		}
 	}
 
-	public static ArrayList<Evento> obtenerEventos(String atributo, Object valor) {
+	public static ArrayList<Evento> obtenerEventos(String atributo, Object valor, boolean incluirFinalizados) {
 
-		String sql = "SELECT * FROM eventos WHERE estado NOT LIKE 'Finalizado'";
+		String sql = "SELECT * FROM eventos WHERE 1=1";
 		ArrayList<Evento> eventos = new ArrayList<>();
 		boolean filtrar = false;
 
 		try {
 			AccesoBD bd = new AccesoBD();
+
+			// 🔹 Filtro estado opcional
+			if (!incluirFinalizados) {
+				sql += " AND estado <> 'Finalizado'";
+			}
 
 			if (atributo != null && !atributo.isEmpty() && valor != null) {
 
@@ -289,10 +294,6 @@ public class AccesoBD {
 				} else if (valor instanceof Integer) {
 
 					ps.setInt(1, (Integer) valor);
-
-				} else if (valor instanceof String) {
-
-					ps.setString(1, (String) valor);
 
 				} else {
 
@@ -424,35 +425,35 @@ public class AccesoBD {
 	}
 
 	public void borrarVoluntario(int idUsuario) throws SQLException {
-	    String sql = "UPDATE voluntarios SET nombre=?, apellidos=?, email=?, pass=?, fechaNac=NULL, telefono=?, vehiculo=?, discapacidad=? WHERE id_voluntario=?";
+		String sql = "UPDATE voluntarios SET nombre=?, apellidos=?, email=?, pass=?, fechaNac=NULL, telefono=?, vehiculo=?, discapacidad=? WHERE id_voluntario=?";
 
-	    PreparedStatement ps = con.prepareStatement(sql);
+		PreparedStatement ps = con.prepareStatement(sql);
 
-	    ps.setString(1, "Usuario eliminado");
-	    ps.setString(2, "");
-	    ps.setString(3, "eliminado_" + idUsuario + "@eliminado.com");
-	    ps.setString(4, "");
-	    ps.setString(5, "");
-	    ps.setBoolean(6, false);
-	    ps.setInt(7, 0);
-	    ps.setInt(8, idUsuario);
+		ps.setString(1, "Usuario eliminado");
+		ps.setString(2, "");
+		ps.setString(3, "eliminado_" + idUsuario + "@eliminado.com");
+		ps.setString(4, "");
+		ps.setString(5, "");
+		ps.setBoolean(6, false);
+		ps.setInt(7, 0);
+		ps.setInt(8, idUsuario);
 
-	    ps.executeUpdate();
-	    ps.close();
+		ps.executeUpdate();
+		ps.close();
 	}
 
 	public void borrarOrganizador(int idOrganizador) throws SQLException {
-	    String sql = "UPDATE organizadores SET nombre=?, apellidos=?, email=?, pass=?, telefono=?, empresa=? WHERE id_organizador=?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setString(1, "Usuario eliminado");
-	        ps.setString(2, "");
-	        ps.setString(3, "eliminado_" + idOrganizador + "@eliminado.com");
-	        ps.setString(4, "");
-	        ps.setString(5, "");
-	        ps.setString(6, "");
-	        ps.setInt(7, idOrganizador);
-	        ps.executeUpdate();
-	    }
+		String sql = "UPDATE organizadores SET nombre=?, apellidos=?, email=?, pass=?, telefono=?, empresa=? WHERE id_organizador=?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, "Usuario eliminado");
+			ps.setString(2, "");
+			ps.setString(3, "eliminado_" + idOrganizador + "@eliminado.com");
+			ps.setString(4, "");
+			ps.setString(5, "");
+			ps.setString(6, "");
+			ps.setInt(7, idOrganizador);
+			ps.executeUpdate();
+		}
 	}
 
 	public boolean editarDatosUsuario(Usuario u) {
@@ -688,8 +689,8 @@ public class AccesoBD {
 			// =========================
 			case "empresas":
 
-				sql = "SELECT empresa, COUNT(id_organizador) AS organizadores " +
-				          "FROM organizadores WHERE nombre != 'Usuario eliminado' GROUP BY empresa";
+				sql = "SELECT empresa, COUNT(id_organizador) AS organizadores "
+						+ "FROM organizadores WHERE nombre != 'Usuario eliminado' GROUP BY empresa";
 				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 
@@ -731,7 +732,7 @@ public class AccesoBD {
 	}
 
 	public boolean valorarVoluntario(int idInscripcion, int nota) {
-		// Validar que la nota sea lógica (de 1 a 5)
+		// Validar que la nota sea de 1 a 5
 		if (nota < 1 || nota > 5)
 			return false;
 
@@ -875,49 +876,48 @@ public class AccesoBD {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public List<Organizador> obtenerOrganizadoresPorEmpresa(String empresa) throws SQLException {
-	    String sql = "SELECT * FROM organizadores WHERE empresa = ? AND nombre != 'Usuario eliminado'";
-	    List<Organizador> lista = new ArrayList<>();
 
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setString(1, empresa);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            while (rs.next()) {
-	                lista.add(crearOrganizador(rs));
-	            }
-	        }
-	    }
-	    return lista;
+	public List<Organizador> obtenerOrganizadoresPorEmpresa(String empresa) throws SQLException {
+		String sql = "SELECT * FROM organizadores WHERE empresa = ? AND nombre != 'Usuario eliminado'";
+		List<Organizador> lista = new ArrayList<>();
+
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, empresa);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					lista.add(crearOrganizador(rs));
+				}
+			}
+		}
+		return lista;
 	}
 
 	public void borrarOrganizadoresPorEmpresa(String empresa) throws SQLException {
-	    String sqlIds = "SELECT id_organizador FROM organizadores WHERE empresa = ?";
-	    List<Integer> ids = new ArrayList<>();
-	    
-	    try (PreparedStatement ps = con.prepareStatement(sqlIds)) {
-	        ps.setString(1, empresa);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            while (rs.next()) {
-	                ids.add(rs.getInt("id_organizador"));
-	            }
-	        }
-	    }
-	    
-	    String sql = "UPDATE organizadores SET nombre=?, apellidos=?, email=?, pass=?, telefono=?, empresa=? WHERE id_organizador=?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        for (int id : ids) {
-	            ps.setString(1, "Usuario eliminado");
-	            ps.setString(2, "");
-	            ps.setString(3, "eliminado_" + id + "@eliminado.com");
-	            ps.setString(4, "");
-	            ps.setString(5, "");
-	            ps.setString(6, "");
-	            ps.setInt(7, id);
-	            ps.executeUpdate();
-	        }
-	    }
+		String sqlIds = "SELECT id_organizador FROM organizadores WHERE empresa = ?";
+		List<Integer> ids = new ArrayList<>();
+
+		try (PreparedStatement ps = con.prepareStatement(sqlIds)) {
+			ps.setString(1, empresa);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					ids.add(rs.getInt("id_organizador"));
+				}
+			}
+		}
+
+		String sql = "UPDATE organizadores SET nombre=?, apellidos=?, email=?, pass=?, telefono=?, empresa=? WHERE id_organizador=?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			for (int id : ids) {
+				ps.setString(1, "Usuario eliminado");
+				ps.setString(2, "");
+				ps.setString(3, "eliminado_" + id + "@eliminado.com");
+				ps.setString(4, "");
+				ps.setString(5, "");
+				ps.setString(6, "");
+				ps.setInt(7, id);
+				ps.executeUpdate();
+			}
+		}
 	}
 
 	public static String obtenerEstadoInscripcion(int idVoluntario, int idEvento) {

@@ -28,7 +28,7 @@ public class ProximosEventosController extends HttpServlet {
 		    session.setAttribute("lang", lang);
 		}
 
-		ArrayList<Evento> eventos = AccesoBD.obtenerEventos("","");
+		ArrayList<Evento> eventos = AccesoBD.obtenerEventos("","", false);
 
 		// 2. Cargar la vista
 		request.setAttribute("eventos", eventos);
@@ -62,7 +62,7 @@ public class ProximosEventosController extends HttpServlet {
 	        valor = ciudad;
 	    }
 
-	    ArrayList<Evento> eventos = AccesoBD.obtenerEventos(atributo, valor);
+	    ArrayList<Evento> eventos = AccesoBD.obtenerEventos(atributo, valor, false);
 
 	    request.setAttribute("eventos", eventos);
 	    request.setAttribute("view", "evento/ProximosEventos.jsp");

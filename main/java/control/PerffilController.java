@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -50,7 +51,28 @@ public class PerffilController extends HttpServlet {
 		case "gestionar-eventos":
 			perfilView = "GestionarEventos.jsp";
 			opcion = "gestionar";
-			request.setAttribute("eventos", AccesoBD.obtenerEventos("id_organizador", user.getId()));
+
+			List<Evento> eventos = AccesoBD.obtenerEventos("id_organizador", user.getId(), true);
+
+			List<Evento> enProceso = new java.util.ArrayList<>();
+			List<Evento> finalizado = new java.util.ArrayList<>();
+
+			for (Evento e : eventos) {
+
+				if (e.getEstado() == null) {
+					continue;
+				}
+
+				if ("Finalizado".equals(e.getEstado())) {
+					finalizado.add(e);
+				} else {
+					enProceso.add(e);
+				}
+			}
+
+			request.setAttribute("enProceso", enProceso);
+			request.setAttribute("finalizados", finalizado);
+
 			break;
 
 		case "gestionar-evento":
@@ -59,7 +81,7 @@ public class PerffilController extends HttpServlet {
 
 			String idEvento = request.getParameter("id");
 
-			List<Evento> eventosId = AccesoBD.obtenerEventos("id_evento", idEvento);
+			List<Evento> eventosId = AccesoBD.obtenerEventos("id_evento", idEvento, true);
 			Evento evento1 = eventosId.isEmpty() ? null : eventosId.get(0);
 
 			request.setAttribute("evento", evento1);
@@ -90,7 +112,7 @@ public class PerffilController extends HttpServlet {
 					case "Aceptado":
 						aceptados.add(i);
 						break;
-						
+
 					case "Asignado":
 						asignados.add(i);
 						break;
@@ -117,7 +139,36 @@ public class PerffilController extends HttpServlet {
 			}
 
 			break;
+		case "valorar-voluntarios":
+			perfilView = "ValorarVoluntarios.jsp";
+			opcion = "gestionar";
+			String idEvento1 = request.getParameter("id");
 
+			List<Evento> eventosId1 = AccesoBD.obtenerEventos("id_evento", idEvento1, true);
+			Evento eventoFinalizado = eventosId1.isEmpty() ? null : eventosId1.get(0);
+
+			List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEvento1));
+			List<Inscripcion> asignados = new ArrayList<>();
+			List<Inscripcion> valorados = new ArrayList<>();
+
+			for (Inscripcion i : voluntarios) {
+
+				String estado = i.getEstado();
+				Integer valoracion = i.getValoracion();
+
+				if ("Asignado".equals(estado)) {
+
+					if (valoracion != null) {
+						valorados.add(i);
+					} else {
+						asignados.add(i);
+					}
+				}
+			}
+			request.setAttribute("asignados", asignados);
+			request.setAttribute("valorados", valorados);
+			request.setAttribute("evento", eventoFinalizado);
+			break;
 		case "eliminar-cuenta":
 			perfilView = "EliminarCuenta.jsp";
 			opcion = "eliminar";

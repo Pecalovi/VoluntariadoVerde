@@ -45,7 +45,7 @@ public class EventoController extends HttpServlet {
 			return;
 		}
 
-		List<Evento> eventos = AccesoBD.obtenerEventos("id_evento", id);
+		List<Evento> eventos = AccesoBD.obtenerEventos("id_evento", id, false);
 
 		if (eventos.isEmpty()) {
 		    response.sendRedirect(contextPath + "/home");
