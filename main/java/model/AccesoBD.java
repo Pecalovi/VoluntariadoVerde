@@ -371,29 +371,6 @@ public class AccesoBD {
 		return 0;
 	}
 
-	public boolean insertarRecorrido(Puntos punto) {
-
-		String sql = "INSERT INTO eventos_zonas (id_evento, id_zona, punto_kilometrico) VALUES (?, ?, ?)";
-
-		try {
-
-			PreparedStatement ps = con.prepareStatement(sql);
-			ps.setInt(1, punto.getIdEvento());
-			ps.setInt(2, punto.getTipoPunto());
-			ps.setDouble(3, punto.getKmPunto());
-
-			ps.executeUpdate();
-
-			ps.close();
-			return true;
-
-		} catch (Exception m) {
-			m.printStackTrace();
-			return false;
-		}
-
-	}
-
 	public boolean inscribir(int idUser, int idEvento) {
 		String sql = "INSERT INTO inscripciones (id_voluntario, id_evento, estado) VALUES (?, ?, 'Pendiente') "
 				+ "ON DUPLICATE KEY UPDATE estado = 'Pendiente'";
@@ -903,8 +880,7 @@ public class AccesoBD {
 	public boolean eliminarEvento(int idEvento) throws SQLException {
 		// 1. Asignaciones ligadas a puntos de control o inscripciones de este evento
 		String sql1 = "DELETE FROM asignacion_tareas WHERE id_pc IN "
-				+ "(SELECT id_pc FROM puntos_control WHERE id_evento = ?) "
-				+ "OR id_inscripcion IN "
+				+ "(SELECT id_pc FROM puntos_control WHERE id_evento = ?) " + "OR id_inscripcion IN "
 				+ "(SELECT id_inscripcion FROM inscripciones WHERE id_evento = ?)";
 		PreparedStatement ps1 = con.prepareStatement(sql1);
 		ps1.setInt(1, idEvento);
@@ -934,6 +910,72 @@ public class AccesoBD {
 		ps4.close();
 
 		return rows > 0;
+	}
+
+	public static List<String> obtenerPuntosControl(String idEvento) {
+
+		List<String> puntosControl = new ArrayList<>();
+		String sql = "SELECT nombre FROM puntos_control WHERE id_evento = ?";
+
+		try {
+			AccesoBD bd = new AccesoBD();
+
+			PreparedStatement ps = bd.con.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(idEvento));
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				puntosControl.add(rs.getString("nombre"));
+			}
+
+			rs.close();
+			ps.close();
+			bd.disconnect();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return puntosControl;
+	}
+
+	public void asignarPuntoControl(int idInscripcion, String nombrePuntoControl) {
+		// Consulta para actualizar solo la primera fila encontrada que no tenga
+		// inscripción asignada
+		String sql = "UPDATE asignacion_tareas " + "SET id_inscripcion = ? " + "WHERE id_inscripcion IS NULL "
+				+ "AND id_pc = (SELECT id_pc FROM puntos_control WHERE nombre = ? LIMIT 1) " + "LIMIT 1";
+
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, idInscripcion);
+			ps.setString(2, nombrePuntoControl);
+
+			int filasAfectadas = ps.executeUpdate();
+
+			if (filasAfectadas > 0) {
+				System.out.println("Asignación realizada con éxito.");
+			} else {
+				System.out.println("No se encontraron huecos libres en este punto de control.");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean estaAsignado(int idInscripcion) {
+		String sql = "SELECT COUNT(*) FROM asignacion_tareas WHERE id_inscripcion = ?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idInscripcion);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1) > 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

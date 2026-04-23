@@ -135,6 +135,30 @@ public class ServPerfil extends HttpServlet {
 				return;
 			}
 
+			if ("asignar-voluntarios".equals(accion)) {
+
+				int idUsuario = Integer.parseInt(request.getParameter("idUsuario"));
+				int idInscripcion = Integer.parseInt(request.getParameter("idInscripcion"));
+				int idEvento = Integer.parseInt(request.getParameter("idEvento"));
+				String puntoControl = request.getParameter("puntoControl");
+
+				if (puntoControl != null && !puntoControl.isEmpty()) {
+
+					bd.cambiarEstadoInscripcion(idUsuario, idEvento, "Asignado");
+					bd.asignarPuntoControl(idInscripcion, puntoControl);
+					
+					session.setAttribute("message", "Voluntario asignado correctamente.");
+					session.setAttribute("messageType", "success");
+
+				} else {
+					session.setAttribute("message", "Debes seleccionar un punto de control.");
+					session.setAttribute("messageType", "danger");
+				}
+
+				response.sendRedirect(request.getContextPath() + "/perfil?opcion=gestionar-evento&id=" + idEvento);
+				return;
+			}
+
 			if ("editar-cuenta".equals(accion) && user != null) {
 
 				user.setNombre(Usuario.capitalizarTexto(request.getParameter("fname")));

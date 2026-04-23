@@ -63,14 +63,14 @@ public class PerffilController extends HttpServlet {
 			Evento evento1 = eventosId.isEmpty() ? null : eventosId.get(0);
 
 			request.setAttribute("evento", evento1);
-			String idEventoAccion = request.getParameter("id");
 
-			if (idEventoAccion != null) {
+			if (idEvento != null) {
 
-				List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEventoAccion));
+				List<Inscripcion> voluntarios = AccesoBD.obtenerVoluntarios(Integer.parseInt(idEvento));
 
 				List<Inscripcion> pendientes = new java.util.ArrayList<>();
 				List<Inscripcion> aceptados = new java.util.ArrayList<>();
+				List<Inscripcion> asignados = new java.util.ArrayList<>();
 				List<Inscripcion> espera = new java.util.ArrayList<>();
 				List<Inscripcion> inactivos = new java.util.ArrayList<>();
 
@@ -78,22 +78,40 @@ public class PerffilController extends HttpServlet {
 
 					String estado = i.getEstado();
 
-					if ("Pendiente".equals(estado)) {
+					if (estado == null)
+						continue;
+
+					switch (estado) {
+
+					case "Pendiente":
 						pendientes.add(i);
+						break;
 
-					} else if ("Aceptado".equals(estado)) {
+					case "Aceptado":
 						aceptados.add(i);
+						break;
+						
+					case "Asignado":
+						asignados.add(i);
+						break;
 
-					} else if ("Lista de espera".equals(estado)) {
+					case "Lista de espera":
 						espera.add(i);
+						break;
 
-					} else if ("Rechazado".equals(estado) || "Cancelado".equals(estado)) {
+					case "Rechazado":
+					case "Cancelado":
 						inactivos.add(i);
+						break;
 					}
 				}
 
+				List<String> puntosControl = AccesoBD.obtenerPuntosControl(idEvento);
+
+				request.setAttribute("puntosControl", puntosControl);
 				request.setAttribute("pendientes", pendientes);
 				request.setAttribute("aceptados", aceptados);
+				request.setAttribute("asignados", asignados);
 				request.setAttribute("espera", espera);
 				request.setAttribute("inactivos", inactivos);
 			}

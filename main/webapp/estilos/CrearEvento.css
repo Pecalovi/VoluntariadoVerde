@@ -118,7 +118,7 @@ form textarea {
 	height: 300px;
 }
 
-fieldset{
+fieldset {
 	border: none;
 }
 
@@ -205,6 +205,71 @@ fieldset{
 	transition: background-color 0.3s;
 }
 
+.campos-control {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.campos-control label {
+	font-size: 0.85rem;
+	color: #555;
+	font-weight: 600;
+}
+
+.campos-control input[type="text"], .campos-control textarea {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+.campos-control textarea {
+	resize: vertical;
+	min-height: 70px;
+}
+
+.tareas-control-lista {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+.tarea-check-label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	background: #f4f8fc;
+	border: 1px solid #c0d9ee;
+	border-radius: 20px;
+	padding: 5px 12px;
+	font-size: 0.85rem;
+	cursor: pointer;
+	transition: background 0.2s, border-color 0.2s;
+}
+
+.tarea-check-label:has(input:checked) {
+	background: #d0eaff;
+	border-color: #0070c0;
+	font-weight: 600;
+}
+
+.tarea-check-label input {
+	margin: 0;
+	cursor: pointer;
+}
+
+.sin-tareas {
+	color: #aaa;
+	font-size: 0.85rem;
+	font-style: italic;
+}
+
 @media ( max-width : 768px) {
 	.indicador-pasos {
 		margin-block: 25px;
@@ -212,7 +277,7 @@ fieldset{
 	.enuncidado {
 		margin-bottom: 30px;
 	}
-	main{
-	padding-bottom:50px;
+	main {
+		padding-bottom: 50px;
 	}
 }

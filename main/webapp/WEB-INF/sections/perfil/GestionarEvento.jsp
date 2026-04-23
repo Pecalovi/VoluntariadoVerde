@@ -84,7 +84,7 @@ String accion = (String) request.getAttribute("accion");
 						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
 					</p>
 					<p>
-						Media: <b>${v.voluntario.media}</b>
+						Valoración media: <b>${v.voluntario.media}</b>
 					</p>
 				</div>
 			</div>
@@ -95,13 +95,18 @@ String accion = (String) request.getAttribute("accion");
 		<h3>Aceptados (${aceptados.size()})</h3>
 
 		<c:forEach var="v" items="${aceptados}">
-			<div class="admin-tarjeta voluntarios">
+			<div class="admin-tarjeta voluntarios ">
 
 				<div class="info">
 					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+					<div style="display: flex; gap: 10px;">
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="mostrarPerfil(this)">Ver información</button>
 
-					<button type="button" class="btn btn-outline-secondary"
-						onclick="mostrarPerfil(this)">Ver información</button>
+						<button type="button" class="btn btn-primary"
+							onclick="mostrarAsignacion(this)">Asignar punto de
+							control</button>
+					</div>
 				</div>
 
 				<div class="info-voluntario" style="display: none;">
@@ -121,11 +126,65 @@ String accion = (String) request.getAttribute("accion");
 						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
 					</p>
 					<p>
-						Media: <b>${v.voluntario.media}</b>
+						Valoración Media: <b>${v.voluntario.media}</b>
 					</p>
 				</div>
 
+				<div class="asignar-voluntario" style="display: none;">
+					<form action="${pageContext.request.contextPath}/ServPerfil"
+						method="post">
+
+						<input type="hidden" name="accion" value="asignar-voluntarios" />
+						<input type="hidden" name="idInscripcion" value="${v.idInscripcion}" />
+						<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
+						<input type="hidden" name="accionVoluntario" value="asignar" /> <input
+							type="hidden" name="idEvento" value="${param.id}" /> <select
+							name="puntoControl">
+							<option disabled selected>Selecciona un punto de control</option>
+							<c:forEach var="p" items="${puntosControl}">
+								<option value="${p}">${p}</option>
+							</c:forEach>
+						</select>
+
+						<button type="submit" class="btn btn-success">Asignar</button>
+					</form>
+				</div>
 			</div>
+
+		</c:forEach>
+		<c:forEach var="v" items="${asignados}">
+			<div class="admin-tarjeta voluntarios asignados">
+
+				<div class="info">
+					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+					<div style="display: flex; gap: 10px;">
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="mostrarPerfil(this)">Ver información</button>
+					</div>
+				</div>
+
+				<div class="info-voluntario" style="display: none;">
+					<p>
+						El usuario se registró el <b>${v.voluntario.fecha_registro}</b>
+					</p>
+
+					<p>
+						¿Tiene vehículo? <b> <c:choose>
+								<c:when test="${v.voluntario.vehiculo}">Sí</c:when>
+								<c:otherwise>No</c:otherwise>
+							</c:choose>
+						</b>
+					</p>
+
+					<p>
+						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
+					</p>
+					<p>
+						Valoración Media: <b>${v.voluntario.media}</b>
+					</p>
+				</div>
+			</div>
+
 		</c:forEach>
 	</div>
 
@@ -141,9 +200,10 @@ String accion = (String) request.getAttribute("accion");
 					<form action="${pageContext.request.contextPath}/ServPerfil"
 						method="post">
 						<input type="hidden" name="accion" value="gestionar-voluntarios" />
-						<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
-						<input type="hidden" name="accionVoluntario" value="aceptar" /> <input
-							type="hidden" name="idEvento" value="${param.id}" />
+						<input type="hidden" name="idInscripcion"
+							value="${v.idInscripcion}" /> <input type="hidden"
+							name="accionVoluntario" value="aceptar" /> <input type="hidden"
+							name="idEvento" value="${param.id}" />
 						<button type="submit" class="btn btn-success">Aceptar</button>
 					</form>
 
@@ -208,6 +268,17 @@ String accion = (String) request.getAttribute("accion");
 			}
 
 			form.submit();
+		}
+	}
+
+	function mostrarAsignacion(btn) {
+		const tarjeta = btn.closest(".admin-tarjeta");
+		const panel = tarjeta.querySelector(".asignar-voluntario");
+
+		if (panel.style.display === "none" || panel.style.display === "") {
+			panel.style.display = "block";
+		} else {
+			panel.style.display = "none";
 		}
 	}
 </script>

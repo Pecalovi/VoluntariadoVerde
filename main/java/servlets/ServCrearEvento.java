@@ -66,7 +66,7 @@ public class ServCrearEvento extends HttpServlet {
 				response.sendRedirect(contextPath + "/crearevento?error=1");
 			}
 
-		// FASE 2: Crear tareas nuevas y avanzar al paso 3
+			// FASE 2: Crear tareas nuevas y avanzar al paso 3
 
 		} else if (fase == 2) {
 			try {
@@ -86,7 +86,7 @@ public class ServCrearEvento extends HttpServlet {
 				response.sendRedirect(contextPath + "/recorridoevento");
 			}
 
-		// FASE 3: Guardar recorrido y puntos de control
+			// FASE 3: Guardar recorrido y puntos de control
 
 		} else if (fase == 3) {
 			Integer idEvento = (Integer) session.getAttribute("idEvento");
@@ -100,30 +100,30 @@ public class ServCrearEvento extends HttpServlet {
 				AccesoBD bd = new AccesoBD();
 
 				// Puntos de control
-				String[] tipos    = request.getParameterValues("puntoTipo");
-				String[] kms      = request.getParameterValues("puntoKm");
-				String[] nombres  = request.getParameterValues("puntoNombre");
-				String[] descs    = request.getParameterValues("puntoDesc");
-				String[] tareas   = request.getParameterValues("puntoTareas");
+				String[] nombres = request.getParameterValues("puntoNombre");
+				String[] descs = request.getParameterValues("puntoDesc");
+				String[] tareas = request.getParameterValues("puntoTareas");
 
-				if (tipos != null) {
-					for (int i = 0; i < tipos.length; i++) {
-						int tipo = Integer.parseInt(tipos[i]);
+				if (nombres != null) {
 
-						if (tipo == 2) {
-							if (kms != null && kms[i] != null && !kms[i].isEmpty()) {
-								bd.insertarRecorrido(new Puntos(idEvento, 2, Double.parseDouble(kms[i])));
-							}
-						} else if (tipo == 3) {
-							String nombre  = capitalizarPrimera((nombres != null && nombres[i] != null) ? nombres[i].trim() : "");
-							String desc    = (descs   != null && descs[i]   != null) ? descs[i].trim()   : "";
-							int idPc = bd.insertarPuntoControl(nombre, desc, idEvento);
-							if (idPc > 0 && tareas != null && tareas[i] != null && !tareas[i].isEmpty()) {
-								for (String idTareaStr : tareas[i].split(",")) {
-									String s = idTareaStr.trim();
-									if (!s.isEmpty()) {
-										bd.asignarTareaAPuntoControl(idPc, Integer.parseInt(s));
-									}
+					for (int i = 0; i < nombres.length; i++) {
+
+						String nombre = nombres[i] != null ? nombres[i].trim() : "";
+						String desc = (descs != null && i < descs.length && descs[i] != null) ? descs[i].trim() : "";
+
+						String tareaStr = (tareas != null && i < tareas.length && tareas[i] != null) ? tareas[i].trim()
+								: "";
+
+						// TODOS son puntos de control (tipo 3)
+						String nombreFinal = capitalizarPrimera(nombre);
+
+						int idPc = bd.insertarPuntoControl(nombreFinal, desc, idEvento);
+
+						if (idPc > 0 && !tareaStr.isEmpty()) {
+							for (String idTarea : tareaStr.split(",")) {
+								idTarea = idTarea.trim();
+								if (!idTarea.isEmpty()) {
+									bd.asignarTareaAPuntoControl(idPc, Integer.parseInt(idTarea));
 								}
 							}
 						}
@@ -149,7 +149,8 @@ public class ServCrearEvento extends HttpServlet {
 	}
 
 	private static String capitalizarPrimera(String s) {
-		if (s == null || s.isEmpty()) return s;
+		if (s == null || s.isEmpty())
+			return s;
 		return Character.toUpperCase(s.charAt(0)) + s.substring(1);
 	}
 }

@@ -350,7 +350,7 @@ section form input[readonly]:focus {
 }
 
 .textarea-admin:focus {
-	border-color: #27ae60 !important; /* El verde de tu aplicación */
+	border-color: #27ae60 !important;
 	box-shadow: 0 0 5px rgba(39, 174, 96, 0.3) !important;
 }
 
@@ -358,6 +358,11 @@ section form input[readonly]:focus {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+}
+
+.asignados {
+	border: 1px solid #2e7d32;
+	background-color: #e8f5e9;
 }
 
 .info {
@@ -368,7 +373,7 @@ section form input[readonly]:focus {
 	align-items: center;
 }
 
-.info-voluntario {
+.info-voluntario, .asignar-voluntario {
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
@@ -423,6 +428,19 @@ section form input[readonly]:focus {
 	align-items: center;
 	align-content: stretch;
 	gap: 8px;
+}
+
+.tarjeta-asignada {
+	border-left: 6px solid #28a745 !important; /* Borde verde lateral */
+	background-color: #f4fdf6; /* Fondo ligeramente verdoso */
+	opacity: 0.9;
+}
+
+.asignar-voluntario select {
+	padding: 5px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	margin-right: 5px;
 }
 
 @media ( max-width : 768px) {
