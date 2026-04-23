@@ -308,11 +308,6 @@ em {
 	.texto-principal {
 		border-left: none;
 	}
-	.texto-principal p {
-		font-size: 1.1rem;
-		width: 266px;
-		margin-left: -22px;
-	}
 	
 	ul{
 	list-style-type: none;

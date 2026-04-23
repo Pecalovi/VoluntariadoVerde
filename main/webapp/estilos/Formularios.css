@@ -62,12 +62,6 @@ input {
 	margin-left: -14px;
 }
 
-span {
-	width: 206px;
-	margin-left: -42px;
-	margin-top: 6px;
-}
-
 .cajas {
 	padding: 100px;
 	text-align: center;
@@ -185,6 +179,9 @@ textarea {
 	#vehiculo {
 		display: block;
 	}
+	#diversidad {
+		margin: 0p	x;
+	}
 	.submit {
 		font-size: 1rem;
 	}
@@ -192,6 +189,6 @@ textarea {
 		background-color: white;
 	}
 	form {
-		padding-bottom: 20px;
+		padding: 20px;
 	}
 }

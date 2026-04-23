@@ -48,8 +48,8 @@ public class EventoController extends HttpServlet {
 		List<Evento> eventos = AccesoBD.obtenerEventos("id_evento", id, false);
 
 		if (eventos.isEmpty()) {
-		    response.sendRedirect(contextPath + "/home");
-		    return;
+			response.sendRedirect(contextPath + "/home");
+			return;
 		}
 
 		Evento e = eventos.get(0);
@@ -61,43 +61,38 @@ public class EventoController extends HttpServlet {
 		String estadoInscripcion = null;
 
 		if (user != null) {
-		    int idUsuario = user.getId();
-		    try {
-		        AccesoBD bd = new AccesoBD();
-		        inscrito = bd.usuarioInscrito(idUsuario, id);
-		        estadoInscripcion = bd.obtenerEstadoInscripcion2(idUsuario, id);
-		    } catch (ClassNotFoundException | SQLException e1) {
-		        e1.printStackTrace();
-		    }
+			int idUsuario = user.getId();
+			try {
+				AccesoBD bd = new AccesoBD();
+				inscrito = bd.usuarioInscrito(idUsuario, id);
+				estadoInscripcion = bd.obtenerEstadoInscripcion2(idUsuario, id);
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 		request.setAttribute("inscrito", inscrito);
 		request.setAttribute("estadoInscripcion", estadoInscripcion);
 		request.setAttribute("inscritos", AccesoBD.contarInscritos(id));
 		request.setAttribute("evento", e);
-		
+
 		String lang = (String) session.getAttribute("lang");
-		
+
 		if (lang == null) {
-		    lang = "es";
-		    session.setAttribute("lang", lang);
+			lang = "es";
+			session.setAttribute("lang", lang);
 		}
-		
-		//2. Cargar la vista
-		if (lang.equals("es")) {
-			request.setAttribute("view", "evento/Evento.jsp");
-		} else {
-			request.setAttribute("view", "EN/Evento.jsp");
-		}
-		
+
+		// 2. Cargar la vista
+		request.setAttribute("view", "evento/Evento.jsp");
 		request.setAttribute("estilo", "estilos/Evento.css");
-		;
 
 		// Encadenar la petición y cargar otro recurso
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
 
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

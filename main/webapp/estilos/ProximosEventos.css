@@ -195,9 +195,12 @@
 }
 
 @media ( max-width : 768px) {
-	
-	.buscar, #panel-filtros{
-	width: 100%;
+	.informacion-evento h2 {
+		font-size: 1.3rem;
+
+	}
+	.buscar, #panel-filtros {
+		width: 100%;
 	}
 	.eventos {
 		flex-direction: column;
@@ -223,8 +226,7 @@
 		margin-bottom: 0;
 		flex-shrink: 0;
 	}
-	
-	.informacion-evento p ,.extra_info {
+	.informacion-evento p, .extra_info {
 		display: none;
 	}
 }

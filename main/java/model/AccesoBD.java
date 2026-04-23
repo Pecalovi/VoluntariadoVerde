@@ -656,7 +656,7 @@ public class AccesoBD {
 		return numContador;
 	}
 
-	// Método para listar voluntarios, organizadores y eventos según variable
+	// Método para listar voluntarios y empresas según variable
 	public ArrayList<Object> PanelAdmin(String tabla) {
 
 		ArrayList<Object> lista = new ArrayList<>();
@@ -703,20 +703,6 @@ public class AccesoBD {
 				}
 				break;
 
-			// =========================
-			// EVENTOS
-			// =========================
-			case "eventos":
-
-				sql = "SELECT * FROM eventos";
-				ps = con.prepareStatement(sql);
-				rs = ps.executeQuery();
-
-				while (rs.next()) {
-					Evento e = crearEvento(rs);
-					lista.add(e);
-				}
-				break;
 			}
 
 			if (rs != null)
@@ -1057,40 +1043,42 @@ public class AccesoBD {
 		}
 		return false;
 	}
-	
+
 	public boolean emailExiste(String email) throws SQLException {
-	    String emailLimpio = email.toLowerCase().trim();
-	    
-	    String sqlVol = "SELECT 1 FROM voluntarios WHERE LOWER(TRIM(email)) = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sqlVol)) {
-	        ps.setString(1, emailLimpio);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) return true;
-	        }
-	    }
-	    
-	    String sqlOrg = "SELECT 1 FROM organizadores WHERE LOWER(TRIM(email)) = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sqlOrg)) {
-	        ps.setString(1, emailLimpio);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) return true;
-	        }
-	    }
-	    
-	    return false;
+		String emailLimpio = email.toLowerCase().trim();
+
+		String sqlVol = "SELECT 1 FROM voluntarios WHERE LOWER(TRIM(email)) = ?";
+		try (PreparedStatement ps = con.prepareStatement(sqlVol)) {
+			ps.setString(1, emailLimpio);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return true;
+			}
+		}
+
+		String sqlOrg = "SELECT 1 FROM organizadores WHERE LOWER(TRIM(email)) = ?";
+		try (PreparedStatement ps = con.prepareStatement(sqlOrg)) {
+			ps.setString(1, emailLimpio);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return true;
+			}
+		}
+
+		return false;
 	}
-	
-	
+
 	public String obtenerEstadoInscripcion2(int idVoluntario, int idEvento) throws SQLException {
-	    String sql = "SELECT estado FROM inscripciones WHERE id_voluntario = ? AND id_evento = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, idVoluntario);
-	        ps.setInt(2, idEvento);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) return rs.getString("estado");
-	        }
-	    }
-	    return null;
+		String sql = "SELECT estado FROM inscripciones WHERE id_voluntario = ? AND id_evento = ?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, idVoluntario);
+			ps.setInt(2, idEvento);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return rs.getString("estado");
+			}
+		}
+		return null;
 	}
 
 }

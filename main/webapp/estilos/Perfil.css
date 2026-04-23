@@ -125,7 +125,7 @@ h1 {
 
 img {
 	height: 30px;
-	width: auto;
+	width: 30px;
 }
 
 section {
@@ -431,8 +431,8 @@ section form input[readonly]:focus {
 }
 
 .tarjeta-asignada {
-	border-left: 6px solid #28a745 !important; /* Borde verde lateral */
-	background-color: #f4fdf6; /* Fondo ligeramente verdoso */
+	border-left: 6px solid #28a745 !important;
+	background-color: #f4fdf6;
 	opacity: 0.9;
 }
 
@@ -443,6 +443,121 @@ section form input[readonly]:focus {
 	margin-right: 5px;
 }
 
+/* =========================
+   TABLAS MODAL
+========================= */
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th {
+	background: #f2f2f2;
+	padding: 10px;
+	text-align: left;
+}
+
+td {
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+td.email {
+	color: #2980b9;
+}
+
+/* =========================
+   MODAL GENERAL
+========================= */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+.modal-contenido {
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+	overflow: hidden;
+	font-family: Arial, sans-serif;
+}
+
+/* tamaños distintos para cada modal */
+#modalEmpresa .modal-contenido {
+	width: 520px;
+	max-width: 95%;
+	overflow-x: auto;
+}
+
+#miModal .modal-contenido {
+	width: 450px;
+	max-width: 95%;
+}
+
+/* =========================
+   HEADER MODAL
+========================= */
+.modal-contenido>div:first-child {
+	width: 100%;
+	background: var(--verde-principal);
+	padding: 15px;
+}
+
+.modal-contenido h3 {
+	margin: 0;
+	font-size: 18px;
+	color: white;
+}
+
+/* =========================
+   FOOTER MODAL
+========================= */
+.modal-contenido>div:last-child {
+	padding: 15px;
+	text-align: center;
+	background: #f9f9f9;
+}
+
+.modal-contenido button {
+	background: #2c3e50;
+	color: white;
+	border: none;
+	padding: 10px 25px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.modal-contenido button:hover {
+	background: #1f2d3a;
+}
+
+/* =========================
+   ANIMACIONES SUAVES
+========================= */
+.modal-contenido {
+	animation: fadeIn 0.2s ease-in-out;
+}
+
+@
+keyframes fadeIn {from { opacity:0;
+	transform: scale(0.97);
+}
+
+to {
+	opacity: 1;
+	transform: scale(1);
+}
+
+}
 @media ( max-width : 768px) {
 	.tarjeta-perfil {
 		margin-inline: 0px;
@@ -461,7 +576,7 @@ section form input[readonly]:focus {
 	.menu-perfil {
 		height: 120px;
 		flex-direction: row;
-		width: 0px;
+		width: 100%;
 	}
 	.menu-perfil img {
 		height: 30px;
@@ -477,6 +592,7 @@ section form input[readonly]:focus {
 	.menu-perfil a.activo {
 		border-bottom: 3px solid var(--azul);
 		border-right: none;
+		width: auto;
 	}
 	.menu-perfil a.eliminar.activo {
 		border-bottom: 3px solid rgba(246, 97, 81, 0.8);
@@ -485,6 +601,9 @@ section form input[readonly]:focus {
 	.menu-perfil a.eliminar:hover {
 		border-bottom: 3px solid rgba(246, 97, 81, 0.7);
 		border-right: none;
+	}
+	.section-evento {
+		padding: 0px;
 	}
 	.crearevento {
 		position: static;
@@ -501,7 +620,22 @@ section form input[readonly]:focus {
 	.form-col label {
 		margin-bottom: 3px;
 	}
-	section form {
-		gap: 0px;
+	.info-sostenibilidad-wrapper {
+		display: none;
+	}
+	.info {
+		flex-direction: column;
+		gap: 10px;
+	}
+	.info-voluntario {
+		flex-direction: column;
+		gap: 10px;
+	}
+	.admin-tarjeta {
+		flex-direction: column;
+	}
+	.nombre-evento {
+		flex-direction: column;
+		gap: 20px;
 	}
 }

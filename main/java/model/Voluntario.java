@@ -60,13 +60,16 @@ public class Voluntario extends Usuario {
 		this.media = media;
 	}
 
-	public String getDiscapacidadTexto() {
+	public String getDiscapacidadTexto(String lang) {
+
+		boolean es = lang == null || lang.equals("es");
+
 		return switch (discapacidad) {
-		case 0 -> "Ninguna";
-		case 1 -> "Leve";
-		case 2 -> "Moderada";
-		case 3 -> "Severa";
-		default -> "No especificada";
+		case 0 -> es ? "Ninguna" : "None";
+		case 1 -> es ? "Leve" : "Mild";
+		case 2 -> es ? "Moderada" : "Moderate";
+		case 3 -> es ? "Severa" : "Severe";
+		default -> es ? "No especificada" : "Not specified";
 		};
 	}
 }

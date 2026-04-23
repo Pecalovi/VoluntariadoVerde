@@ -14,30 +14,30 @@ import model.Organizador;
 import model.Tarea;
 import model.Usuario;
 
-
 @WebServlet("/crearevento")
 public class CrearEventoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-	    if (session == null || session.getAttribute("usuario") == null) {
-	        response.sendRedirect(request.getContextPath() + "/login");
-	        return;
-	    }
+		if (session == null || session.getAttribute("usuario") == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
 
-	    Usuario usuario = (Usuario) session.getAttribute("usuario");
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-	    if (!(usuario instanceof Organizador)) {
-	    	response.sendRedirect(request.getContextPath() + "/login");
-	        return;
-	    }
+		if (!(usuario instanceof Organizador)) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
 
 		String lang = (String) session.getAttribute("lang");
 
 		if (lang == null) {
-		    lang = "es";
-		    session.setAttribute("lang", lang);
+			lang = "es";
+			session.setAttribute("lang", lang);
 		}
 
 		if ("2".equals(request.getParameter("paso")) && session.getAttribute("idEvento") != null) {
@@ -48,18 +48,15 @@ public class CrearEventoController extends HttpServlet {
 			session.removeAttribute("idEvento");
 		}
 
-		if (lang.equals("es")) {
-			request.setAttribute("view", "evento/CrearEvento.jsp");
-		} else {
-			request.setAttribute("view", "EN/CrearEvento.jsp");
-		}
-	    request.setAttribute("estilo", "estilos/CrearEvento.css");
+		request.setAttribute("view", "evento/CrearEvento.jsp");
+		request.setAttribute("estilo", "estilos/CrearEvento.css");
 
-	    request.getRequestDispatcher("/index.jsp").forward(request, response);
-    }
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 }

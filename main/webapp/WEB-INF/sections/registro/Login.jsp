@@ -17,7 +17,7 @@ if (lang == null)
 	<form action="<%=request.getContextPath()%>/ServLogin" method="POST">
 
 		<input type="text" id="fuser" name="fuser"
-			placeholder="<%=lang.equals("es") ? "Email" : "Email"%>"> <input
+			placeholder="<%=lang.equals("es") ? "Correo electronico" : "Email"%>"> <input
 			type="password" id="fpwd" name="fcontra"
 			placeholder="<%=lang.equals("es") ? "Contraseña" : "Password"%>">
 		</a> <input type="submit" class="botones"

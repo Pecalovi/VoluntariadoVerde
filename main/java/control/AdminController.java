@@ -54,10 +54,6 @@ public class AdminController extends HttpServlet {
                     request.setAttribute("tablas", bd.PanelAdmin("empresas"));
                     break;
 
-                case "eventos":
-                    request.setAttribute("tablas", bd.PanelAdmin("eventos"));
-                    break;
-
                 default:
                 	request.setAttribute("tablas", bd.PanelAdmin("voluntarios"));
                     break;

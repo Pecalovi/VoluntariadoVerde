@@ -18,43 +18,42 @@ import model.Usuario;
 public class CrearEventoRecorridoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-	    if (session == null || session.getAttribute("usuario") == null) {
-	        response.sendRedirect(request.getContextPath() + "/login");
-	        return;
-	    }
+		if (session == null || session.getAttribute("usuario") == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
 
-	    Usuario usuario = (Usuario) session.getAttribute("usuario");
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
 
-	    // Verifica que sea un Organizador (id_rol = 2)
-	    if (!(usuario instanceof Organizador)) {
-	    	response.sendRedirect(request.getContextPath() + "/login");
-	        return;
-	    }
-	    
+		if (!(usuario instanceof Organizador)) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
+
 		String lang = (String) session.getAttribute("lang");
-		
+
 		if (lang == null) {
-		    lang = "es";
-		    session.setAttribute("lang", lang);
+			lang = "es";
+			session.setAttribute("lang", lang);
 		}
-		
-		//2. Cargar la vista
-		if (lang.equals("es")) {
-			request.setAttribute("view", "evento/RecorridoEvento.jsp");
-		} else {
-			request.setAttribute("view", "EN/RecorridoEvento.jsp");
-		}
-	    request.setAttribute("estilo", "estilos/CrearEvento.css");
 
-	    List<Tarea> tareas = AccesoBD.obtenerTareas();
-	    request.setAttribute("tareas", tareas);
+		// 2. Cargar la vista
 
-	    request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.setAttribute("view", "evento/RecorridoEvento.jsp");
+
+		request.setAttribute("estilo", "estilos/CrearEvento.css");
+
+		List<Tarea> tareas = AccesoBD.obtenerTareas();
+		request.setAttribute("tareas", tareas);
+
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

@@ -7,13 +7,16 @@ Usuario user = (Usuario) session.getAttribute("usuario");
 String lang = (String) session.getAttribute("lang");
 if (lang == null)
 	lang = "es";
+boolean es = lang.equals("es");
 
 String accion = (String) request.getAttribute("accion");
 %>
+
 <div class="nombre-evento">
 	<div>
 		<form id="formEvento"
 			action="${pageContext.request.contextPath}/ServPerfil" method="post">
+
 			<input type="hidden" name="accion" value="editar-evento" /> <input
 				type="hidden" name="id" value="${evento.idEvento}"> <input
 				type="text" id="evento_nombre_editar" name="nombre"
@@ -22,23 +25,33 @@ String accion = (String) request.getAttribute("accion");
 			<button type="button" id="btnEditarEvento"
 				style="background: none; border: none; cursor: pointer;"
 				onclick="toggleEdicionEvento()">
-				<img src="src/editar_nombre.png" alt="Editar nombre">
+				<img src="src/editar_nombre.png"
+					alt="<%=es ? "Editar nombre" : "Edit name"%>">
 			</button>
+
 		</form>
 	</div>
+
 	<div>
 		<a
-			href="${pageContext.request.contextPath}/evento?id=${evento.idEvento}"><img
-			src="src/ojo.png"></a>
-		<a href="#" data-bs-toggle="modal" data-bs-target="#modalEliminarEvento"><img src="src/basura.png"></a>
+			href="${pageContext.request.contextPath}/evento?id=${evento.idEvento}">
+			<img src="src/ojo.png" alt="<%=es ? "Ver" : "View"%>">
+		</a> <a href="#" data-bs-toggle="modal"
+			data-bs-target="#modalEliminarEvento"> <img src="src/basura.png"
+			alt="<%=es ? "Eliminar" : "Delete"%>">
+		</a>
 	</div>
 </div>
 
 <section class="section-evento">
-	<h2>Solicitudes de voluntarios</h2>
 
+	<h2><%=es ? "Solicitudes de voluntarios" : "Volunteer applications"%></h2>
+
+	<!-- PENDIENTES -->
 	<div>
-		<h3>Pendientes (${pendientes.size()})</h3>
+		<h3><%=es ? "Pendientes" : "Pending"%>
+			(${pendientes.size()})
+		</h3>
 
 		<c:forEach var="v" items="${pendientes}">
 			<div class="admin-tarjeta voluntarios">
@@ -47,8 +60,10 @@ String accion = (String) request.getAttribute("accion");
 
 					<div style="display: flex; gap: 10px;">
 
-						<button type="submit" class="btn btn-outline-secondary"
-							onclick="mostrarPerfil(this)">Ver información</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="mostrarPerfil(this)">
+							<%=es ? "Ver información" : "View info"%>
+						</button>
 
 						<form action="${pageContext.request.contextPath}/ServPerfil"
 							method="post">
@@ -56,7 +71,10 @@ String accion = (String) request.getAttribute("accion");
 							<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
 							<input type="hidden" name="accionVoluntario" value="aceptar" />
 							<input type="hidden" name="idEvento" value="${param.id}" />
-							<button type="submit" class="btn btn-success">Aceptar</button>
+
+							<button type="submit" class="btn btn-success">
+								<%=es ? "Aceptar" : "Accept"%>
+							</button>
 						</form>
 
 						<form action="${pageContext.request.contextPath}/ServPerfil"
@@ -65,68 +83,92 @@ String accion = (String) request.getAttribute("accion");
 							<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
 							<input type="hidden" name="accionVoluntario" value="rechazar" />
 							<input type="hidden" name="idEvento" value="${param.id}" />
-							<button type="submit" class="btn btn-danger">Rechazar</button>
+
+							<button type="submit" class="btn btn-danger">
+								<%=es ? "Rechazar" : "Reject"%>
+							</button>
 						</form>
 
 					</div>
 				</div>
-				<div class="info-voluntario" style="display: none;">
-					<p>
-						El usuario se registro el <b>${v.voluntario.fecha_registro}</b>
-					</p>
-					<p>
-						¿Tiene vehículo? <b> <c:choose>
-								<c:when test="${v.voluntario.vehiculo}">Si</c:when>
-								<c:otherwise>No</c:otherwise>
-							</c:choose></b>
-					</p>
-					<p>
-						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
-					</p>
-					<p>
-						Valoración media: <b>${v.voluntario.media}</b>
-					</p>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
-
-	<div>
-		<h3>Aceptados (${aceptados.size()})</h3>
-
-		<c:forEach var="v" items="${aceptados}">
-			<div class="admin-tarjeta voluntarios ">
-
-				<div class="info">
-					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
-					<div style="display: flex; gap: 10px;">
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="mostrarPerfil(this)">Ver información</button>
-
-						<button type="button" class="btn btn-primary"
-							onclick="mostrarAsignacion(this)">Asignar punto de
-							control</button>
-					</div>
-				</div>
 
 				<div class="info-voluntario" style="display: none;">
 					<p>
-						El usuario se registró el <b>${v.voluntario.fecha_registro}</b>
+						<%=es ? "Registrado el" : "Registered on"%>
+						<b>${v.voluntario.fecha_registro}</b>
 					</p>
 
 					<p>
-						¿Tiene vehículo? <b> <c:choose>
-								<c:when test="${v.voluntario.vehiculo}">Sí</c:when>
+						<%=es ? "¿Tiene vehículo?" : "Has vehicle?"%>
+						<b> <c:choose>
+								<c:when test="${v.voluntario.vehiculo}">
+									<%=es ? "Sí" : "Yes"%>
+								</c:when>
 								<c:otherwise>No</c:otherwise>
 							</c:choose>
 						</b>
 					</p>
 
 					<p>
-						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
+						<%=es ? "Discapacidad" : "Disability"%>: <b>${v.voluntario.getDiscapacidadTexto(lang)}</b>
 					</p>
+
 					<p>
-						Valoración Media: <b>${v.voluntario.media}</b>
+						<%=es ? "Valoración media" : "Average rating"%>: <b>${v.voluntario.media}</b>
+					</p>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+
+	<!-- ACEPTADOS -->
+	<div>
+		<h3><%=es ? "Aceptados" : "Accepted"%>
+			(${aceptados.size()})
+		</h3>
+
+		<c:forEach var="v" items="${aceptados}">
+			<div class="admin-tarjeta voluntarios">
+
+				<div class="info">
+					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+
+					<div style="display: flex; gap: 10px;">
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="mostrarPerfil(this)">
+							<%=es ? "Ver información" : "View info"%>
+						</button>
+
+						<button type="button" class="btn btn-primary"
+							onclick="mostrarAsignacion(this)">
+							<%=es ? "Asignar punto de control" : "Assign checkpoint"%>
+						</button>
+					</div>
+				</div>
+
+				<div class="info-voluntario" style="display: none;">
+					<p>
+						<%=es ? "Registrado el" : "Registered on"%>
+						<b>${v.voluntario.fecha_registro}</b>
+					</p>
+
+					<p>
+						<%=es ? "¿Tiene vehículo?" : "Has vehicle?"%>
+						<b> <c:choose>
+								<c:when test="${v.voluntario.vehiculo}">
+									<%=es ? "Sí" : "Yes"%>
+								</c:when>
+								<c:otherwise>No</c:otherwise>
+							</c:choose>
+						</b>
+					</p>
+
+					<p>
+						<%=es ? "Discapacidad" : "Disability"%>: <b>${v.voluntario.getDiscapacidadTexto(lang)}</b>
+					</p>
+
+					<p>
+						<%=es ? "Valoración media" : "Average rating"%>: <b>${v.voluntario.media}</b>
 					</p>
 				</div>
 
@@ -135,62 +177,89 @@ String accion = (String) request.getAttribute("accion");
 						method="post">
 
 						<input type="hidden" name="accion" value="asignar-voluntarios" />
-						<input type="hidden" name="idInscripcion" value="${v.idInscripcion}" />
-						<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
-						<input type="hidden" name="accionVoluntario" value="asignar" /> <input
+						<input type="hidden" name="idInscripcion"
+							value="${v.idInscripcion}" /> <input type="hidden"
+							name="idUsuario" value="${v.voluntario.id}" /> <input
+							type="hidden" name="accionVoluntario" value="asignar" /> <input
 							type="hidden" name="idEvento" value="${param.id}" /> <select
 							name="puntoControl">
-							<option disabled selected>Selecciona un punto de control</option>
+							<option disabled selected>
+								<%=es ? "Selecciona un punto de control" : "Select a checkpoint"%>
+							</option>
+
 							<c:forEach var="p" items="${puntosControl}">
 								<option value="${p}">${p}</option>
 							</c:forEach>
 						</select>
 
-						<button type="submit" class="btn btn-success">Asignar</button>
+						<button type="submit" class="btn btn-success">
+							<%=es ? "Asignar" : "Assign"%>
+						</button>
 					</form>
 				</div>
-			</div>
 
+			</div>
 		</c:forEach>
+	</div>
+
+	<!-- ASIGNADOS -->
+	<div>
+		<h3><%=es ? "Asignados" : "Assigned"%>
+			(${asignados.size()})
+		</h3>
+
 		<c:forEach var="v" items="${asignados}">
 			<div class="admin-tarjeta voluntarios asignados">
 
 				<div class="info">
 					<span>${v.voluntario.nombre} ${v.voluntario.apellidos}</span>
+
 					<div style="display: flex; gap: 10px;">
 						<button type="button" class="btn btn-outline-secondary"
-							onclick="mostrarPerfil(this)">Ver información</button>
-						<button class="btn btn-success" disabled>Asignado</button>
+							onclick="mostrarPerfil(this)">
+							<%=es ? "Ver información" : "View info"%>
+						</button>
+
+						<button class="btn btn-success" disabled>
+							<%=es ? "Asignado" : "Assigned"%>
+						</button>
 					</div>
 				</div>
-
 				<div class="info-voluntario" style="display: none;">
 					<p>
-						El usuario se registró el <b>${v.voluntario.fecha_registro}</b>
+						<%=es ? "Registrado el" : "Registered on"%>
+						<b>${v.voluntario.fecha_registro}</b>
 					</p>
 
 					<p>
-						¿Tiene vehículo? <b> <c:choose>
-								<c:when test="${v.voluntario.vehiculo}">Sí</c:when>
+						<%=es ? "¿Tiene vehículo?" : "Has vehicle?"%>
+						<b> <c:choose>
+								<c:when test="${v.voluntario.vehiculo}">
+									<%=es ? "Sí" : "Yes"%>
+								</c:when>
 								<c:otherwise>No</c:otherwise>
 							</c:choose>
 						</b>
 					</p>
 
 					<p>
-						Discapacidad: <b>${v.voluntario.discapacidadTexto}</b>
+						<%=es ? "Discapacidad" : "Disability"%>: <b>${v.voluntario.getDiscapacidadTexto(lang)}</b>
 					</p>
+
 					<p>
-						Valoración Media: <b>${v.voluntario.media}</b>
+						<%=es ? "Valoración media" : "Average rating"%>: <b>${v.voluntario.media}</b>
 					</p>
 				</div>
-			</div>
 
+			</div>
 		</c:forEach>
 	</div>
 
+	<!-- LISTA ESPERA -->
 	<div>
-		<h3>Lista de espera (${espera.size()})</h3>
+		<h3><%=es ? "Lista de espera" : "Waiting list"%>
+			(${espera.size()})
+		</h3>
 
 		<c:forEach var="v" items="${espera}">
 			<div class="admin-tarjeta">
@@ -205,7 +274,10 @@ String accion = (String) request.getAttribute("accion");
 							value="${v.idInscripcion}" /> <input type="hidden"
 							name="accionVoluntario" value="aceptar" /> <input type="hidden"
 							name="idEvento" value="${param.id}" />
-						<button type="submit" class="btn btn-success">Aceptar</button>
+
+						<button type="submit" class="btn btn-success">
+							<%=es ? "Aceptar" : "Accept"%>
+						</button>
 					</form>
 
 					<form action="${pageContext.request.contextPath}/ServPerfil"
@@ -214,7 +286,10 @@ String accion = (String) request.getAttribute("accion");
 						<input type="hidden" name="idUsuario" value="${v.voluntario.id}" />
 						<input type="hidden" name="accionVoluntario" value="rechazar" />
 						<input type="hidden" name="idEvento" value="${param.id}" />
-						<button type="submit" class="btn btn-danger">Rechazar</button>
+
+						<button type="submit" class="btn btn-danger">
+							<%=es ? "Rechazar" : "Reject"%>
+						</button>
 					</form>
 
 				</div>
@@ -222,8 +297,11 @@ String accion = (String) request.getAttribute("accion");
 		</c:forEach>
 	</div>
 
+	<!-- CANCELADOS -->
 	<div>
-		<h3>Cancelados (${inactivos.size()})</h3>
+		<h3><%=es ? "Cancelados" : "Cancelled"%>
+			(${inactivos.size()})
+		</h3>
 
 		<c:forEach var="v" items="${inactivos}">
 			<div>
@@ -231,6 +309,7 @@ String accion = (String) request.getAttribute("accion");
 			</div>
 		</c:forEach>
 	</div>
+
 </section>
 
 <script>
@@ -288,22 +367,39 @@ String accion = (String) request.getAttribute("accion");
 <div class="modal fade" id="modalEliminarEvento" tabindex="-1">
 	<div class="modal-dialog" style="margin-top: 5rem;">
 		<div class="modal-content">
+
 			<div class="modal-header">
-				<h5 class="modal-title">Eliminar evento</h5>
+				<h5 class="modal-title">
+					<%=es ? "Eliminar evento" : "Delete event"%>
+				</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
+
 			<div class="modal-body">
-				<p>¿Estás seguro de que quieres eliminar el evento <b>${evento.nombre}</b>?
-				Esta acción no se puede deshacer y eliminará todas las inscripciones y puntos de control asociados.</p>
+				<p>
+					<%=es ? "¿Estás seguro de que quieres eliminar el evento" : "Are you sure you want to delete the event"%>
+					<b>${evento.nombre}</b>?
+					<%=es ? "Esta acción no se puede deshacer y eliminará todas las inscripciones y puntos de control asociados."
+		: "This action cannot be undone and will delete all registrations and associated checkpoints."%>
+				</p>
 			</div>
+
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-				<form action="${pageContext.request.contextPath}/ServPerfil" method="post">
+				<button type="button" class="btn btn-secondary"
+					data-bs-dismiss="modal">
+					<%=es ? "Cancelar" : "Cancel"%>
+				</button>
+
+				<form action="${pageContext.request.contextPath}/ServPerfil"
+					method="post">
 					<input type="hidden" name="accion" value="eliminar-evento">
 					<input type="hidden" name="idEvento" value="${param.id}">
-					<button type="submit" class="btn btn-danger">Eliminar</button>
+					<button type="submit" class="btn btn-danger">
+						<%=es ? "Eliminar" : "Delete"%>
+					</button>
 				</form>
 			</div>
+
 		</div>
 	</div>
 </div>

@@ -7,28 +7,34 @@ if (idEvento == null) {
 	return;
 }
 List<Tarea> tareas = (List<Tarea>) request.getAttribute("tareas");
+
+String lang = (String) session.getAttribute("lang");
+if (lang == null) lang = "es";
+boolean es = lang.equals("es");
 %>
 
 <div class="indicador-pasos">
 	<div class="paso completado">
 		<span>1</span>
-		<p>Datos</p>
+		<p><%= es ? "Datos" : "Details" %></p>
 	</div>
 	<div class="paso completado">
 		<span>2</span>
-		<p>Tareas</p>
+		<p><%= es ? "Tareas" : "Tasks" %></p>
 	</div>
 	<div class="paso activo">
 		<span>3</span>
-		<p>Puntos de control</p>
+		<p><%= es ? "Puntos de control" : "Checkpoints" %></p>
 	</div>
 </div>
 
 <div class="enuncidado">
-	<h1>Puntos de control</h1>
-	<p>Selecciona los puntos de control que necesitarás cubrir durante
-		el evento. Añadele un nombre, una descripción y asigna las tareas
-		necesarias.</p>
+	<h1><%= es ? "Puntos de control" : "Checkpoints" %></h1>
+	<p>
+		<%= es 
+			? "Selecciona los puntos de control que necesitarás cubrir durante el evento. Añádeles un nombre, una descripción y asigna las tareas necesarias."
+			: "Select the checkpoints you will need to cover during the event. Give them a name, a description and assign the required tasks." %>
+	</p>
 </div>
 
 <form id="formRecorrido"
@@ -38,16 +44,24 @@ List<Tarea> tareas = (List<Tarea>) request.getAttribute("tareas");
 
 	<div class="puntos-container">
 		<div class="puntos-header" style="justify-content: center;">
-			<button type="button" class="btn-agregar" id="btnAgregar">+
-				Añadir punto de control</button>
+			<button type="button" class="btn-agregar" id="btnAgregar">
+				+
+				<%= es ? "Añadir punto de control" : "Add checkpoint" %>
+			</button>
 		</div>
+
 		<div id="puntosLista">
-			<div class="empty-message" id="emptyMessage">No hay puntos
-				añadidos. Pulsa el botón para añadir un punto de control.</div>
+			<div class="empty-message" id="emptyMessage">
+				<%= es 
+					? "No hay puntos añadidos. Pulsa el botón para añadir un punto de control."
+					: "No checkpoints added. Click the button to add one." %>
+			</div>
 		</div>
 	</div>
 
-	<button type="submit" class="botones">Crear Recorrido</button>
+	<button type="submit" class="botones">
+		<%= es ? "Crear recorrido" : "Create route" %>
+	</button>
 </form>
 
 <script>
@@ -62,7 +76,9 @@ const TAREAS = [
 ];
 
 function generarCheckboxesTareas() {
-	if (TAREAS.length === 0) return '<span class="sin-tareas">No hay tareas disponibles</span>';
+	if (TAREAS.length === 0) 
+		return '<span class="sin-tareas"><%= es ? "No hay tareas disponibles" : "No tasks available" %></span>';
+	
 	return TAREAS.map(function(t) {
 		return '<label class="tarea-check-label">' +
 			'<input type="checkbox" class="tarea-check" value="' + t.id + '">' +
@@ -79,16 +95,15 @@ document.getElementById('btnAgregar').addEventListener('click', function() {
 	const div = document.createElement('div');
 	div.className = 'punto-item';
 	div.innerHTML =
-		'<input type="hidden" name="puntoTipo" value="3">' +
-		'<input type="hidden" name="puntoKm" value="">' +
 		'<button type="button" class="btn-eliminar" onclick="eliminarPunto(this)">&#215;</button>' +
-		'<div class="form-group"><label>Nombre del punto de control</label>' +
-		'<input type="text" name="puntoNombre" placeholder="Ej: Control de hidratación"></div>' +
-		'<div class="form-group"><label>Descripción</label>' +
-		'<textarea name="puntoDesc" placeholder="Describe este punto de control..."></textarea></div>' +
-		'<div class="form-group"><label>Tareas asignadas a este punto</label>' +
+		'<div class="form-group"><label><%= es ? "Nombre del punto de control" : "Checkpoint name" %></label>' +
+		'<input type="text" name="puntoNombre" placeholder="<%= es ? "Ej: Control de hidratación" : "e.g. Hydration point" %>"></div>' +
+		'<div class="form-group"><label><%= es ? "Descripción" : "Description" %></label>' +
+		'<textarea name="puntoDesc" placeholder="<%= es ? "Describe este punto de control..." : "Describe this checkpoint..." %>"></textarea></div>' +
+		'<div class="form-group"><label><%=es ? "Tareas asignadas a este punto" : "Tasks assigned to this checkpoint"%></label>' +
 		'<div class="tareas-control-lista">' + generarCheckboxesTareas() + '</div></div>' +
 		'<input type="hidden" name="puntoTareas" value="">';
+
 	lista.appendChild(div);
 });
 
