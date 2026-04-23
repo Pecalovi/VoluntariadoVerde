@@ -9,10 +9,7 @@
 		</a> <a href="${pageContext.request.contextPath}/admin?opcion=empresas"
 			class="${opcion == 'empresas' ? 'activo' : ''}"> <img
 			src="src/editar_evento.png"> ${lang == 'es' ? 'Gestionar organizadores' : 'Manage organizers'}
-		</a> <a href="${pageContext.request.contextPath}/admin?opcion=eventos"
-			class="${opcion == 'eventos' ? 'activo' : ''}"> <img
-			src="src/evento.png"> ${lang == 'es' ? 'Gestionar eventos' : 'Manage events'}
-		</a>
+		</a> 
 	</div>
 
 	<section>
@@ -20,7 +17,7 @@
 			<c:when test="${opcion == 'voluntarios'}">
 				<c:forEach var="item" items="${tablas}">
 					<div class="admin-tarjeta">
-						<h2>${item.apellidos},${item.nombre}</h2>
+						<h2>${item.apellidos}, ${item.nombre}</h2>
 						<div>
 							<form action="${pageContext.request.contextPath}/ServAdmin"
 								method="post" style="display: inline;">

@@ -69,7 +69,21 @@ public class ServRegister extends HttpServlet {
 			} else if ("organizador".equals(tipo)) {
 				u = new Organizador(nombre, apellidos, tlf, email, passCifrada, empresa);
 			}
-
+				
+			
+			if (bd.emailExiste(email)) {
+			    HttpSession session = request.getSession();
+			    session.setAttribute("message", "Este email ya está registrado.");
+			    session.setAttribute("messageType", "danger");
+			    if ("voluntario".equals(tipo)) {
+			        response.sendRedirect(contextPath + "/registrovoluntario");
+			    } else if ("organizador".equals(tipo)) {
+			        response.sendRedirect(contextPath + "/registroorg");
+			    }
+			    return;
+			}
+			
+			
 			if (bd.registrar(u)) {
 
 				String asunto = "¡Bienvenido a Voluntariado Verde!";

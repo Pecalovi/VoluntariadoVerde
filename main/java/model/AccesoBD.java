@@ -1057,5 +1057,40 @@ public class AccesoBD {
 		}
 		return false;
 	}
+	
+	public boolean emailExiste(String email) throws SQLException {
+	    String emailLimpio = email.toLowerCase().trim();
+	    
+	    String sqlVol = "SELECT 1 FROM voluntarios WHERE LOWER(TRIM(email)) = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sqlVol)) {
+	        ps.setString(1, emailLimpio);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) return true;
+	        }
+	    }
+	    
+	    String sqlOrg = "SELECT 1 FROM organizadores WHERE LOWER(TRIM(email)) = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sqlOrg)) {
+	        ps.setString(1, emailLimpio);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) return true;
+	        }
+	    }
+	    
+	    return false;
+	}
+	
+	
+	public String obtenerEstadoInscripcion(int idVoluntario, int idEvento) throws SQLException {
+	    String sql = "SELECT estado FROM inscripciones WHERE id_voluntario = ? AND id_evento = ?";
+	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, idVoluntario);
+	        ps.setInt(2, idEvento);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) return rs.getString("estado");
+	        }
+	    }
+	    return null;
+	}
 
 }

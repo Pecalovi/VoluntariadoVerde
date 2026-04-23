@@ -57,11 +57,28 @@ public class EventoController extends HttpServlet {
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute("usuario");
 
+<<<<<<< Updated upstream
 		String estadoInscripcion = null;
 
 		if (user != null) {
 			estadoInscripcion = AccesoBD.obtenerEstadoInscripcion(user.getId(), id);
 		}
+=======
+		boolean inscrito = false;
+		String estadoInscripcion = null;
+
+		if (user != null) {
+		    int idUsuario = user.getId();
+		    try {
+		        AccesoBD bd = new AccesoBD();
+		        inscrito = bd.usuarioInscrito(idUsuario, id);
+		        estadoInscripcion = bd.obtenerEstadoInscripcion(idUsuario, id);
+		    } catch (ClassNotFoundException | SQLException e1) {
+		        e1.printStackTrace();
+		    }
+		}
+		request.setAttribute("inscrito", inscrito);
+>>>>>>> Stashed changes
 		request.setAttribute("estadoInscripcion", estadoInscripcion);
 		request.setAttribute("inscritos", AccesoBD.contarInscritos(id));
 		request.setAttribute("evento", e);
