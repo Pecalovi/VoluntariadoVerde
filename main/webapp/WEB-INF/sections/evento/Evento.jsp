@@ -13,7 +13,7 @@
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_fecha.png"
 					alt="icono fecha">
-				<p>${evento.fecha_inicio}/${evento.fecha_fin}</p>
+				<p>${evento.fecha_inicio} / ${evento.fecha_fin}</p>
 			</div>
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_ubi.png" alt="icono ubi">
@@ -22,7 +22,7 @@
 			<div class="icoytxt">
 				<img class="icono" src="src/Icono-evento_inscritos.png"
 					alt="icono inscritos">
-				<p>${inscritos}Voluntarios</p>
+				<p>${inscritos} Voluntarios</p>
 			</div>
 		</div>
 		<hr>
